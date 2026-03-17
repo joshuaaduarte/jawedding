@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Coastal placeholder image</title>
+  <desc id="desc">Elegant coastal themed placeholder.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#98b7c6"/>
+      <stop offset="45%" stop-color="#b8d2db"/>
+      <stop offset="100%" stop-color="#e9d9c4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="900" fill="url(#bg)"/>
+  <path d="M0 620 C240 560 460 700 700 650 C960 595 1110 690 1400 610 L1400 900 L0 900 Z" fill="#f4ecdf" fill-opacity="0.95"/>
+  <path d="M0 690 C220 640 450 770 720 720 C980 670 1170 760 1400 705" fill="none" stroke="#ffffff" stroke-opacity="0.7" stroke-width="6"/>
+  <text x="700" y="460" text-anchor="middle" font-family="Georgia, serif" font-size="58" fill="#ffffff" fill-opacity="0.94">Monterey Coast Placeholder</text>
+</svg>
+

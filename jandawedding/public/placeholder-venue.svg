@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Venue placeholder image</title>
+  <desc id="desc">Elegant venue themed placeholder.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d8cab8"/>
+      <stop offset="55%" stop-color="#ebe0d3"/>
+      <stop offset="100%" stop-color="#bfd3c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="900" fill="url(#bg)"/>
+  <rect x="180" y="220" width="1040" height="520" fill="#ffffff" fill-opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="4"/>
+  <rect x="270" y="300" width="860" height="360" fill="none" stroke="#ffffff" stroke-opacity="0.8" stroke-width="3"/>
+  <text x="700" y="470" text-anchor="middle" font-family="Georgia, serif" font-size="60" fill="#ffffff" fill-opacity="0.95">Venue Placeholder</text>
+  <text x="700" y="525" text-anchor="middle" font-family="Verdana, sans-serif" font-size="22" letter-spacing="7" fill="#ffffff" fill-opacity="0.9">REPLACE WITH PHOTO</text>
+</svg>
+

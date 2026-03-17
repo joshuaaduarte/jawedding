@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAuthenticatedGuest } from "@/lib/auth";
 import { saveRsvp } from "@/lib/rsvp-store";
+import { sendRsvpNotification } from "@/lib/email";
 
 export async function POST(request: Request) {
   const guest = await getAuthenticatedGuest();
@@ -33,6 +34,14 @@ export async function POST(request: Request) {
     notes: typeof body.notes === "string" ? body.notes.trim() : "",
   });
 
+  // Fire-and-forget email notification to Joshua
+  void sendRsvpNotification({
+    guestName: record.fullName,
+    inviteCode: record.inviteCode,
+    attendance: record.attendance,
+    guestCount: record.guestCount,
+    notes: record.notes,
+  });
+
   return NextResponse.json({ ok: true, record });
 }
-

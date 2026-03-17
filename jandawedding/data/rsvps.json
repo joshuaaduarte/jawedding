@@ -1,0 +1,12 @@
+[
+  {
+    "guestId": "guest-001",
+    "inviteCode": "JAX-2401",
+    "fullName": "Taylor Rivera",
+    "email": "taylor@example.com",
+    "attendance": "yes",
+    "guestCount": 3,
+    "notes": "no fish",
+    "submittedAt": "2026-02-18T04:31:01.719Z"
+  }
+]

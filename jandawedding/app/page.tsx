@@ -1,35 +1,38 @@
 import Image from "next/image";
-import { TEMP_IMAGES } from "@/lib/temp-images";
+import { PHOTOS } from "@/lib/photos";
 import { getLocale } from "@/lib/locale";
 import { LanguageSwitcher } from "@/components/language-switcher";
 
 export default async function Home() {
   const locale = await getLocale();
-  const t = locale === "es"
-    ? {
-        saveDate: "Reserva La Fecha",
-        guestLogin: "Ingreso Invitados",
-        adminLogin: "Ingreso Admin",
-        weMarried: "Nos vamos a casar.",
-        date: "Fecha",
-        mainLocation: "Ubicación Principal",
-        ceremony: "Ceremonia",
-        reception: "Recepción",
-        photoWall: "Nuestros Momentos",
-        photoHint: "Espacios para tus fotos favoritas.",
-      }
-    : {
-        saveDate: "Save The Date",
-        guestLogin: "Guest Login",
-        adminLogin: "Admin Login",
-        weMarried: "We are getting married.",
-        date: "Date",
-        mainLocation: "Main Location",
-        ceremony: "Ceremony",
-        reception: "Reception",
-        photoWall: "Our Photo Wall",
-        photoHint: "Spots for your favorite moments together.",
-      };
+  const t =
+    locale === "es"
+      ? {
+          saveDate: "Reserva La Fecha",
+          guestLogin: "Ingreso Invitados",
+          adminLogin: "Ingreso Admin",
+          weMarried: "Nos vamos a casar.",
+          date: "Fecha",
+          mainLocation: "Ubicación",
+          ceremony: "Ceremonia",
+          reception: "Recepción",
+          photoWall: "Nuestros Momentos",
+          photoHint: "Espacios para tus fotos favoritas.",
+          rsvpDeadline: "Fecha Límite de RSVP",
+        }
+      : {
+          saveDate: "Save The Date",
+          guestLogin: "Guest Login",
+          adminLogin: "Admin Login",
+          weMarried: "We are getting married.",
+          date: "Date",
+          mainLocation: "Location",
+          ceremony: "Ceremony",
+          reception: "Reception",
+          photoWall: "Our Photo Wall",
+          photoHint: "Spots for your favorite moments together.",
+          rsvpDeadline: "RSVP Deadline",
+        };
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top,#fbf4e8_0%,#f5f5f3_42%,#edf1ee_100%)] text-stone-800">
@@ -46,7 +49,10 @@ export default async function Home() {
             >
               {t.guestLogin}
             </a>
-            <a href="/admin/login" className="inline-flex h-10 items-center px-2 text-xs uppercase tracking-[0.18em] text-stone-600 hover:text-stone-800">
+            <a
+              href="/admin/login"
+              className="inline-flex h-10 items-center px-2 text-xs uppercase tracking-[0.18em] text-stone-600 hover:text-stone-800"
+            >
               {t.adminLogin}
             </a>
           </div>
@@ -54,8 +60,8 @@ export default async function Home() {
 
         <div className="relative h-[560px] overflow-hidden rounded-[2.2rem] border border-stone-200 shadow-[0_18px_50px_rgba(59,39,20,0.14)]">
           <Image
-            src={TEMP_IMAGES.hero}
-            alt="Wedding hero placeholder"
+            src={PHOTOS.hero}
+            alt="Joshua & Ana"
             fill
             priority
             className="object-cover"
@@ -63,7 +69,7 @@ export default async function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10" />
           <div className="absolute bottom-10 left-8 right-8 text-white sm:left-12 sm:right-12">
             <p className="text-xs uppercase tracking-[0.28em] text-emerald-100">
-              Jane & Alex
+              Ana & Joshua
             </p>
             <h1 className="mt-2 font-serif text-5xl leading-tight sm:text-6xl md:text-7xl">
               {t.weMarried}
@@ -71,26 +77,22 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
           <article className="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm">
             <p className="text-xs uppercase tracking-[0.16em] text-stone-500">{t.date}</p>
-            <p className="mt-2 text-sm text-stone-700">Saturday, July 12, 2026</p>
-          </article>
-          <article className="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm">
-            <p className="text-xs uppercase tracking-[0.16em] text-stone-500">
-              {t.mainLocation}
-            </p>
-            <p className="mt-2 text-sm text-stone-700">Monterey, CA</p>
+            <p className="mt-2 text-sm text-stone-700">Friday, September 4, 2026</p>
           </article>
           <article className="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm">
             <p className="text-xs uppercase tracking-[0.16em] text-stone-500">{t.ceremony}</p>
-            <p className="mt-2 text-sm text-stone-700">
-              West Garden, Monterey • 4:00 PM
-            </p>
+            <p className="mt-2 text-sm text-stone-700">Carmel Mission Basilica · 2:00 PM</p>
           </article>
           <article className="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm">
             <p className="text-xs uppercase tracking-[0.16em] text-stone-500">{t.reception}</p>
-            <p className="mt-2 text-sm text-stone-700">Glasshouse, Monterey • 6:00 PM</p>
+            <p className="mt-2 text-sm text-stone-700">Fairview Laguna Seca · 5:00 PM</p>
+          </article>
+          <article className="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm">
+            <p className="text-xs uppercase tracking-[0.16em] text-stone-500">{t.rsvpDeadline}</p>
+            <p className="mt-2 text-sm text-stone-700">July 31, 2026</p>
           </article>
         </div>
 
@@ -104,12 +106,12 @@ export default async function Home() {
           </div>
           <div className="mt-5 grid gap-4 md:grid-cols-12">
             <div className="relative h-56 overflow-hidden rounded-2xl border border-stone-200 shadow-sm md:col-span-5 md:h-72">
-              <Image src={TEMP_IMAGES.moment1} alt="Photo slot 1" fill className="object-cover" />
+              <Image src={PHOTOS.moment1} alt="Photo slot 1" fill className="object-cover" />
             </div>
             <div className="relative h-56 overflow-hidden rounded-2xl border border-stone-200 shadow-sm md:col-span-7 md:h-72">
-              <Image src={TEMP_IMAGES.moment2} alt="Photo slot 2" fill className="object-cover" />
+              <Image src={PHOTOS.moment2} alt="Photo slot 2" fill className="object-cover" />
             </div>
-            {[TEMP_IMAGES.moment3, TEMP_IMAGES.moment4, TEMP_IMAGES.moment5, TEMP_IMAGES.moment6].map(
+            {([PHOTOS.moment3, PHOTOS.moment4, PHOTOS.moment5, PHOTOS.moment6] as const).map(
               (imageSrc, index) => (
                 <div
                   key={imageSrc}
@@ -119,7 +121,7 @@ export default async function Home() {
                 >
                   <Image
                     src={imageSrc}
-                    alt={`Wedding preview ${index + 3}`}
+                    alt={`Moment ${index + 3}`}
                     fill
                     className="object-cover"
                   />
@@ -128,10 +130,14 @@ export default async function Home() {
             )}
           </div>
         </section>
+
         <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {[TEMP_IMAGES.coast, TEMP_IMAGES.venue, TEMP_IMAGES.portrait].map((imageSrc, index) => (
-            <div key={imageSrc} className="relative h-44 overflow-hidden rounded-2xl border border-stone-200 shadow-sm">
-              <Image src={imageSrc} alt={`Wedding preview ${index + 1}`} fill className="object-cover" />
+          {([PHOTOS.coast, PHOTOS.venue, PHOTOS.portrait] as const).map((imageSrc, index) => (
+            <div
+              key={imageSrc}
+              className="relative h-44 overflow-hidden rounded-2xl border border-stone-200 shadow-sm"
+            >
+              <Image src={imageSrc} alt={`Preview ${index + 1}`} fill className="object-cover" />
             </div>
           ))}
         </div>

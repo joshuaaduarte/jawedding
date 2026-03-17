@@ -1,8 +1,14 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Wedding website built with [Next.js](https://nextjs.org).
 
 ## Getting Started
 
-First, run the development server:
+1. Copy environment variables:
+
+```bash
+cp .env.example .env.local
+```
+
+2. Run the development server:
 
 ```bash
 npm run dev
@@ -14,23 +20,39 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` public landing page with generic wedding information
+- `/login` invite-code guest login
+- `/portal` protected page with personalized timeline and RSVP content
+- `/portal/registry` protected registry page
+- `/portal/stay` protected places-to-stay page
+- `/portal/things-to-do` protected local activities page
+- `/portal/carpool` protected ride-share board for SFO/OAK/SJC arrivals
+- `/admin/login` admin login
+- `/admin` admin dashboard for RSVP submissions
 
-## Learn More
+## Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+- `AUTH_SESSION_SECRET`: reserved for future auth hardening/custom secrets
+- `ADMIN_PORTAL_PASSWORD`: password for admin dashboard access
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Guest records and invite codes live in `/Users/joshuaduarte/Documents/projects/jawedding/jandawedding/lib/guest-data.ts`.
+- The `/portal` route is protected by `/Users/joshuaduarte/Documents/projects/jawedding/jandawedding/proxy.ts` and a secure HTTP-only cookie.
+- RSVP submissions are saved to `/Users/joshuaduarte/Documents/projects/jawedding/jandawedding/data/rsvps.json`.
+- Carpool posts are saved to `/Users/joshuaduarte/Documents/projects/jawedding/jandawedding/data/carpool.json`.
 
-## Deploy on Vercel
+## Temporary Login Info (for testing)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Guest login page: `/login`
+- Guest test accounts:
+  - Invite code `JAX-2401` + last name `Rivera`
+  - Invite code `JAX-2402` + last name `Chen`
+  - Invite code `JAX-2403` + last name `Parker`
+  - Invite code `JAX-2404` + last name `Lewis`
+- Admin login page: `/admin/login`
+- Default admin password: `admin-temp-2026` (override in `.env.local`)

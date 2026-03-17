@@ -6,9 +6,10 @@ export async function POST(request: Request) {
   const formData = await request.formData();
   const inviteCode = formData.get("inviteCode");
   const lastName = formData.get("lastName");
+
   const guest =
     typeof inviteCode === "string" && typeof lastName === "string"
-      ? findGuestByInvite(inviteCode, lastName)
+      ? await findGuestByInvite(inviteCode, lastName)
       : null;
 
   if (!guest) {
