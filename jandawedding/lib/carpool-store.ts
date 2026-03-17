@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 import type { Guest } from "@/lib/guest-data";
 
 export type CarpoolAirport = "SFO" | "OAK" | "SJC";
@@ -32,7 +32,7 @@ function mapEntry(row: Record<string, unknown>): CarpoolEntry {
 }
 
 export async function getAllCarpoolEntries(): Promise<CarpoolEntry[]> {
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("carpool_entries")
     .select("*")
     .order("arrival_date", { ascending: true });
@@ -47,7 +47,7 @@ export async function addCarpoolEntry(input: {
   notes: string;
   contact: string;
 }): Promise<CarpoolEntry> {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("carpool_entries")
     .insert({
       guest_id: input.guest.id,

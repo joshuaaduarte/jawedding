@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 
 export type GuestGroup = "all" | "family" | "bridal-party" | "parents";
 
@@ -61,7 +61,7 @@ export async function findGuestByInvite(
   lastName: string,
 ): Promise<Guest | null> {
   const normalized = normalizeCode(inviteCode);
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("guests")
     .select("*")
     .ilike("last_name", lastName.trim());
@@ -75,7 +75,7 @@ export async function findGuestByInvite(
 
 export async function findGuestByCode(inviteCode: string): Promise<Guest | null> {
   const normalized = normalizeCode(inviteCode);
-  const { data } = await supabase.from("guests").select("*");
+  const { data } = await getSupabase().from("guests").select("*");
   if (!data) return null;
   const match = data.find(
     (g) => normalizeCode(g.invite_code as string) === normalized,
@@ -84,7 +84,7 @@ export async function findGuestByCode(inviteCode: string): Promise<Guest | null>
 }
 
 export async function getAllGuests(): Promise<(Guest & { rsvp: { attendance: string; guestCount: number; submittedAt: string } | null })[]> {
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("guests")
     .select("*, rsvps(attendance, guest_count, submitted_at)")
     .order("last_name", { ascending: true });
@@ -105,7 +105,7 @@ export async function getAllGuests(): Promise<(Guest & { rsvp: { attendance: str
 }
 
 export async function getGuestById(id: string): Promise<Guest | null> {
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("guests")
     .select("*")
     .eq("id", id)
@@ -121,7 +121,7 @@ export async function createGuest(input: {
   anecdote: string;
   inviteCode: string;
 }): Promise<Guest> {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("guests")
     .insert({
       first_name: input.firstName,
@@ -156,7 +156,7 @@ export async function updateGuest(
   if (input.anecdote !== undefined) patch.anecdote = input.anecdote;
   if (input.inviteCode !== undefined) patch.invite_code = input.inviteCode;
 
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("guests")
     .update(patch)
     .eq("id", id)
@@ -167,12 +167,12 @@ export async function updateGuest(
 }
 
 export async function deleteGuest(id: string): Promise<void> {
-  const { error } = await supabase.from("guests").delete().eq("id", id);
+  const { error } = await getSupabase().from("guests").delete().eq("id", id);
   if (error) throw error;
 }
 
 export async function getNextInviteCode(): Promise<string> {
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("guests")
     .select("invite_code")
     .ilike("invite_code", "AJD-%");
@@ -188,7 +188,7 @@ export async function getNextInviteCode(): Promise<string> {
 // ---------- event queries ----------
 
 export async function getAllEvents(): Promise<WeddingEvent[]> {
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("events")
     .select("*")
     .order("sort_order", { ascending: true });
@@ -196,7 +196,7 @@ export async function getAllEvents(): Promise<WeddingEvent[]> {
 }
 
 export async function eventsForGuestGroup(group: GuestGroup): Promise<WeddingEvent[]> {
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("events")
     .select("*")
     .order("sort_order", { ascending: true });
@@ -206,7 +206,7 @@ export async function eventsForGuestGroup(group: GuestGroup): Promise<WeddingEve
 }
 
 export async function getEventById(id: string): Promise<WeddingEvent | null> {
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("events")
     .select("*")
     .eq("id", id)
@@ -223,7 +223,7 @@ export async function createEvent(input: {
   groups: string[];
   sortOrder: number;
 }): Promise<WeddingEvent> {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("events")
     .insert({
       day_label: input.dayLabel,
@@ -261,7 +261,7 @@ export async function updateEvent(
   if (input.groups !== undefined) patch.groups = input.groups;
   if (input.sortOrder !== undefined) patch.sort_order = input.sortOrder;
 
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("events")
     .update(patch)
     .eq("id", id)
@@ -272,6 +272,6 @@ export async function updateEvent(
 }
 
 export async function deleteEvent(id: string): Promise<void> {
-  const { error } = await supabase.from("events").delete().eq("id", id);
+  const { error } = await getSupabase().from("events").delete().eq("id", id);
   if (error) throw error;
 }

@@ -17,6 +17,8 @@ export default async function EditEventPage({ params }: Props) {
   const event = await getEventById(id);
   if (!event) notFound();
 
+  const currentSortOrder = event.sortOrder;
+
   async function handleUpdate(formData: FormData) {
     "use server";
     const groups = ALL_GROUPS.filter((g) => formData.get(`group_${g}`) === "on");
@@ -28,7 +30,7 @@ export default async function EditEventPage({ params }: Props) {
       time: (formData.get("time") as string).trim(),
       location: (formData.get("location") as string).trim(),
       groups: groups.length > 0 ? groups : ["all"],
-      sortOrder: parseInt(formData.get("sortOrder") as string, 10) || event.sortOrder,
+      sortOrder: parseInt(formData.get("sortOrder") as string, 10) || currentSortOrder,
     });
     redirect("/admin/events");
   }

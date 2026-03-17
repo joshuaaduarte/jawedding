@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 import type { Guest } from "@/lib/guest-data";
 
 export type RsvpAttendance = "yes" | "no";
@@ -28,7 +28,7 @@ function mapRsvp(row: Record<string, unknown>): RsvpRecord {
 }
 
 export async function getAllRsvps(): Promise<RsvpRecord[]> {
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("rsvps")
     .select("*")
     .order("submitted_at", { ascending: false });
@@ -36,7 +36,7 @@ export async function getAllRsvps(): Promise<RsvpRecord[]> {
 }
 
 export async function getRsvpByGuestId(guestId: string): Promise<RsvpRecord | null> {
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("rsvps")
     .select("*")
     .eq("guest_id", guestId)
@@ -50,7 +50,7 @@ export async function saveRsvp(input: {
   guestCount: number;
   notes: string;
 }): Promise<RsvpRecord> {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("rsvps")
     .upsert(
       {
