@@ -66,7 +66,8 @@ export function RsvpForm({ defaultRecord, locale }: RsvpFormProps) {
     setSaving(false);
 
     if (!response.ok) {
-      setStatusMessage(t.submitError);
+      const data = await response.json().catch(() => ({}));
+      setStatusMessage(data.error ?? t.submitError);
       return;
     }
 

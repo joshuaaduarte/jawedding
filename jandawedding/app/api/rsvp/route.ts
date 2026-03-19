@@ -27,12 +27,19 @@ export async function POST(request: Request) {
       ? Math.max(1, Math.min(10, Math.floor(body.guestCount)))
       : 1;
 
-  const record = await saveRsvp({
-    guest,
-    attendance: body.attendance,
-    guestCount: parsedGuestCount,
-    notes: typeof body.notes === "string" ? body.notes.trim() : "",
-  });
+  let record;
+  try {
+    record = await saveRsvp({
+      guest,
+      attendance: body.attendance,
+      guestCount: parsedGuestCount,
+      notes: typeof body.notes === "string" ? body.notes.trim() : "",
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("saveRsvp failed:", message);
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 
   // Fire-and-forget email notification to Joshua
   void sendRsvpNotification({
