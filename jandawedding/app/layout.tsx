@@ -3,7 +3,7 @@ import "./globals.css";
 import { getLocale } from "@/lib/locale";
 
 export const metadata: Metadata = {
-  title: "Jane & Alex Wedding",
+  title: "Ana & Joshua · September 4, 2026",
   description: "Wedding details, weekend timeline, travel info, and RSVP.",
 };
 

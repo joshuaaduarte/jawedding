@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   }
 
   const response = NextResponse.redirect(new URL("/portal", request.url), 303);
-  response.cookies.set(AUTH_COOKIE_NAME, guest.inviteCode, {
+  response.cookies.set(AUTH_COOKIE_NAME, guest.id, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",

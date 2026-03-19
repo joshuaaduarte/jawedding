@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { getAuthenticatedGuest } from "@/lib/auth";
-import { eventsForGuestGroup } from "@/lib/guest-data";
-import { getRsvpByGuestId } from "@/lib/rsvp-store";
+import { eventsForGuestGroup, getGuestsByInviteCode } from "@/lib/guest-data";
+import { getRsvpsByGuestIds } from "@/lib/rsvp-store";
 import { RsvpForm } from "@/components/rsvp-form";
 import { PHOTOS } from "@/lib/photos";
 import { getLocale } from "@/lib/locale";
@@ -11,11 +11,12 @@ export default async function PortalPage() {
   const guest = await getAuthenticatedGuest();
   if (!guest) redirect("/login");
 
-  const [events, existingRsvp, locale] = await Promise.all([
+  const [events, groupGuests, locale] = await Promise.all([
     eventsForGuestGroup(guest.group),
-    getRsvpByGuestId(guest.id),
+    getGuestsByInviteCode(guest.inviteCode),
     getLocale(),
   ]);
+  const existingRsvps = await getRsvpsByGuestIds(groupGuests.map((g) => g.id));
 
   const t =
     locale === "es"
@@ -97,7 +98,7 @@ export default async function PortalPage() {
       <section className="rounded-3xl border border-stone-800 bg-stone-800 p-8 text-stone-50">
         <h2 className="font-serif text-4xl">{t.rsvp}</h2>
         <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-200">{t.rsvpText}</p>
-        <RsvpForm defaultRecord={existingRsvp} locale={locale} />
+        <RsvpForm guests={groupGuests} existingRsvps={existingRsvps} locale={locale} />
       </section>
     </div>
   );

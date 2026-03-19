@@ -185,6 +185,17 @@ export async function getNextInviteCode(): Promise<string> {
   return `AJD-${String(max + 1).padStart(4, "0")}`;
 }
 
+export async function getGuestsByInviteCode(inviteCode: string): Promise<Guest[]> {
+  const normalized = normalizeCode(inviteCode);
+  const { data } = await getSupabase()
+    .from("guests")
+    .select("*")
+    .order("created_at", { ascending: true });
+  return (data ?? [])
+    .filter((row) => normalizeCode(row.invite_code as string) === normalized)
+    .map(mapGuest);
+}
+
 // ---------- event queries ----------
 
 export async function getAllEvents(): Promise<WeddingEvent[]> {

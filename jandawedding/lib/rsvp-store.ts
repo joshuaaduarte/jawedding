@@ -35,6 +35,21 @@ export async function getAllRsvps(): Promise<RsvpRecord[]> {
   return (data ?? []).map(mapRsvp);
 }
 
+export async function getRsvpsByGuestIds(
+  guestIds: string[],
+): Promise<Record<string, RsvpRecord>> {
+  if (guestIds.length === 0) return {};
+  const { data } = await getSupabase()
+    .from("rsvps")
+    .select("*")
+    .in("guest_id", guestIds);
+  const result: Record<string, RsvpRecord> = {};
+  for (const row of data ?? []) {
+    result[row.guest_id as string] = mapRsvp(row);
+  }
+  return result;
+}
+
 export async function getRsvpByGuestId(guestId: string): Promise<RsvpRecord | null> {
   const { data } = await getSupabase()
     .from("rsvps")

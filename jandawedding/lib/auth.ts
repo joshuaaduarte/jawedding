@@ -1,14 +1,14 @@
 import { cookies } from "next/headers";
-import { findGuestByCode } from "@/lib/guest-data";
+import { getGuestById } from "@/lib/guest-data";
 
 export const AUTH_COOKIE_NAME = "guest_portal_auth";
 export const ADMIN_AUTH_COOKIE_NAME = "admin_portal_auth";
 
 export async function getAuthenticatedGuest() {
   const cookieStore = await cookies();
-  const inviteCode = cookieStore.get(AUTH_COOKIE_NAME)?.value;
-  if (!inviteCode) return null;
-  return findGuestByCode(inviteCode);
+  const guestId = cookieStore.get(AUTH_COOKIE_NAME)?.value;
+  if (!guestId) return null;
+  return getGuestById(guestId);
 }
 
 export async function isAuthenticated() {
