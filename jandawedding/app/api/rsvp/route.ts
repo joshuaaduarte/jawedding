@@ -36,7 +36,12 @@ export async function POST(request: Request) {
       notes: typeof body.notes === "string" ? body.notes.trim() : "",
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
+    const message =
+      err instanceof Error
+        ? err.message
+        : (err as Record<string, unknown>)?.message
+          ? String((err as Record<string, unknown>).message)
+          : JSON.stringify(err);
     console.error("saveRsvp failed:", message);
     return NextResponse.json({ error: message }, { status: 500 });
   }
