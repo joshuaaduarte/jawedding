@@ -11,7 +11,7 @@
 
 export const PHOTOS = {
   // Hero image on the public landing page
-  hero: "https://picsum.photos/seed/weddinghero/1800/1200",
+  hero: "https://onuxjtvcfocptampxthj.supabase.co/storage/v1/object/public/photos/hero.jpg",
 
   // Venue / location photos
   coast:    "https://picsum.photos/seed/montereycoast/1600/1000",
