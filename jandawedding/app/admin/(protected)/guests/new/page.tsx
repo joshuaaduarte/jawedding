@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getNextInviteCode, createGuest, type GuestGroup } from "@/lib/guest-data";
+import { AdminSubmitButton } from "@/components/admin-submit-button";
 
 export default async function NewGuestPage() {
   const nextCode = await getNextInviteCode();
@@ -106,12 +107,7 @@ export default async function NewGuestPage() {
           </div>
 
           <div className="flex items-center gap-3 pt-2">
-            <button
-              type="submit"
-              className="h-10 rounded-full bg-stone-800 px-6 text-xs uppercase tracking-[0.18em] text-white transition hover:bg-stone-700"
-            >
-              Add Guest
-            </button>
+            <AdminSubmitButton label="Add Guest" />
             <Link
               href="/admin/guests"
               className="text-sm text-stone-600 underline hover:text-stone-900"

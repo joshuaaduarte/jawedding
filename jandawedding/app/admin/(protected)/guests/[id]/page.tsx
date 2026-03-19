@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getGuestById, updateGuest, deleteGuest, type GuestGroup } from "@/lib/guest-data";
+import { AdminSubmitButton } from "@/components/admin-submit-button";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -117,12 +118,7 @@ export default async function EditGuestPage({ params }: Props) {
           </div>
 
           <div className="flex items-center gap-3 pt-2">
-            <button
-              type="submit"
-              className="h-10 rounded-full bg-stone-800 px-6 text-xs uppercase tracking-[0.18em] text-white transition hover:bg-stone-700"
-            >
-              Save Changes
-            </button>
+            <AdminSubmitButton label="Save Changes" />
             <Link href="/admin/guests" className="text-sm text-stone-600 underline hover:text-stone-900">
               Cancel
             </Link>
@@ -137,12 +133,7 @@ export default async function EditGuestPage({ params }: Props) {
           Deleting a guest will also remove their RSVP and carpool entry. This cannot be undone.
         </p>
         <form action={handleDelete} className="mt-4">
-          <button
-            type="submit"
-            className="h-9 rounded-full border border-rose-400 bg-white px-5 text-xs uppercase tracking-[0.16em] text-rose-700 transition hover:bg-rose-100"
-          >
-            Delete Guest
-          </button>
+          <AdminSubmitButton label="Delete Guest" pendingLabel="Deleting..." />
         </form>
       </section>
     </div>

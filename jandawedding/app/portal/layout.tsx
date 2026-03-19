@@ -20,6 +20,8 @@ export default async function PortalLayout({
           welcome: "Bienvenido",
           logout: "Salir",
           home: "Inicio",
+          story: "Nuestra Historia",
+          party: "Familia De La Boda",
           registry: "Mesa De Regalos",
           stay: "Hospedaje",
           things: "Qué Hacer",
@@ -30,6 +32,8 @@ export default async function PortalLayout({
           welcome: "Welcome",
           logout: "Logout",
           home: "Home",
+          story: "Our Story",
+          party: "Wedding Party",
           registry: "Registry",
           stay: "Stay",
           things: "To Do",
@@ -38,6 +42,8 @@ export default async function PortalLayout({
 
   const navItems = [
     { href: "/portal", label: t.home },
+    { href: "/portal/our-story", label: t.story },
+    { href: "/portal/bridal-party", label: t.party },
     { href: "/portal/registry", label: t.registry },
     { href: "/portal/stay", label: t.stay },
     { href: "/portal/things-to-do", label: t.things },
