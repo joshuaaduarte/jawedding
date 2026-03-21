@@ -1,10 +1,10 @@
-import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { getAuthenticatedGuest } from "@/lib/auth";
 import { PHOTOS } from "@/lib/photos";
 import { getLocale } from "@/lib/locale";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { PortalNav } from "@/components/portal-nav";
 
 export default async function PortalLayout({
   children,
@@ -118,27 +118,7 @@ export default async function PortalLayout({
           </div>
 
           {/* Navigation */}
-          <nav
-            aria-label="Portal navigation"
-            className="flex overflow-x-auto scrollbar-none"
-            style={{ background: "rgba(251, 244, 232, 0.96)" }}
-          >
-            <div
-              className="flex min-w-full items-center border-b px-2"
-              style={{ borderColor: "#e8ddd4" }}
-            >
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="shrink-0 px-4 py-4 text-xs uppercase tracking-[0.18em] transition hover:opacity-60"
-                  style={{ color: "#3d2b1f" }}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </nav>
+          <PortalNav items={navItems} />
         </header>
 
         {children}
