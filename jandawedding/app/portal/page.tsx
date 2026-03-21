@@ -24,8 +24,8 @@ export default async function PortalPage() {
           note: "Un Mensaje Para Ti",
           rsvp: "Confirmación",
           at: "en",
-          gallery: "Galería Del Fin De Semana",
-          galleryHint: "Espacios para subir fotos de ustedes y sus invitados.",
+          gallery: "Galería",
+          galleryHint: "Momentos que compartiremos juntos.",
           rsvpText:
             "Por favor confirma antes del 31 de julio de 2026. Puedes actualizar tu respuesta cuando quieras.",
         }
@@ -33,72 +33,217 @@ export default async function PortalPage() {
           note: "A Note For You",
           rsvp: "RSVP",
           at: "at",
-          gallery: "Weekend Gallery",
-          galleryHint: "Slots for your couple photos and guest moments.",
+          gallery: "Gallery",
+          galleryHint: "Moments we'll share together.",
           rsvpText:
             "Please submit your RSVP by July 31, 2026. You can return and update your response anytime.",
         };
 
   return (
-    <div className="space-y-6">
-      {/* Personalised note */}
+    <div className="space-y-5">
+      {/* ── Personalised note ── */}
       {guest.anecdote ? (
-        <section className="grid gap-4 rounded-3xl border border-stone-200 bg-white/85 p-6 shadow-sm md:grid-cols-[1.2fr_1fr]">
-          <div>
-            <p className="text-xs uppercase tracking-[0.18em] text-stone-500">{t.note}</p>
-            <p className="mt-3 text-sm leading-7 text-stone-700">{guest.anecdote}</p>
+        <section
+          className="grid gap-0 overflow-hidden rounded-3xl md:grid-cols-[1fr_340px]"
+          style={{
+            border: "1px solid #e8ddd4",
+            background: "rgba(251, 244, 232, 0.9)",
+          }}
+        >
+          <div className="flex flex-col justify-center p-8 sm:p-10">
+            <p
+              className="text-xs uppercase tracking-[0.3em]"
+              style={{ color: "#c9a0a0" }}
+            >
+              {t.note}
+            </p>
+            {/* Decorative quote mark */}
+            <p
+              className="mt-2 font-serif leading-none select-none"
+              style={{ fontSize: "5rem", color: "#e8ddd4", lineHeight: 1 }}
+              aria-hidden
+            >
+              &ldquo;
+            </p>
+            <p
+              className="-mt-3 font-serif italic leading-8"
+              style={{
+                fontSize: "clamp(1rem, 2vw, 1.2rem)",
+                color: "#3d2b1f",
+              }}
+            >
+              {guest.anecdote}
+            </p>
           </div>
-          <div className="relative h-44 overflow-hidden rounded-2xl border border-stone-200">
-            <Image src={PHOTOS.venue} alt="Guest note" fill className="object-cover" />
+          <div className="relative hidden h-full min-h-[220px] md:block">
+            <Image
+              src={PHOTOS.venue}
+              alt="Guest note"
+              fill
+              className="object-cover"
+            />
           </div>
         </section>
       ) : null}
 
-      {/* Gallery */}
-      <section className="rounded-3xl border border-stone-200 bg-white/90 p-6 shadow-sm">
-        <h2 className="font-serif text-3xl text-stone-900">{t.gallery}</h2>
-        <p className="mt-1 text-sm text-stone-600">{t.galleryHint}</p>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-          {([PHOTOS.moment1, PHOTOS.moment2, PHOTOS.moment3, PHOTOS.moment4] as const).map(
-            (src, index) => (
-              <div
-                key={src}
-                className={`relative h-40 overflow-hidden rounded-2xl border border-stone-200 shadow-sm ${
-                  index % 2 === 0 ? "md:-rotate-1" : "md:rotate-1"
-                }`}
-              >
-                <Image src={src} alt={`Gallery ${index + 1}`} fill className="object-cover" />
-              </div>
-            ),
-          )}
+      {/* ── Gallery ── */}
+      <section
+        className="overflow-hidden rounded-3xl p-6 sm:p-8"
+        style={{
+          border: "1px solid #e8ddd4",
+          background: "rgba(251, 244, 232, 0.9)",
+        }}
+      >
+        <div className="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <p
+              className="text-xs uppercase tracking-[0.28em]"
+              style={{ color: "#c9a0a0" }}
+            >
+              ✦ &nbsp; Ana &amp; Joshua
+            </p>
+            <h2
+              className="mt-1 font-serif italic"
+              style={{ fontSize: "clamp(1.8rem, 3vw, 2.4rem)", color: "#2d1f14" }}
+            >
+              {t.gallery}
+            </h2>
+          </div>
+          <p className="text-sm" style={{ color: "#8a7060" }}>
+            {t.galleryHint}
+          </p>
+        </div>
+
+        {/* 2+2 asymmetric grid */}
+        <div className="grid grid-cols-12 gap-3">
+          <div
+            className="relative col-span-7 overflow-hidden rounded-2xl"
+            style={{ height: "clamp(160px, 24vw, 320px)" }}
+          >
+            <Image
+              src={PHOTOS.moment1}
+              alt="Gallery 1"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div
+            className="relative col-span-5 overflow-hidden rounded-2xl"
+            style={{ height: "clamp(160px, 24vw, 320px)" }}
+          >
+            <Image
+              src={PHOTOS.moment2}
+              alt="Gallery 2"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div
+            className="relative col-span-5 overflow-hidden rounded-2xl"
+            style={{ height: "clamp(120px, 16vw, 210px)" }}
+          >
+            <Image
+              src={PHOTOS.moment3}
+              alt="Gallery 3"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div
+            className="relative col-span-7 overflow-hidden rounded-2xl"
+            style={{ height: "clamp(120px, 16vw, 210px)" }}
+          >
+            <Image
+              src={PHOTOS.moment4}
+              alt="Gallery 4"
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
       </section>
 
-      {/* Event timeline */}
+      {/* ── Event timeline ── */}
       {events.length > 0 ? (
-        <section className="grid gap-4 sm:grid-cols-2">
+        <section className="grid gap-3 sm:grid-cols-2">
           {events.map((event) => (
             <article
               key={event.id}
-              className="rounded-2xl border border-stone-200 bg-white p-5"
+              className="rounded-2xl p-6"
+              style={{
+                border: "1px solid #e8ddd4",
+                background: "rgba(251, 244, 232, 0.9)",
+              }}
             >
-              <p className="text-xs uppercase tracking-[0.18em] text-stone-500">
-                {event.dayLabel} · {event.eventDate}
+              <p
+                className="text-xs uppercase tracking-[0.28em]"
+                style={{ color: "#c9a0a0" }}
+              >
+                {event.dayLabel}
               </p>
-              <h2 className="mt-2 font-serif text-2xl text-stone-900">{event.title}</h2>
-              <p className="mt-2 text-sm leading-7 text-stone-700">
-                {event.time} {t.at} {event.location}
+              <p
+                className="mt-0.5 text-xs uppercase tracking-[0.22em]"
+                style={{ color: "#b08878" }}
+              >
+                {event.eventDate}
+              </p>
+              <div
+                className="my-3 h-px"
+                style={{ background: "#e8ddd4" }}
+              />
+              <h2
+                className="font-serif italic"
+                style={{ fontSize: "clamp(1.4rem, 2.5vw, 1.9rem)", color: "#2d1f14" }}
+              >
+                {event.title}
+              </h2>
+              <p
+                className="mt-2 text-sm"
+                style={{ color: "#6b5444" }}
+              >
+                {event.time}
+                <span
+                  className="mx-2 inline-block"
+                  style={{ color: "#c9a0a0" }}
+                  aria-hidden
+                >
+                  ·
+                </span>
+                {event.location}
               </p>
             </article>
           ))}
         </section>
       ) : null}
 
-      {/* RSVP */}
-      <section className="rounded-3xl border border-stone-800 bg-stone-800 p-8 text-stone-50">
-        <h2 className="font-serif text-4xl">{t.rsvp}</h2>
-        <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-200">{t.rsvpText}</p>
-        <RsvpForm guests={groupGuests} existingRsvps={existingRsvps} locale={locale} />
+      {/* ── RSVP ── */}
+      <section
+        className="rounded-3xl p-8 sm:p-10"
+        style={{ background: "#2d1f14" }}
+      >
+        <p
+          className="text-xs uppercase tracking-[0.32em]"
+          style={{ color: "#c9a0a0" }}
+        >
+          ✦ &nbsp; Ana &amp; Joshua
+        </p>
+        <h2
+          className="mt-2 font-serif italic"
+          style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "#f5ece0" }}
+        >
+          {t.rsvp}
+        </h2>
+        <p
+          className="mt-3 max-w-2xl text-sm leading-7"
+          style={{ color: "#c4a898" }}
+        >
+          {t.rsvpText}
+        </p>
+        <RsvpForm
+          guests={groupGuests}
+          existingRsvps={existingRsvps}
+          locale={locale}
+        />
       </section>
     </div>
   );

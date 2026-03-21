@@ -22,7 +22,7 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
       ? {
           selectAll: "Por favor selecciona asistencia para cada persona.",
           submitError: "No pudimos guardar tu confirmación. Inténtalo otra vez.",
-          submitOk: "Confirmación guardada.",
+          submitOk: "Confirmación guardada. ¡Nos vemos pronto!",
           yes: "Asistiré",
           no: "No podré",
           notes: "Necesidades alimenticias o mensaje",
@@ -33,7 +33,7 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
       : {
           selectAll: "Please select attendance for each person.",
           submitError: "Unable to submit RSVP. Please try again.",
-          submitOk: "RSVP saved successfully.",
+          submitOk: "RSVP saved. We can't wait to see you!",
           yes: "Attending",
           no: "Declining",
           notes: "Dietary needs or message",
@@ -54,6 +54,7 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
     ),
   );
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [statusOk, setStatusOk] = useState(false);
   const [saving, setSaving] = useState(false);
 
   function setAttendance(guestId: string, value: RsvpAttendance) {
@@ -76,6 +77,7 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
     const allSelected = guests.every((g) => states[g.id]?.attendance !== "");
     if (!allSelected) {
       setStatusMessage(t.selectAll);
+      setStatusOk(false);
       return;
     }
 
@@ -98,65 +100,109 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
 
     if (!response.ok) {
       setStatusMessage(t.submitError);
+      setStatusOk(false);
       return;
     }
 
     setStatusMessage(t.submitOk);
+    setStatusOk(true);
   }
 
   return (
-    <form onSubmit={onSubmit} className="mt-6 space-y-4">
+    <form onSubmit={onSubmit} className="mt-8 space-y-4">
       {guests.map((guest) => {
         const state = states[guest.id];
         return (
           <div
             key={guest.id}
-            className="rounded-2xl border border-stone-700 bg-stone-900/40 p-5"
+            className="rounded-2xl p-5"
+            style={{
+              border: "1px solid rgba(201,160,160,0.2)",
+              background: "rgba(255,255,255,0.05)",
+            }}
           >
-            <p className="text-sm font-medium text-stone-100">
+            <p
+              className="font-serif italic"
+              style={{ fontSize: "1.1rem", color: "#f0e0d0" }}
+            >
               {guest.firstName} {guest.lastName}
             </p>
-            <div className="mt-3 flex gap-2">
+
+            <div className="mt-4 flex gap-2">
+              {/* Attending */}
               <button
                 type="button"
                 onClick={() => setAttendance(guest.id, "yes")}
-                className={`rounded-full px-4 py-2 text-xs uppercase tracking-[0.16em] transition ${
+                className="rounded-full px-5 py-2 text-xs uppercase tracking-[0.18em] transition"
+                style={
                   state?.attendance === "yes"
-                    ? "border border-emerald-600 bg-emerald-700 text-white"
-                    : "border border-stone-600 text-stone-300 hover:bg-stone-700"
-                }`}
+                    ? {
+                        background: "#2d6a4f",
+                        border: "1px solid #3d8a68",
+                        color: "#d4f1e4",
+                      }
+                    : {
+                        background: "transparent",
+                        border: "1px solid rgba(201,160,160,0.35)",
+                        color: "#c4a898",
+                      }
+                }
               >
                 {t.yes}
               </button>
+
+              {/* Declining */}
               <button
                 type="button"
                 onClick={() => setAttendance(guest.id, "no")}
-                className={`rounded-full px-4 py-2 text-xs uppercase tracking-[0.16em] transition ${
+                className="rounded-full px-5 py-2 text-xs uppercase tracking-[0.18em] transition"
+                style={
                   state?.attendance === "no"
-                    ? "border border-stone-500 bg-stone-600 text-white"
-                    : "border border-stone-600 text-stone-300 hover:bg-stone-700"
-                }`}
+                    ? {
+                        background: "#6b3a3a",
+                        border: "1px solid #8a5050",
+                        color: "#f0d4d4",
+                      }
+                    : {
+                        background: "transparent",
+                        border: "1px solid rgba(201,160,160,0.35)",
+                        color: "#c4a898",
+                      }
+                }
               >
                 {t.no}
               </button>
             </div>
+
             <textarea
               rows={2}
               value={state?.notes ?? ""}
               onChange={(e) => setNotes(guest.id, e.target.value)}
               placeholder={t.notes}
-              className="mt-3 w-full rounded-xl border border-stone-700 bg-stone-900/40 px-4 py-2 text-sm text-stone-100 placeholder:text-stone-500 outline-none ring-stone-600 transition focus:ring-1"
+              className="mt-4 w-full rounded-xl px-4 py-3 text-sm outline-none transition"
+              style={{
+                border: "1px solid rgba(201,160,160,0.2)",
+                background: "rgba(255,255,255,0.04)",
+                color: "#f0e0d0",
+              }}
             />
           </div>
         );
       })}
 
+      {/* Status message */}
       {statusMessage ? (
-        <p className="text-xs uppercase tracking-[0.18em] text-stone-300">
+        <p
+          className="text-xs uppercase tracking-[0.2em]"
+          style={{ color: statusOk ? "#7ec8a0" : "#e0a0a0" }}
+        >
           {statusMessage}
         </p>
       ) : (
-        <p className="text-xs uppercase tracking-[0.18em] text-stone-400">
+        <p
+          className="text-xs uppercase tracking-[0.2em]"
+          style={{ color: "#8a7060" }}
+        >
           {t.hint}
         </p>
       )}
@@ -164,7 +210,12 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
       <button
         type="submit"
         disabled={saving}
-        className="rounded-full border border-stone-200 px-7 py-3 text-xs uppercase tracking-[0.2em] text-stone-50 transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-70"
+        className="rounded-full px-8 py-3 text-xs uppercase tracking-[0.24em] transition disabled:cursor-not-allowed disabled:opacity-60"
+        style={{
+          border: "1px solid #c9a0a0",
+          color: "#f0e0d0",
+          background: "transparent",
+        }}
       >
         {saving ? t.saving : t.submit}
       </button>
