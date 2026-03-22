@@ -10,6 +10,30 @@ const NOTIFY_EMAIL = "Joshua.duarte151@gmail.com";
 // something like: "wedding@yourdomain.com"
 const FROM_EMAIL = "onboarding@resend.dev";
 
+export async function sendMessageNotification(input: {
+  guestName: string;
+  message: string;
+}): Promise<void> {
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: NOTIFY_EMAIL,
+      subject: `💌 New note from ${input.guestName}`,
+      html: `
+        <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; color: #292524;">
+          <h2 style="font-size: 22px; margin-bottom: 8px;">A note from ${input.guestName}</h2>
+          <p style="font-size: 14px; color: #78716c; margin-bottom: 16px;">Left via the guest portal</p>
+          <div style="border-left: 3px solid #c9a0a0; padding: 12px 16px; background: #fdf8f4; border-radius: 4px; font-size: 15px; line-height: 1.7; font-style: italic;">
+            ${input.message}
+          </div>
+        </div>
+      `,
+    });
+  } catch (err) {
+    console.error("Failed to send message notification email:", err);
+  }
+}
+
 export async function sendRsvpNotification(input: {
   guestName: string;
   inviteCode: string;

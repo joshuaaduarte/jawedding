@@ -13,11 +13,12 @@ export default async function NewGuestPage() {
     const email = (formData.get("email") as string).trim();
     const group = (formData.get("group") as GuestGroup) ?? "all";
     const anecdote = (formData.get("anecdote") as string).trim();
+    const anecdoteEs = (formData.get("anecdoteEs") as string).trim();
     const inviteCode = (formData.get("inviteCode") as string).trim().toUpperCase();
 
     if (!firstName || !lastName || !inviteCode) return;
 
-    await createGuest({ firstName, lastName, email, group, anecdote, inviteCode });
+    await createGuest({ firstName, lastName, email, group, anecdote, anecdoteEs, inviteCode });
     redirect("/admin/guests");
   }
 
@@ -92,16 +93,30 @@ export default async function NewGuestPage() {
             </div>
             <div className="sm:col-span-2">
               <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
-                Personal Note / Anecdote
+                Personal Note (English)
               </label>
               <p className="mt-1 text-xs text-stone-500">
-                This message is shown to the guest when they log in to the portal.
+                Shown to the guest on their portal home page.
               </p>
               <textarea
                 name="anecdote"
                 rows={4}
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
                 placeholder="Write a personal note for this guest..."
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
+                Personal Note (Spanish — optional)
+              </label>
+              <p className="mt-1 text-xs text-stone-500">
+                Shown when the guest views in Spanish. Leave blank to fall back to the English note.
+              </p>
+              <textarea
+                name="anecdoteEs"
+                rows={4}
+                className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
+                placeholder="Escribe una nota personal en español..."
               />
             </div>
           </div>

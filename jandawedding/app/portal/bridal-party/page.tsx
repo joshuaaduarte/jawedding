@@ -116,14 +116,46 @@ export default async function BridalPartyPage() {
       ? {
           label: "Nuestra Boda",
           title: "La Familia De La Boda",
-          intro:
-            "Las personas especiales que estarán con nosotros el día más importante de nuestras vidas.",
+          intro: "Las personas especiales que estarán con nosotros el día más importante de nuestras vidas.",
+          moh: "Damas de Honor",
+          mohRole: "Dama de Honor",
+          bridesmaids: "Damas",
+          bridesmaidRole: "Dama",
+          bestMen: "Padrinos de Honor",
+          bestManRole: "Padrino de Honor",
+          groomsmen: "Chambelanes",
+          groomsmanRole: "Chambelán",
+          familyLabel: "Familia",
+          parents: "Padres",
+          godparents: "Padrinos",
+          godparentRole: "Padrino / Madrina",
+          ceremony: "Ceremonia",
+          officiants: "Celebrantes",
+          deaconRole: "Diácono",
+          deaconsWife: "Esposa del Diácono",
+          priestRole: "Sacerdote",
         }
       : {
           label: "Our Wedding",
           title: "The Wedding Party",
-          intro:
-            "The special people standing beside us on the most important day of our lives.",
+          intro: "The special people standing beside us on the most important day of our lives.",
+          moh: "Maids of Honor",
+          mohRole: "Maid of Honor",
+          bridesmaids: "Bridesmaids",
+          bridesmaidRole: "Bridesmaid",
+          bestMen: "Best Men",
+          bestManRole: "Best Man",
+          groomsmen: "Groomsmen",
+          groomsmanRole: "Groomsman",
+          familyLabel: "Family",
+          parents: "Parents",
+          godparents: "Godparents",
+          godparentRole: "Godparent",
+          ceremony: "Ceremony",
+          officiants: "Officiants",
+          deaconRole: "Deacon",
+          deaconsWife: "Deacon's Wife",
+          priestRole: "Priest",
         };
 
   return (
@@ -135,15 +167,15 @@ export default async function BridalPartyPage() {
         <p className="mt-4 max-w-2xl text-sm leading-7 text-stone-600">{t.intro}</p>
       </section>
 
-      <Section label="Bridesmaids" title="Maids of Honor" people={MAIDS_OF_HONOR} role="Maid of Honor" />
-      <Section label="Bridesmaids" title="Bridesmaids" people={BRIDESMAIDS} role="Bridesmaid" />
-      <Section label="Groomsmen" title="Best Men" people={BEST_MEN} role="Best Man" />
-      <Section label="Groomsmen" title="Groomsmen" people={GROOMSMEN} role="Groomsman" />
+      <Section label={t.moh} title={t.moh} people={MAIDS_OF_HONOR} role={t.mohRole} />
+      <Section label={t.bridesmaids} title={t.bridesmaids} people={BRIDESMAIDS} role={t.bridesmaidRole} />
+      <Section label={t.bestMen} title={t.bestMen} people={BEST_MEN} role={t.bestManRole} />
+      <Section label={t.groomsmen} title={t.groomsmen} people={GROOMSMEN} role={t.groomsmanRole} />
 
       <section className="space-y-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Family</p>
-          <h2 className="mt-1 font-serif text-3xl text-stone-900">Parents</h2>
+          <p className="text-xs uppercase tracking-[0.2em] text-stone-500">{t.familyLabel}</p>
+          <h2 className="mt-1 font-serif text-3xl text-stone-900">{t.parents}</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {PARENTS.map((person, i) => (
@@ -152,8 +184,8 @@ export default async function BridalPartyPage() {
         </div>
       </section>
 
-      <Section label="Family" title="Godparents" people={GODPARENTS} role="Godparent" />
-      <Section label="Ceremony" title="Officiants" people={CLERGY} />
+      <Section label={t.familyLabel} title={t.godparents} people={GODPARENTS} role={t.godparentRole} />
+      <Section label={t.ceremony} title={t.officiants} people={CLERGY} />
     </div>
   );
 }

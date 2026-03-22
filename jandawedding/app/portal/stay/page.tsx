@@ -6,17 +6,23 @@ const STAYS = [
   {
     name: "Monterey Plaza Hotel & Spa",
     area: "Cannery Row",
+    areaEs: "Cannery Row",
     note: "Waterfront option, around 15 minutes from venue.",
+    noteEs: "Opción frente al mar, a unos 15 minutos del venue.",
   },
   {
     name: "Portola Hotel & Spa",
     area: "Downtown Monterey",
+    areaEs: "Centro de Monterey",
     note: "Great central option for groups and families.",
+    noteEs: "Excelente opción central para grupos y familias.",
   },
   {
     name: "Carmel Mission Inn",
     area: "Carmel-by-the-Sea",
+    areaEs: "Carmel junto al Mar",
     note: "Close to Carmel restaurants and a short drive to events.",
+    noteEs: "Cerca de los restaurantes de Carmel y a poca distancia de los eventos.",
   },
 ];
 
@@ -62,9 +68,11 @@ export default async function StayPage() {
           >
             <h3 className="font-serif text-2xl text-stone-900">{stay.name}</h3>
             <p className="mt-1 text-xs uppercase tracking-[0.16em] text-stone-500">
-              {stay.area}
+              {locale === "es" ? stay.areaEs : stay.area}
             </p>
-            <p className="mt-2 text-sm text-stone-700">{stay.note}</p>
+            <p className="mt-2 text-sm text-stone-700">
+              {locale === "es" ? stay.noteEs : stay.note}
+            </p>
           </article>
         ))}
       </div>

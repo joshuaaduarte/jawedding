@@ -5,19 +5,27 @@ import { getLocale } from "@/lib/locale";
 const THINGS_TO_DO = [
   {
     title: "17-Mile Drive",
+    titleEs: "Ruta de las 17 Millas",
     note: "Scenic coastal route with iconic ocean viewpoints.",
+    noteEs: "Ruta costera escénica con icónicos miradores al océano.",
   },
   {
     title: "Monterey Bay Aquarium",
+    titleEs: "Acuario de la Bahía de Monterey",
     note: "Perfect for family guests and ocean lovers.",
+    noteEs: "Perfecto para familias y amantes del océano.",
   },
   {
     title: "Carmel-by-the-Sea",
+    titleEs: "Carmel junto al Mar",
     note: "Walkable village with shops, coffee, and beach access.",
+    noteEs: "Pintoresco pueblo a pie con tiendas, cafés y acceso a la playa.",
   },
   {
     title: "Point Lobos",
+    titleEs: "Punta Lobos",
     note: "Great coastal trails and quick morning hikes.",
+    noteEs: "Excelentes senderos costeros para caminatas matutinas.",
   },
 ];
 
@@ -61,8 +69,12 @@ export default async function ThingsToDoPage() {
             key={item.title}
             className="rounded-2xl border border-stone-200 bg-stone-50 p-5"
           >
-            <h3 className="font-serif text-2xl text-stone-900">{item.title}</h3>
-            <p className="mt-2 text-sm text-stone-700">{item.note}</p>
+            <h3 className="font-serif text-2xl text-stone-900">
+              {locale === "es" ? item.titleEs : item.title}
+            </h3>
+            <p className="mt-2 text-sm text-stone-700">
+              {locale === "es" ? item.noteEs : item.note}
+            </p>
           </article>
         ))}
       </div>

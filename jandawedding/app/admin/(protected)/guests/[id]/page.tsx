@@ -18,6 +18,7 @@ export default async function EditGuestPage({ params }: Props) {
       email: (formData.get("email") as string).trim(),
       group: (formData.get("group") as GuestGroup),
       anecdote: (formData.get("anecdote") as string).trim(),
+      anecdoteEs: (formData.get("anecdoteEs") as string).trim(),
       inviteCode: (formData.get("inviteCode") as string).trim().toUpperCase(),
     });
     redirect("/admin/guests");
@@ -105,7 +106,7 @@ export default async function EditGuestPage({ params }: Props) {
             </div>
             <div className="sm:col-span-2">
               <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
-                Personal Note / Anecdote
+                Personal Note (English)
               </label>
               <textarea
                 name="anecdote"
@@ -113,6 +114,21 @@ export default async function EditGuestPage({ params }: Props) {
                 defaultValue={guest.anecdote}
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
                 placeholder="Write a personal note for this guest..."
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
+                Personal Note (Spanish — optional)
+              </label>
+              <p className="mt-1 text-xs text-stone-500">
+                Leave blank to fall back to the English note.
+              </p>
+              <textarea
+                name="anecdoteEs"
+                rows={4}
+                defaultValue={guest.anecdoteEs}
+                className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
+                placeholder="Escribe una nota personal en español..."
               />
             </div>
           </div>

@@ -9,8 +9,7 @@ export default async function Home() {
     locale === "es"
       ? {
           saveDate: "Reserva La Fecha",
-          guestLogin: "Ingreso Invitados",
-          adminLogin: "Ingreso Admin",
+          guestLogin: "Ingresar",
           weMarried: "Nos vamos a casar.",
           date: "Fecha",
           mainLocation: "Ubicación",
@@ -23,7 +22,6 @@ export default async function Home() {
       : {
           saveDate: "Save The Date",
           guestLogin: "Guest Login",
-          adminLogin: "Admin Login",
           weMarried: "We are getting married.",
           date: "Date",
           mainLocation: "Location",
@@ -65,13 +63,6 @@ export default async function Home() {
               style={{ background: "#2d1f14" }}
             >
               {t.guestLogin}
-            </a>
-            <a
-              href="/admin/login"
-              className="text-xs uppercase tracking-[0.2em] transition hover:opacity-60"
-              style={{ color: "#8a7060" }}
-            >
-              {t.adminLogin}
             </a>
           </div>
         </header>

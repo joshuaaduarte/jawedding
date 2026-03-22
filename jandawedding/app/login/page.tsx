@@ -25,6 +25,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           mismatch: "El código y apellido no coinciden. Inténtalo otra vez.",
           continue: "Continuar",
           back: "Volver al sitio público",
+          adminAccess: "Acceso administrador",
         }
       : {
           guestPortal: "Guest Portal",
@@ -36,6 +37,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           mismatch: "Invite code and last name did not match. Try again.",
           continue: "Continue",
           back: "Back to public page",
+          adminAccess: "Admin access",
         };
 
   const params = await searchParams;
@@ -207,13 +209,22 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               </button>
             </form>
 
-            <Link
-              href="/"
-              className="mt-7 inline-block text-xs uppercase tracking-[0.2em] transition hover:opacity-60"
-              style={{ color: "#8a7060" }}
-            >
-              ← {t.back}
-            </Link>
+            <div className="mt-7 flex items-center justify-between gap-4">
+              <Link
+                href="/"
+                className="text-xs uppercase tracking-[0.2em] transition hover:opacity-60"
+                style={{ color: "#8a7060" }}
+              >
+                ← {t.back}
+              </Link>
+              <Link
+                href="/admin/login"
+                className="text-xs uppercase tracking-[0.18em] transition hover:opacity-60"
+                style={{ color: "#c4b8b0" }}
+              >
+                {t.adminAccess}
+              </Link>
+            </div>
           </div>
         </div>
       </div>
