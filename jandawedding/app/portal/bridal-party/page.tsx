@@ -9,64 +9,70 @@ const MAIDS_OF_HONOR = [
   {
     name: "Name Placeholder",
     bio: "Write a short bio or note about this person here.",
+    bioEs: "Escribe una nota corta sobre esta persona aquí.",
   },
   {
     name: "Name Placeholder",
     bio: "Write a short bio or note about this person here.",
+    bioEs: "Escribe una nota corta sobre esta persona aquí.",
   },
 ];
 
 const BRIDESMAIDS = [
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 
 const BEST_MEN = [
   {
     name: "Name Placeholder",
     bio: "Write a short bio or note about this person here.",
+    bioEs: "Escribe una nota corta sobre esta persona aquí.",
   },
   {
     name: "Name Placeholder",
     bio: "Write a short bio or note about this person here.",
+    bioEs: "Escribe una nota corta sobre esta persona aquí.",
   },
 ];
 
 const GROOMSMEN = [
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 
 const PARENTS = [
-  { name: "Name Placeholder", role: "Joshua's Parent", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", role: "Joshua's Parent", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", role: "Ana's Parent", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", role: "Ana's Parent", bio: "Write a short bio or note about this person here." },
+  { name: "Name Placeholder", role: "Joshua's Parent", roleEs: "Padre de Joshua", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", role: "Joshua's Parent", roleEs: "Padre de Joshua", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", role: "Ana's Parent", roleEs: "Padre de Ana", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", role: "Ana's Parent", roleEs: "Padre de Ana", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 
 const GODPARENTS = [
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 
 const CLERGY = [
-  { name: "Name Placeholder", role: "Deacon", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", role: "Deacon's Wife", bio: "Write a short bio or note about this person here." },
-  { name: "Name Placeholder", role: "Priest", bio: "Write a short bio or note about this person here." },
+  { name: "Name Placeholder", role: "Deacon", roleEs: "Diácono", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", role: "Deacon's Wife", roleEs: "Esposa del Diácono", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Name Placeholder", role: "Priest", roleEs: "Sacerdote", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 // ──────────────────────────────────────────────────────────────────────────────
 
-type Person = { name: string; bio: string; role?: string };
+type Person = { name: string; bio: string; bioEs?: string; role?: string; roleEs?: string };
 
-function PersonCard({ person, role }: { person: Person; role?: string }) {
+function PersonCard({ person, role, locale }: { person: Person; role?: string; locale: string }) {
+  const bio = locale === "es" ? (person.bioEs ?? person.bio) : person.bio;
+  const displayRole = locale === "es" ? (person.roleEs ?? person.role ?? role) : (person.role ?? role);
   return (
     <article className="flex flex-col gap-4 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:flex-row sm:items-start">
       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-stone-200">
@@ -74,10 +80,10 @@ function PersonCard({ person, role }: { person: Person; role?: string }) {
       </div>
       <div className="min-w-0">
         <p className="text-xs uppercase tracking-[0.16em] text-stone-500">
-          {person.role ?? role}
+          {displayRole}
         </p>
         <h3 className="mt-1 font-serif text-xl text-stone-900">{person.name}</h3>
-        <p className="mt-2 text-sm leading-6 text-stone-600">{person.bio}</p>
+        <p className="mt-2 text-sm leading-6 text-stone-600">{bio}</p>
       </div>
     </article>
   );
@@ -88,11 +94,13 @@ function Section({
   title,
   people,
   role,
+  locale,
 }: {
   label: string;
   title: string;
   people: Person[];
   role?: string;
+  locale: string;
 }) {
   return (
     <section className="space-y-4">
@@ -102,7 +110,7 @@ function Section({
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         {people.map((person, i) => (
-          <PersonCard key={i} person={person} role={role} />
+          <PersonCard key={i} person={person} role={role} locale={locale} />
         ))}
       </div>
     </section>
@@ -167,10 +175,10 @@ export default async function BridalPartyPage() {
         <p className="mt-4 max-w-2xl text-sm leading-7 text-stone-600">{t.intro}</p>
       </section>
 
-      <Section label={t.moh} title={t.moh} people={MAIDS_OF_HONOR} role={t.mohRole} />
-      <Section label={t.bridesmaids} title={t.bridesmaids} people={BRIDESMAIDS} role={t.bridesmaidRole} />
-      <Section label={t.bestMen} title={t.bestMen} people={BEST_MEN} role={t.bestManRole} />
-      <Section label={t.groomsmen} title={t.groomsmen} people={GROOMSMEN} role={t.groomsmanRole} />
+      <Section label={t.moh} title={t.moh} people={MAIDS_OF_HONOR} role={t.mohRole} locale={locale} />
+      <Section label={t.bridesmaids} title={t.bridesmaids} people={BRIDESMAIDS} role={t.bridesmaidRole} locale={locale} />
+      <Section label={t.bestMen} title={t.bestMen} people={BEST_MEN} role={t.bestManRole} locale={locale} />
+      <Section label={t.groomsmen} title={t.groomsmen} people={GROOMSMEN} role={t.groomsmanRole} locale={locale} />
 
       <section className="space-y-4">
         <div>
@@ -179,13 +187,13 @@ export default async function BridalPartyPage() {
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {PARENTS.map((person, i) => (
-            <PersonCard key={i} person={person} />
+            <PersonCard key={i} person={person} locale={locale} />
           ))}
         </div>
       </section>
 
-      <Section label={t.familyLabel} title={t.godparents} people={GODPARENTS} role={t.godparentRole} />
-      <Section label={t.ceremony} title={t.officiants} people={CLERGY} />
+      <Section label={t.familyLabel} title={t.godparents} people={GODPARENTS} role={t.godparentRole} locale={locale} />
+      <Section label={t.ceremony} title={t.officiants} people={CLERGY} locale={locale} />
     </div>
   );
 }

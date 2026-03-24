@@ -18,6 +18,11 @@ export default async function Home() {
           photoWall: "Nuestros Momentos",
           photoHint: "Una colección de nuestros recuerdos favoritos.",
           rsvpDeadline: "Fecha Límite de RSVP",
+          heroDate: "4 de Septiembre de 2026 · Monterey, California",
+          dateValue: "Viernes, 4 de Septiembre de 2026",
+          ceremonyValue: "Carmel Mission Basilica · 2:00 PM",
+          receptionValue: "Fairview Laguna Seca · 5:00 PM",
+          rsvpDeadlineValue: "31 de Julio de 2026",
         }
       : {
           saveDate: "Save The Date",
@@ -30,6 +35,11 @@ export default async function Home() {
           photoWall: "Our Moments",
           photoHint: "A collection of our favourite memories together.",
           rsvpDeadline: "RSVP Deadline",
+          heroDate: "September 4, 2026 · Monterey, California",
+          dateValue: "Friday, September 4, 2026",
+          ceremonyValue: "Carmel Mission Basilica · 2:00 PM",
+          receptionValue: "Fairview Laguna Seca · 5:00 PM",
+          rsvpDeadlineValue: "July 31, 2026",
         };
 
   return (
@@ -108,7 +118,7 @@ export default async function Home() {
               className="mb-4 text-xs uppercase tracking-[0.32em]"
               style={{ color: "#c9a8a0" }}
             >
-              September 4, 2026 &nbsp;·&nbsp; Monterey, California
+              {t.heroDate}
             </p>
             <h1
               className="font-serif italic leading-[1.06] text-white"
@@ -122,10 +132,10 @@ export default async function Home() {
         {/* ── Info cards ── */}
         <section className="mt-5 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
           {[
-            { label: t.date, value: "Friday, September 4, 2026" },
-            { label: t.ceremony, value: "Carmel Mission Basilica · 2:00 PM" },
-            { label: t.reception, value: "Fairview Laguna Seca · 5:00 PM" },
-            { label: t.rsvpDeadline, value: "July 31, 2026" },
+            { label: t.date, value: t.dateValue },
+            { label: t.ceremony, value: t.ceremonyValue },
+            { label: t.reception, value: t.receptionValue },
+            { label: t.rsvpDeadline, value: t.rsvpDeadlineValue },
           ].map((card) => (
             <article
               key={card.label}
@@ -261,7 +271,7 @@ export default async function Home() {
           className="mt-16 text-center text-xs uppercase tracking-[0.38em]"
           style={{ color: "#c9a0a0" }}
         >
-          Ana Lima &amp; Joshua Duarte &nbsp;·&nbsp; September 4, 2026
+          Ana Lima &amp; Joshua Duarte &nbsp;·&nbsp; {locale === "es" ? "4 de Septiembre de 2026" : "September 4, 2026"}
         </p>
       </div>
     </main>
