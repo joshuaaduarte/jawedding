@@ -163,7 +163,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                   type="text"
                   required
                   placeholder="AJD-0001"
-                  className="w-full rounded-xl px-4 py-3 text-sm outline-none ring-[#c9a0a0] transition focus:ring-1"
+                  className="w-full rounded-xl px-4 py-3 text-base md:text-sm outline-none ring-[#c9a0a0] transition focus:ring-1"
                   style={{
                     border: "1px solid #e0d2c4",
                     background: "rgba(251, 244, 232, 0.7)",
@@ -185,7 +185,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                   name="lastName"
                   type="text"
                   required
-                  className="w-full rounded-xl px-4 py-3 text-sm outline-none ring-[#c9a0a0] transition focus:ring-1"
+                  className="w-full rounded-xl px-4 py-3 text-base md:text-sm outline-none ring-[#c9a0a0] transition focus:ring-1"
                   style={{
                     border: "1px solid #e0d2c4",
                     background: "rgba(251, 244, 232, 0.7)",
@@ -202,7 +202,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
               <button
                 type="submit"
-                className="mt-2 w-full rounded-full py-3 text-xs uppercase tracking-[0.24em] text-white transition hover:opacity-85"
+                className="mt-2 w-full appearance-none rounded-full py-3 text-xs uppercase tracking-[0.24em] text-white transition hover:opacity-85"
                 style={{ background: "#2d1f14" }}
               >
                 {t.continue}
