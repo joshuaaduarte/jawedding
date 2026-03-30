@@ -1,5 +1,3 @@
-import Image from "next/image";
-import { PHOTOS } from "@/lib/photos";
 import { getLocale } from "@/lib/locale";
 
 // ─── Fill in each person's name and bio below ─────────────────────────────────
@@ -61,10 +59,13 @@ const GODPARENTS = [
   { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 
-const CLERGY = [
+const PRIEST = [
+  { name: "Name Placeholder", role: "Priest", roleEs: "Sacerdote", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+];
+
+const DEACONS = [
   { name: "Name Placeholder", role: "Deacon", roleEs: "Diácono", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
   { name: "Name Placeholder", role: "Deacon's Wife", roleEs: "Esposa del Diácono", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", role: "Priest", roleEs: "Sacerdote", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 // ──────────────────────────────────────────────────────────────────────────────
 
@@ -74,10 +75,7 @@ function PersonCard({ person, role, locale }: { person: Person; role?: string; l
   const bio = locale === "es" ? (person.bioEs ?? person.bio) : person.bio;
   const displayRole = locale === "es" ? (person.roleEs ?? person.role ?? role) : (person.role ?? role);
   return (
-    <article className="flex flex-col gap-4 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:flex-row sm:items-start">
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-stone-200">
-        <Image src={PHOTOS.portrait} alt={person.name} fill className="object-cover" />
-      </div>
+    <article className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
       <div className="min-w-0">
         <p className="text-xs uppercase tracking-[0.16em] text-stone-500">
           {displayRole}
@@ -175,10 +173,24 @@ export default async function BridalPartyPage() {
         <p className="mt-4 max-w-2xl text-sm leading-7 text-stone-600">{t.intro}</p>
       </section>
 
-      <Section label={t.moh} title={t.moh} people={MAIDS_OF_HONOR} role={t.mohRole} locale={locale} />
-      <Section label={t.bridesmaids} title={t.bridesmaids} people={BRIDESMAIDS} role={t.bridesmaidRole} locale={locale} />
-      <Section label={t.bestMen} title={t.bestMen} people={BEST_MEN} role={t.bestManRole} locale={locale} />
-      <Section label={t.groomsmen} title={t.groomsmen} people={GROOMSMEN} role={t.groomsmanRole} locale={locale} />
+      <section className="space-y-4">
+        <div>
+          <p className="text-xs uppercase tracking-[0.2em] text-stone-500">{t.ceremony}</p>
+          <h2 className="mt-1 font-serif text-3xl text-stone-900">{t.officiants}</h2>
+        </div>
+        {/* Priest — centered when on a wide grid */}
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="md:col-span-2 md:mx-auto md:w-1/2">
+            <PersonCard person={PRIEST[0]} locale={locale} />
+          </div>
+        </div>
+        {/* Deacon + Deacon's Wife */}
+        <div className="grid gap-4 md:grid-cols-2">
+          {DEACONS.map((person, i) => (
+            <PersonCard key={i} person={person} locale={locale} />
+          ))}
+        </div>
+      </section>
 
       <section className="space-y-4">
         <div>
@@ -193,7 +205,10 @@ export default async function BridalPartyPage() {
       </section>
 
       <Section label={t.familyLabel} title={t.godparents} people={GODPARENTS} role={t.godparentRole} locale={locale} />
-      <Section label={t.ceremony} title={t.officiants} people={CLERGY} locale={locale} />
+      <Section label={t.moh} title={t.moh} people={MAIDS_OF_HONOR} role={t.mohRole} locale={locale} />
+      <Section label={t.bridesmaids} title={t.bridesmaids} people={BRIDESMAIDS} role={t.bridesmaidRole} locale={locale} />
+      <Section label={t.bestMen} title={t.bestMen} people={BEST_MEN} role={t.bestManRole} locale={locale} />
+      <Section label={t.groomsmen} title={t.groomsmen} people={GROOMSMEN} role={t.groomsmanRole} locale={locale} />
     </div>
   );
 }
