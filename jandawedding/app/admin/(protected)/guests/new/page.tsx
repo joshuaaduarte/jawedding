@@ -89,6 +89,7 @@ export default async function NewGuestPage() {
                 <option value="family">Family</option>
                 <option value="bridal-party">Bridal Party (+ Rehearsal)</option>
                 <option value="parents">Parents (+ Rehearsal)</option>
+                <option value="couple">Couple — Ana &amp; Joshua</option>
               </select>
             </div>
             <div className="sm:col-span-2">

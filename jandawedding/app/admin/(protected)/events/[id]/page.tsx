@@ -4,12 +4,13 @@ import { getEventById, updateEvent, deleteEvent } from "@/lib/guest-data";
 
 type Props = { params: Promise<{ id: string }> };
 
-const ALL_GROUPS = ["all", "family", "bridal-party", "parents"] as const;
+const ALL_GROUPS = ["all", "family", "bridal-party", "parents", "couple"] as const;
 const GROUP_LABELS: Record<string, string> = {
   all: "All Guests",
   family: "Family",
   "bridal-party": "Bridal Party",
   parents: "Parents",
+  couple: "Couple (Ana & Joshua)",
 };
 
 export default async function EditEventPage({ params }: Props) {
@@ -23,6 +24,7 @@ export default async function EditEventPage({ params }: Props) {
     "use server";
     const groups = ALL_GROUPS.filter((g) => formData.get(`group_${g}`) === "on");
 
+    const rawDatetime = (formData.get("startDatetime") as string).trim();
     await updateEvent(id, {
       dayLabel: (formData.get("dayLabel") as string).trim(),
       eventDate: (formData.get("eventDate") as string).trim(),
@@ -31,6 +33,7 @@ export default async function EditEventPage({ params }: Props) {
       location: (formData.get("location") as string).trim(),
       groups: groups.length > 0 ? groups : ["all"],
       sortOrder: parseInt(formData.get("sortOrder") as string, 10) || currentSortOrder,
+      startDatetime: rawDatetime || null,
     });
     redirect("/admin/events");
   }
@@ -110,6 +113,20 @@ export default async function EditEventPage({ params }: Props) {
                 defaultValue={event.location}
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm outline-none ring-stone-700/30 transition focus:ring-2"
               />
+            </div>
+            <div>
+              <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
+                Start Date &amp; Time (Pacific)
+              </label>
+              <input
+                name="startDatetime"
+                type="datetime-local"
+                defaultValue={event.startDatetime?.slice(0, 16) ?? ""}
+                className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm outline-none ring-stone-700/30 transition focus:ring-2"
+              />
+              <p className="mt-1 text-xs text-stone-400">
+                Used for Add to Calendar links. Leave blank if TBD.
+              </p>
             </div>
             <div>
               <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">

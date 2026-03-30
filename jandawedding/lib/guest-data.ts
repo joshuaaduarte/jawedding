@@ -1,6 +1,6 @@
 import { getSupabase } from "@/lib/supabase";
 
-export type GuestGroup = "all" | "family" | "bridal-party" | "parents";
+export type GuestGroup = "all" | "family" | "bridal-party" | "parents" | "couple";
 
 export type Guest = {
   id: string;
@@ -22,6 +22,7 @@ export type WeddingEvent = {
   location: string;
   groups: string[];
   sortOrder: number;
+  startDatetime: string | null;
 };
 
 // ---------- helpers ----------
@@ -53,6 +54,7 @@ function mapEvent(row: Record<string, unknown>): WeddingEvent {
     location: row.location as string,
     groups: (row.groups as string[]) ?? ["all"],
     sortOrder: (row.sort_order as number) ?? 0,
+    startDatetime: (row.start_datetime as string) ?? null,
   };
 }
 
@@ -239,6 +241,7 @@ export async function createEvent(input: {
   location: string;
   groups: string[];
   sortOrder: number;
+  startDatetime?: string | null;
 }): Promise<WeddingEvent> {
   const { data, error } = await getSupabase()
     .from("events")
@@ -250,6 +253,7 @@ export async function createEvent(input: {
       location: input.location,
       groups: input.groups,
       sort_order: input.sortOrder,
+      start_datetime: input.startDatetime ?? null,
     })
     .select()
     .single();
@@ -267,6 +271,7 @@ export async function updateEvent(
     location: string;
     groups: string[];
     sortOrder: number;
+    startDatetime: string | null;
   }>,
 ): Promise<WeddingEvent> {
   const patch: Record<string, unknown> = {};
@@ -277,6 +282,7 @@ export async function updateEvent(
   if (input.location !== undefined) patch.location = input.location;
   if (input.groups !== undefined) patch.groups = input.groups;
   if (input.sortOrder !== undefined) patch.sort_order = input.sortOrder;
+  if ("startDatetime" in input) patch.start_datetime = input.startDatetime ?? null;
 
   const { data, error } = await getSupabase()
     .from("events")
