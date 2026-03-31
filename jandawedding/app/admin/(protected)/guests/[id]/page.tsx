@@ -20,6 +20,7 @@ export default async function EditGuestPage({ params }: Props) {
       anecdote: (formData.get("anecdote") as string).trim(),
       anecdoteEs: (formData.get("anecdoteEs") as string).trim(),
       inviteCode: (formData.get("inviteCode") as string).trim().toUpperCase(),
+      displayName: (formData.get("displayName") as string).trim(),
     });
     redirect("/admin/guests");
   }
@@ -87,6 +88,18 @@ export default async function EditGuestPage({ params }: Props) {
                 required
                 defaultValue={guest.inviteCode}
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 font-mono text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
+                Display Name <span className="normal-case text-stone-400">(optional — overrides first name in greeting)</span>
+              </label>
+              <input
+                name="displayName"
+                type="text"
+                defaultValue={guest.displayName}
+                className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
+                placeholder='e.g. "The Lima Family" or "Ana &amp; Jorge"'
               />
             </div>
             <div className="sm:col-span-2">

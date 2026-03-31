@@ -11,6 +11,7 @@ export type Guest = {
   group: GuestGroup;
   anecdote: string;
   anecdoteEs: string;
+  displayName: string;
 };
 
 export type WeddingEvent = {
@@ -41,6 +42,7 @@ function mapGuest(row: Record<string, unknown>): Guest {
     group: (row.group as GuestGroup) ?? "all",
     anecdote: (row.anecdote as string) ?? "",
     anecdoteEs: (row.anecdote_es as string) ?? "",
+    displayName: (row.display_name as string) ?? "",
   };
 }
 
@@ -125,6 +127,7 @@ export async function createGuest(input: {
   anecdote: string;
   anecdoteEs?: string;
   inviteCode: string;
+  displayName?: string;
 }): Promise<Guest> {
   const { data, error } = await getSupabase()
     .from("guests")
@@ -136,6 +139,7 @@ export async function createGuest(input: {
       anecdote: input.anecdote,
       anecdote_es: input.anecdoteEs ?? "",
       invite_code: input.inviteCode,
+      display_name: input.displayName ?? "",
     })
     .select()
     .single();
@@ -153,6 +157,7 @@ export async function updateGuest(
     anecdote: string;
     anecdoteEs: string;
     inviteCode: string;
+    displayName: string;
   }>,
 ): Promise<Guest> {
   const patch: Record<string, unknown> = {};
@@ -163,6 +168,7 @@ export async function updateGuest(
   if (input.anecdote !== undefined) patch.anecdote = input.anecdote;
   if (input.anecdoteEs !== undefined) patch.anecdote_es = input.anecdoteEs;
   if (input.inviteCode !== undefined) patch.invite_code = input.inviteCode;
+  if (input.displayName !== undefined) patch.display_name = input.displayName;
 
   const { data, error } = await getSupabase()
     .from("guests")

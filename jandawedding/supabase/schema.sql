@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS guests (
   email         TEXT NOT NULL DEFAULT '',
   "group"       TEXT NOT NULL DEFAULT 'all',
   anecdote      TEXT NOT NULL DEFAULT '',
+  display_name  TEXT NOT NULL DEFAULT '',
   created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
