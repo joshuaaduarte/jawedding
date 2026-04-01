@@ -5,67 +5,67 @@ import { getLocale } from "@/lib/locale";
 
 const MAIDS_OF_HONOR = [
   {
-    name: "Name Placeholder",
-    bio: "Write a short bio or note about this person here.",
+    name: "Ana Sofia Bremer",
+    bio: "Ana Sofia Bremer is Ana’s college roommate and best friend, and they have shared a deep and lasting bond for the past seven years. From their time together at Texas A&M to all the milestones and challenges since, their friendship has always been full of laughter, love, and unwavering support. They have shared countless memories and have treated each other like sisters through every moment. Ana and Joshua are so grateful to have Annie in their lives as a lifelong friend and as someone who has always supported and celebrated their relationship.",
     bioEs: "Escribe una nota corta sobre esta persona aquí.",
   },
   {
-    name: "Name Placeholder",
-    bio: "Write a short bio or note about this person here.",
+    name: "Meera Dasai",
+    bio: "Meera Desai is Ana’s childhood best friend, and the two have shared a special and unbreakable bond since they met in the 5th grade. Over the past 15 years, they have grown up together through nearly every stage of life; from school days at Centerville to attending Texas A&M. Even when they went to different schools in high school, their friendship only grew stronger as they made every effort to stay close. Their friendship, full of laughter, love, and countless shared memories, has stood strong through every stage of life. Meera has always been a caring and steadfast presence in Ana’s life, and Ana and Joshua feel so grateful to have her by their side to celebrate this special day.",
     bioEs: "Escribe una nota corta sobre esta persona aquí.",
   },
 ];
 
 const BRIDESMAIDS = [
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Maria", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Evelyn Williams", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Linsy", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Ana Calleja", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Andrea Lima", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Miranda", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 
 const BEST_MEN = [
   {
-    name: "Name Placeholder",
+    name: "Roberto Gonzalez",
     bio: "Write a short bio or note about this person here.",
     bioEs: "Escribe una nota corta sobre esta persona aquí.",
   },
   {
-    name: "Name Placeholder",
+    name: "Pavan Reddy",
     bio: "Write a short bio or note about this person here.",
     bioEs: "Escribe una nota corta sobre esta persona aquí.",
   },
 ];
 
 const GROOMSMEN = [
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Jonathan Gaytan", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Eddie Gracia", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Jose Lima", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Dustin Acosta", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Luis Garduno", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Abraham Diaz", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 
 const PARENTS = [
-  { name: "Name Placeholder", role: "Joshua's Parent", roleEs: "Padre de Joshua", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", role: "Joshua's Parent", roleEs: "Padre de Joshua", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", role: "Ana's Parent", roleEs: "Padre de Ana", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", role: "Ana's Parent", roleEs: "Padre de Ana", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Francisco Duarte", role: "Joshua's Parent", roleEs: "Padre de Joshua", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Julissa Duarte", role: "Joshua's Parent", roleEs: "Padre de Joshua", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Roberto Lima", role: "Ana's Parent", roleEs: "Padre de Ana", bio: "Roberto Lima is Ana’s beloved father, who passed away in 2023. Known for his kindness, humor, and incredibly generous heart, Roberto was the most selfless and hardworking person Ana has ever known. He loved his family above everything and made countless sacrifices to support and care for them. Roberto quickly grew to love Joshua when they met and always supported their relationship. Ana misses her father deeply and especially will on their big day, but she knows he will be with them in spirit. He was Ana’s best friend, and his love and example will remain with her for the rest of her life.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Juanita Lima", role: "Ana's Parent", roleEs: "Padre de Ana", bio: "​​Juanita Lima is Ana’s beloved mother and one of the most selfless and inspiring people she knows. A woman of deep faith, strength, and wisdom, Juanita has always guided her family with love and care while staying actively involved in her Catholic community. Ana is who she is today because of her mother’s example, support, and encouragement. From the moment Joshua entered their lives five years ago, Juanita welcomed him with open arms and has loved and supported their relationship as one of her own. Ana and Joshua are incredibly grateful for her constant love and guidance.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 
 const GODPARENTS = [
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Ovidio Lima", bio: "Ovidio Lima is Ana’s uncle, and has been a loving presence in her life since childhood. Known for his humor, and caring heart, Ovidio has always made family time special, especially during visits to Los Angeles. He warmly welcomed Joshua into the family and has continued to support Ana and Joshua with encouragement and guidance. Ana and Joshua are grateful for his love and for the important role he has played in their lives.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Oneida Lima", bio: "Oneida Lima is Ana’s aunt and her mom’s oldest sister, who has been a loving presence throughout Ana’s life. Known for her kindness, humor, and caring nature, Oneida has always made time spent together special, especially during visits to Los Angeles. She warmly welcomed Joshua into the family and is always looking out for Ana and Joshua, keeping them in her prayers and supporting their relationship. Ana and Joshua are grateful for her love and the role she has played in their family.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 
 const PRIEST = [
-  { name: "Name Placeholder", role: "Priest", roleEs: "Sacerdote", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Father Rafal Duda", role: "Priest", roleEs: "Sacerdote", bio: "Father Rafal Duda has been a spiritual guide to Ana and Joshua over the past two years. Through his guidance, wisdom, and encouragement, he has helped them grow both individually and as a couple in their faith. Ana and Joshua are deeply grateful for his support and are honored to have him play such a meaningful role in their wedding day.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 
 const DEACONS = [
-  { name: "Name Placeholder", role: "Deacon", roleEs: "Diácono", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Name Placeholder", role: "Deacon's Wife", roleEs: "Esposa del Diácono", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Alex Ebarle", role: "Deacon", roleEs: "Diácono", bio: "Alex Ebarle has been a wonderful spiritual guide and mentor to Ana and Joshua over the past two years. As a deacon at St. Edward’s Catholic Church in Newark, CA, Alex has helped prepare them for marriage and supported Joshua on his journey to converting to Catholicism. Known for his humor, wisdom, and selfless spirit, Alex has had a profound impact on their spiritual growth and has always been willing to lend a helping hand.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Linda Ebarle", role: "Deacon's Wife", roleEs: "Esposa del Diácono", bio: "Over the past year, Linda Ebarle has been a meaningful spiritual guide to Ana and Joshua as they prepared for marriage. Her kindness, humor, and ability to truly listen have made her a wonderful mentor and friend. Ana and Joshua are grateful for the encouragement and wisdom she has shared with them along the way.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
 ];
 // ──────────────────────────────────────────────────────────────────────────────
 
