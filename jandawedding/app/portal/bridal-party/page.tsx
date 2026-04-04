@@ -57,33 +57,91 @@ const BEST_MEN = [
 ];
 
 const GROOMSMEN = [
-  { name: "Jonathan Gaytan", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Eddie Gracia", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Jose Lima", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Dustin Acosta", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Luis Garduno", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Abraham Diaz", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
+  { name: "Jonathan Gaytan", 
+    bio: "Write a short bio or note about this person here.", 
+    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+  },
+  { name: "Eddie Gracia", 
+    bio: "Write a short bio or note about this person here.", 
+    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+  },
+  { name: "Jose Lima", 
+    bio: "Write a short bio or note about this person here.", 
+    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+  },
+  { name: "Dustin Acosta", 
+    bio: "Write a short bio or note about this person here.", 
+    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+  },
+  { name: "Luis Garduno", 
+    bio: "Write a short bio or note about this person here.", 
+    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+  },
+  { name: "Abraham Diaz", 
+    bio: "Write a short bio or note about this person here.", 
+    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+  },
 ];
 
 const PARENTS = [
-  { name: "Francisco Duarte", role: "Joshua's Parent", roleEs: "Padre de Joshua", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Julissa Duarte", role: "Joshua's Parent", roleEs: "Padre de Joshua", bio: "Write a short bio or note about this person here.", bioEs: "Escribe una nota corta sobre esta persona aquí." },
-  { name: "Roberto Lima", role: "Ana's Parent", roleEs: "Padre de Ana", bio: "Roberto Lima is Ana’s beloved father, who passed away in 2023. Known for his kindness, humor, and incredibly generous heart, Roberto was the most selfless and hardworking person Ana has ever known. He loved his family above everything and made countless sacrifices to support and care for them. Roberto quickly grew to love Joshua when they met and always supported their relationship. Ana misses her father deeply and especially will on their big day, but she knows he will be with them in spirit. He was Ana’s best friend, and his love and example will remain with her for the rest of her life.", bioEs: "Roberto Lima era el amado padre de Ana, quien falleció en 2023. Conocido por su bondad, su sentido del humor y su increíble generosidad, Roberto fue la persona más desinteresada y trabajadora que Ana haya conocido. Amaba a su familia por encima de todo e hizo innumerables sacrificios para apoyarlos y cuidarlos. Roberto se enamoró rápidamente de Joshua cuando se conocieron y siempre apoyó su relación. Ana extraña profundamente a su padre, especialmente en su gran día, pero sabe que estará con ellos en espíritu. Él fue el mejor amigo de Ana, y su amor y ejemplo la acompañarán por el resto de su vida." },
-  { name: "Juanita Lima", role: "Ana's Parent", roleEs: "Padre de Ana", bio: "​​Juanita Lima is Ana’s beloved mother and one of the most selfless and inspiring people she knows. A woman of deep faith, strength, and wisdom, Juanita has always guided her family with love and care while staying actively involved in her Catholic community. Ana is who she is today because of her mother’s example, support, and encouragement. From the moment Joshua entered their lives five years ago, Juanita welcomed him with open arms and has loved and supported their relationship as one of her own. Ana and Joshua are incredibly grateful for her constant love and guidance.", bioEs: "Juanita Lima es la querida madre de Ana y una de las personas más altruistas e inspiradoras que conoce. Mujer de profunda fe, fortaleza y sabiduría, Juanita siempre ha guiado a su familia con amor y cariño, participando activamente en su comunidad católica. Ana es quien es hoy gracias al ejemplo, el apoyo y el aliento de su madre. Desde que Joshua llegó a sus vidas hace cinco años, Juanita lo recibió con los brazos abiertos y ha amado y apoyado su relación como si fuera la suya propia. Ana y Joshua están inmensamente agradecidos por su amor y guía constantes." },
+  { name: "Francisco Duarte", 
+    role: "Joshua's Parent", 
+    roleEs: "Padre de Joshua", bio: "Write a short bio or note about this person here.", 
+    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+  },
+  { name: "Julissa Duarte", 
+    role: "Joshua's Parent", 
+    roleEs: "Padre de Joshua", 
+    bio: "Write a short bio or note about this person here.", 
+    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+  },
+  { name: "Roberto Lima", 
+    role: "Ana's Parent", 
+    roleEs: "Padre de Ana", 
+    bio: "Roberto Lima is Ana’s beloved father, who passed away in 2023. Known for his kindness, humor, and incredibly generous heart, Roberto was the most selfless and hardworking person Ana has ever known. He loved his family above everything and made countless sacrifices to support and care for them. Roberto quickly grew to love Joshua when they met and always supported their relationship. Ana misses her father deeply and especially will on their big day, but she knows he will be with them in spirit. He was Ana’s best friend, and his love and example will remain with her for the rest of her life.", 
+    bioEs: "Roberto Lima era el amado padre de Ana, quien falleció en 2023. Conocido por su bondad, su sentido del humor y su increíble generosidad, Roberto fue la persona más desinteresada y trabajadora que Ana haya conocido. Amaba a su familia por encima de todo e hizo innumerables sacrificios para apoyarlos y cuidarlos. Roberto se enamoró rápidamente de Joshua cuando se conocieron y siempre apoyó su relación. Ana extraña profundamente a su padre, especialmente en su gran día, pero sabe que estará con ellos en espíritu. Él fue el mejor amigo de Ana, y su amor y ejemplo la acompañarán por el resto de su vida." 
+  },
+  { name: "Juanita Lima", 
+    role: "Ana's Parent", 
+    roleEs: "Padre de Ana", 
+    bio: "​​Juanita Lima is Ana’s beloved mother and one of the most selfless and inspiring people she knows. A woman of deep faith, strength, and wisdom, Juanita has always guided her family with love and care while staying actively involved in her Catholic community. Ana is who she is today because of her mother’s example, support, and encouragement. From the moment Joshua entered their lives five years ago, Juanita welcomed him with open arms and has loved and supported their relationship as one of her own. Ana and Joshua are incredibly grateful for her constant love and guidance.", 
+    bioEs: "Juanita Lima es la querida madre de Ana y una de las personas más altruistas e inspiradoras que conoce. Mujer de profunda fe, fortaleza y sabiduría, Juanita siempre ha guiado a su familia con amor y cariño, participando activamente en su comunidad católica. Ana es quien es hoy gracias al ejemplo, el apoyo y el aliento de su madre. Desde que Joshua llegó a sus vidas hace cinco años, Juanita lo recibió con los brazos abiertos y ha amado y apoyado su relación como si fuera la suya propia. Ana y Joshua están inmensamente agradecidos por su amor y guía constantes." 
+  },
 ];
 
 const GODPARENTS = [
-  { name: "Ovidio Lima", bio: "Ovidio Lima is Ana’s uncle, and has been a loving presence in her life since childhood. Known for his humor, and caring heart, Ovidio has always made family time special, especially during visits to Los Angeles. He warmly welcomed Joshua into the family and has continued to support Ana and Joshua with encouragement and guidance. Ana and Joshua are grateful for his love and for the important role he has played in their lives.", bioEs: "Ovidio Lima es el tío de Ana y ha sido una presencia cariñosa en su vida desde la infancia. Conocido por su sentido del humor y su gran corazón, Ovidio siempre ha hecho que los momentos en familia sean especiales, sobre todo durante las visitas a Los Ángeles. Recibió a Joshua con mucho cariño en la familia y ha seguido apoyando a Ana y a Joshua con ánimo y orientación. Ana y Joshua están agradecidos por su amor y por el importante papel que ha desempeñado en sus vidas." },
-  { name: "Oneida Lima", bio: "Oneida Lima is Ana’s aunt and her mom’s oldest sister, who has been a loving presence throughout Ana’s life. Known for her kindness, humor, and caring nature, Oneida has always made time spent together special, especially during visits to Los Angeles. She warmly welcomed Joshua into the family and is always looking out for Ana and Joshua, keeping them in her prayers and supporting their relationship. Ana and Joshua are grateful for her love and the role she has played in their family.", bioEs: "Oneida Lima es la tía de Ana y la hermana mayor de su madre, y ha sido una presencia amorosa a lo largo de la vida de Ana. Conocida por su bondad, su sentido del humor y su naturaleza cariñosa, Oneida siempre ha hecho que el tiempo que pasan juntos sea especial, sobre todo durante sus visitas a Los Ángeles. Recibió a Joshua con mucho cariño en la familia y siempre está pendiente de Ana y Joshua, orando por ellos y apoyando su relación. Ana y Joshua están agradecidos por su amor y por el papel que ha desempeñado en su familia." },
+  { name: "Ovidio Lima", 
+    bio: "Ovidio Lima is Ana’s uncle, and has been a loving presence in her life since childhood. Known for his humor, and caring heart, Ovidio has always made family time special, especially during visits to Los Angeles. He warmly welcomed Joshua into the family and has continued to support Ana and Joshua with encouragement and guidance. Ana and Joshua are grateful for his love and for the important role he has played in their lives.", 
+    bioEs: "Ovidio Lima es el tío de Ana y ha sido una presencia cariñosa en su vida desde la infancia. Conocido por su sentido del humor y su gran corazón, Ovidio siempre ha hecho que los momentos en familia sean especiales, sobre todo durante las visitas a Los Ángeles. Recibió a Joshua con mucho cariño en la familia y ha seguido apoyando a Ana y a Joshua con ánimo y orientación. Ana y Joshua están agradecidos por su amor y por el importante papel que ha desempeñado en sus vidas." 
+  },
+  { name: "Oneida Lima", 
+    bio: "Oneida Lima is Ana’s aunt and her mom’s oldest sister, who has been a loving presence throughout Ana’s life. Known for her kindness, humor, and caring nature, Oneida has always made time spent together special, especially during visits to Los Angeles. She warmly welcomed Joshua into the family and is always looking out for Ana and Joshua, keeping them in her prayers and supporting their relationship. Ana and Joshua are grateful for her love and the role she has played in their family.", 
+    bioEs: "Oneida Lima es la tía de Ana y la hermana mayor de su madre, y ha sido una presencia amorosa a lo largo de la vida de Ana. Conocida por su bondad, su sentido del humor y su naturaleza cariñosa, Oneida siempre ha hecho que el tiempo que pasan juntos sea especial, sobre todo durante sus visitas a Los Ángeles. Recibió a Joshua con mucho cariño en la familia y siempre está pendiente de Ana y Joshua, orando por ellos y apoyando su relación. Ana y Joshua están agradecidos por su amor y por el papel que ha desempeñado en su familia." 
+  },
 ];
 
 const PRIEST = [
-  { name: "Father Rafal Duda", role: "Priest", roleEs: "Sacerdote", bio: "Father Rafal Duda has been a spiritual guide to Ana and Joshua over the past two years. Through his guidance, wisdom, and encouragement, he has helped them grow both individually and as a couple in their faith. Ana and Joshua are deeply grateful for his support and are honored to have him play such a meaningful role in their wedding day.", bioEs: "El padre Rafal Duda ha sido un guía espiritual para Ana y Joshua durante los últimos dos años. Con su guía, sabiduría y aliento, los ha ayudado a crecer tanto individualmente como en su fe como pareja. Ana y Joshua están profundamente agradecidos por su apoyo y se sienten honrados de que haya desempeñado un papel tan significativo en el día de su boda." },
+  { name: "Father Rafal Duda", 
+    role: "Priest", 
+    roleEs: "Sacerdote", 
+    bio: "Father Rafal Duda has been a spiritual guide to Ana and Joshua over the past two years. Through his guidance, wisdom, and encouragement, he has helped them grow both individually and as a couple in their faith. Ana and Joshua are deeply grateful for his support and are honored to have him play such a meaningful role in their wedding day.", 
+    bioEs: "El padre Rafal Duda ha sido un guía espiritual para Ana y Joshua durante los últimos dos años. Con su guía, sabiduría y aliento, los ha ayudado a crecer tanto individualmente como en su fe como pareja. Ana y Joshua están profundamente agradecidos por su apoyo y se sienten honrados de que haya desempeñado un papel tan significativo en el día de su boda." 
+  },
 ];
 
 const DEACONS = [
-  { name: "Alex Ebarle", role: "Deacon", roleEs: "Diácono", bio: "Alex Ebarle has been a wonderful spiritual guide and mentor to Ana and Joshua over the past two years. As a deacon at St. Edward’s Catholic Church in Newark, CA, Alex has helped prepare them for marriage and supported Joshua on his journey to converting to Catholicism. Known for his humor, wisdom, and selfless spirit, Alex has had a profound impact on their spiritual growth and has always been willing to lend a helping hand.", bioEs: "Alex Ebarle ha sido un maravilloso guía espiritual y mentor para Ana y Joshua durante los últimos dos años. Como diácono en la Iglesia Católica de San Eduardo en Newark, California, Alex los ayudó a prepararse para el matrimonio y apoyó a Joshua en su camino hacia la conversión al catolicismo. Conocido por su humor, sabiduría y espíritu altruista, Alex ha tenido un profundo impacto en su crecimiento espiritual y siempre ha estado dispuesto a brindarles su ayuda." },
-  { name: "Linda Ebarle", role: "Deacon's Wife", roleEs: "Esposa del Diácono", bio: "Over the past year, Linda Ebarle has been a meaningful spiritual guide to Ana and Joshua as they prepared for marriage. Her kindness, humor, and ability to truly listen have made her a wonderful mentor and friend. Ana and Joshua are grateful for the encouragement and wisdom she has shared with them along the way.", bioEs: "Durante el último año, Linda Ebarle ha sido una valiosa guía espiritual para Ana y Joshua mientras se preparaban para el matrimonio. Su amabilidad, su sentido del humor y su capacidad de escuchar con atención la han convertido en una maravillosa mentora y amiga. Ana y Joshua están agradecidos por el aliento y la sabiduría que ha compartido con ellos a lo largo de este camino." },
+  { name: "Alex Ebarle", 
+    role: "Deacon", 
+    roleEs: "Diácono", 
+    bio: "Alex Ebarle has been a wonderful spiritual guide and mentor to Ana and Joshua over the past two years. As a deacon at St. Edward’s Catholic Church in Newark, CA, Alex has helped prepare them for marriage and supported Joshua on his journey to converting to Catholicism. Known for his humor, wisdom, and selfless spirit, Alex has had a profound impact on their spiritual growth and has always been willing to lend a helping hand.", 
+    bioEs: "Alex Ebarle ha sido un maravilloso guía espiritual y mentor para Ana y Joshua durante los últimos dos años. Como diácono en la Iglesia Católica de San Eduardo en Newark, California, Alex los ayudó a prepararse para el matrimonio y apoyó a Joshua en su camino hacia la conversión al catolicismo. Conocido por su humor, sabiduría y espíritu altruista, Alex ha tenido un profundo impacto en su crecimiento espiritual y siempre ha estado dispuesto a brindarles su ayuda." 
+  },
+  { name: "Linda Ebarle", 
+    role: "Deacon's Wife", 
+    roleEs: "Esposa del Diácono", 
+    bio: "Over the past year, Linda Ebarle has been a meaningful spiritual guide to Ana and Joshua as they prepared for marriage. Her kindness, humor, and ability to truly listen have made her a wonderful mentor and friend. Ana and Joshua are grateful for the encouragement and wisdom she has shared with them along the way.", 
+    bioEs: "Durante el último año, Linda Ebarle ha sido una valiosa guía espiritual para Ana y Joshua mientras se preparaban para el matrimonio. Su amabilidad, su sentido del humor y su capacidad de escuchar con atención la han convertido en una maravillosa mentora y amiga. Ana y Joshua están agradecidos por el aliento y la sabiduría que ha compartido con ellos a lo largo de este camino." 
+  },
 ];
 // ──────────────────────────────────────────────────────────────────────────────
 
