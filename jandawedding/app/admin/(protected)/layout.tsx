@@ -5,6 +5,7 @@ import { isAdminAuthenticated } from "@/lib/auth";
 const NAV = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/guests", label: "Guests" },
+  { href: "/admin/groups", label: "Groups" },
   { href: "/admin/events", label: "Events" },
   { href: "/admin/messages", label: "Messages" },
 ];

@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getNextInviteCode, createGuest, type GuestGroup } from "@/lib/guest-data";
+import { getNextInviteCode, createGuest, getAllGroups, type GuestGroup } from "@/lib/guest-data";
 import { AdminSubmitButton } from "@/components/admin-submit-button";
 
 export default async function NewGuestPage() {
-  const nextCode = await getNextInviteCode();
+  const [nextCode, groups] = await Promise.all([getNextInviteCode(), getAllGroups()]);
 
   async function handleCreate(formData: FormData) {
     "use server";
@@ -97,11 +97,9 @@ export default async function NewGuestPage() {
                 defaultValue="all"
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
               >
-                <option value="all">All Guests (Ceremony + Reception)</option>
-                <option value="family">Family</option>
-                <option value="bridal-party">Bridal Party (+ Rehearsal)</option>
-                <option value="parents">Parents (+ Rehearsal)</option>
-                <option value="couple">Couple — Ana &amp; Joshua</option>
+                {groups.map((g) => (
+                  <option key={g.name} value={g.name}>{g.label}</option>
+                ))}
               </select>
             </div>
             <div className="sm:col-span-2">

@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { getGuestById, updateGuest, deleteGuest, type GuestGroup } from "@/lib/guest-data";
+import { getGuestById, updateGuest, deleteGuest, getAllGroups, type GuestGroup } from "@/lib/guest-data";
 import { AdminSubmitButton } from "@/components/admin-submit-button";
 
 type Props = { params: Promise<{ id: string }> };
 
 export default async function EditGuestPage({ params }: Props) {
   const { id } = await params;
-  const guest = await getGuestById(id);
+  const [guest, groups] = await Promise.all([getGuestById(id), getAllGroups()]);
   if (!guest) notFound();
 
   async function handleUpdate(formData: FormData) {
@@ -111,11 +111,9 @@ export default async function EditGuestPage({ params }: Props) {
                 defaultValue={guest.group}
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
               >
-                <option value="all">All Guests (Ceremony + Reception)</option>
-                <option value="family">Family</option>
-                <option value="bridal-party">Bridal Party (+ Rehearsal)</option>
-                <option value="parents">Parents (+ Rehearsal)</option>
-                <option value="couple">Couple — Ana &amp; Joshua</option>
+                {groups.map((g) => (
+                  <option key={g.name} value={g.name}>{g.label}</option>
+                ))}
               </select>
             </div>
             <div className="sm:col-span-2">

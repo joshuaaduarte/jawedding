@@ -1,6 +1,13 @@
 import { getSupabase } from "@/lib/supabase";
 
-export type GuestGroup = "all" | "family" | "bridal-party" | "parents" | "couple";
+export type GuestGroup = string;
+
+export type Group = {
+  id: string;
+  name: string;
+  label: string;
+  sortOrder: number;
+};
 
 export type Guest = {
   id: string;
@@ -27,6 +34,15 @@ export type WeddingEvent = {
 };
 
 // ---------- helpers ----------
+
+function mapGroup(row: Record<string, unknown>): Group {
+  return {
+    id: row.id as string,
+    name: row.name as string,
+    label: row.label as string,
+    sortOrder: row.sort_order as number,
+  };
+}
 
 function normalizeCode(value: string) {
   return value.trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -210,13 +226,65 @@ export async function getGuestsByInviteCode(inviteCode: string): Promise<Guest[]
     .map(mapGuest);
 }
 
+// ---------- group queries ----------
+
+export async function getAllGroups(): Promise<Group[]> {
+  const { data } = await getSupabase()
+    .from("groups")
+    .select("*")
+    .order("sort_order", { ascending: true });
+  return (data ?? []).map(mapGroup);
+}
+
+export async function createGroup(input: { name: string; label: string }): Promise<Group> {
+  const { data: existing } = await getSupabase()
+    .from("groups")
+    .select("sort_order")
+    .order("sort_order", { ascending: false })
+    .limit(1);
+  const maxOrder = (existing?.[0]?.sort_order as number) ?? 0;
+
+  const { data, error } = await getSupabase()
+    .from("groups")
+    .insert({ name: input.name, label: input.label, sort_order: maxOrder + 1 })
+    .select()
+    .single();
+  if (error) throw error;
+  return mapGroup(data);
+}
+
+export async function updateGroupLabel(id: string, label: string): Promise<Group> {
+  const { data, error } = await getSupabase()
+    .from("groups")
+    .update({ label })
+    .eq("id", id)
+    .select()
+    .single();
+  if (error) throw error;
+  return mapGroup(data);
+}
+
+export async function deleteGroup(name: string): Promise<void> {
+  const { error } = await getSupabase().from("groups").delete().eq("name", name);
+  if (error) throw error;
+}
+
+export async function countGuestsInGroup(group: string): Promise<number> {
+  const { count, error } = await getSupabase()
+    .from("guests")
+    .select("id", { count: "exact", head: true })
+    .eq("group", group);
+  if (error) throw error;
+  return count ?? 0;
+}
+
 // ---------- event queries ----------
 
 export async function getAllEvents(): Promise<WeddingEvent[]> {
   const { data } = await getSupabase()
     .from("events")
     .select("*")
-    .order("sort_order", { ascending: true });
+    .order("start_datetime", { ascending: true, nullsFirst: false });
   return (data ?? []).map(mapEvent);
 }
 
@@ -224,7 +292,7 @@ export async function eventsForGuestGroup(group: GuestGroup): Promise<WeddingEve
   const { data } = await getSupabase()
     .from("events")
     .select("*")
-    .order("sort_order", { ascending: true });
+    .order("start_datetime", { ascending: true, nullsFirst: false });
   return (data ?? [])
     .map(mapEvent)
     .filter((e) => e.groups.includes("all") || e.groups.includes(group));
@@ -246,7 +314,7 @@ export async function createEvent(input: {
   time: string;
   location: string;
   groups: string[];
-  sortOrder: number;
+  sortOrder?: number;
   startDatetime?: string | null;
 }): Promise<WeddingEvent> {
   const { data, error } = await getSupabase()
@@ -258,7 +326,7 @@ export async function createEvent(input: {
       time: input.time,
       location: input.location,
       groups: input.groups,
-      sort_order: input.sortOrder,
+      sort_order: input.sortOrder ?? 0,
       start_datetime: input.startDatetime ?? null,
     })
     .select()

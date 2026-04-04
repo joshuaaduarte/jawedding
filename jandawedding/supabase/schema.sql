@@ -12,21 +12,23 @@ CREATE TABLE IF NOT EXISTS guests (
   email         TEXT NOT NULL DEFAULT '',
   "group"       TEXT NOT NULL DEFAULT 'all',
   anecdote      TEXT NOT NULL DEFAULT '',
+  anecdote_es   TEXT NOT NULL DEFAULT '',
   display_name  TEXT NOT NULL DEFAULT '',
   created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 -- Events table (fully managed from the admin panel)
 CREATE TABLE IF NOT EXISTS events (
-  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  day_label    TEXT NOT NULL,
-  event_date   TEXT NOT NULL,
-  title        TEXT NOT NULL,
-  time         TEXT NOT NULL,
-  location     TEXT NOT NULL,
-  groups       TEXT[] NOT NULL DEFAULT ARRAY['all'],
-  sort_order   INTEGER NOT NULL DEFAULT 0,
-  created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  day_label      TEXT NOT NULL,
+  event_date     TEXT NOT NULL,
+  title          TEXT NOT NULL,
+  time           TEXT NOT NULL,
+  location       TEXT NOT NULL,
+  groups         TEXT[] NOT NULL DEFAULT ARRAY['all'],
+  sort_order     INTEGER NOT NULL DEFAULT 0,
+  start_datetime TIMESTAMPTZ,
+  created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 -- RSVPs table (one per guest, upsert on re-submit)
@@ -56,6 +58,23 @@ CREATE TABLE IF NOT EXISTS carpool_entries (
   notes            TEXT NOT NULL DEFAULT '',
   created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+-- Groups table (source of truth for guest groups / event visibility)
+CREATE TABLE IF NOT EXISTS groups (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name       TEXT UNIQUE NOT NULL,
+  label      TEXT NOT NULL,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO groups (name, label, sort_order) VALUES
+  ('all',          'All Guests',            1),
+  ('family',       'Family',                2),
+  ('bridal-party', 'Bridal Party',          3),
+  ('parents',      'Parents',               4),
+  ('couple',       'Couple (Ana & Joshua)', 5)
+ON CONFLICT DO NOTHING;
 
 -- ============================================================
 -- Seed: Initial wedding events

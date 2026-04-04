@@ -1,28 +1,20 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { getEventById, updateEvent, deleteEvent } from "@/lib/guest-data";
+import { getEventById, updateEvent, deleteEvent, getAllGroups } from "@/lib/guest-data";
 
 type Props = { params: Promise<{ id: string }> };
 
-const ALL_GROUPS = ["all", "family", "bridal-party", "parents", "couple"] as const;
-const GROUP_LABELS: Record<string, string> = {
-  all: "All Guests",
-  family: "Family",
-  "bridal-party": "Bridal Party",
-  parents: "Parents",
-  couple: "Couple (Ana & Joshua)",
-};
-
 export default async function EditEventPage({ params }: Props) {
   const { id } = await params;
-  const event = await getEventById(id);
+  const [event, groups] = await Promise.all([getEventById(id), getAllGroups()]);
   if (!event) notFound();
-
-  const currentSortOrder = event.sortOrder;
 
   async function handleUpdate(formData: FormData) {
     "use server";
-    const groups = ALL_GROUPS.filter((g) => formData.get(`group_${g}`) === "on");
+    const allGroups = await getAllGroups();
+    const selectedGroups = allGroups
+      .map((g) => g.name)
+      .filter((name) => formData.get(`group_${name}`) === "on");
 
     const rawDatetime = (formData.get("startDatetime") as string).trim();
     await updateEvent(id, {
@@ -31,8 +23,7 @@ export default async function EditEventPage({ params }: Props) {
       title: (formData.get("title") as string).trim(),
       time: (formData.get("time") as string).trim(),
       location: (formData.get("location") as string).trim(),
-      groups: groups.length > 0 ? groups : ["all"],
-      sortOrder: parseInt(formData.get("sortOrder") as string, 10) || currentSortOrder,
+      groups: selectedGroups.length > 0 ? selectedGroups : ["all"],
       startDatetime: rawDatetime || null,
     });
     redirect("/admin/events");
@@ -114,7 +105,7 @@ export default async function EditEventPage({ params }: Props) {
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm outline-none ring-stone-700/30 transition focus:ring-2"
               />
             </div>
-            <div>
+            <div className="sm:col-span-2">
               <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
                 Start Date &amp; Time (Pacific)
               </label>
@@ -125,34 +116,23 @@ export default async function EditEventPage({ params }: Props) {
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm outline-none ring-stone-700/30 transition focus:ring-2"
               />
               <p className="mt-1 text-xs text-stone-400">
-                Used for Add to Calendar links. Leave blank if TBD.
+                Used for Add to Calendar links and to automatically order events chronologically.
               </p>
-            </div>
-            <div>
-              <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
-                Sort Order
-              </label>
-              <input
-                name="sortOrder"
-                type="number"
-                defaultValue={event.sortOrder}
-                className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm outline-none ring-stone-700/30 transition focus:ring-2"
-              />
             </div>
             <div className="sm:col-span-2">
               <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
                 Visible To
               </label>
               <div className="mt-3 flex flex-wrap gap-4">
-                {ALL_GROUPS.map((g) => (
-                  <label key={g} className="flex items-center gap-2 text-sm text-stone-700">
+                {groups.map((g) => (
+                  <label key={g.name} className="flex items-center gap-2 text-sm text-stone-700">
                     <input
                       type="checkbox"
-                      name={`group_${g}`}
-                      defaultChecked={event.groups.includes(g)}
+                      name={`group_${g.name}`}
+                      defaultChecked={event.groups.includes(g.name)}
                       className="h-4 w-4 rounded border-stone-300 accent-stone-800"
                     />
-                    {GROUP_LABELS[g]}
+                    {g.label}
                   </label>
                 ))}
               </div>
