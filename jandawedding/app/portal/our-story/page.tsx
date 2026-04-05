@@ -71,25 +71,24 @@ export default async function OurStoryPage() {
 
   return (
     <div className="space-y-8">
-      {/* Hero */}
-      <section className="overflow-hidden rounded-3xl border border-stone-200 shadow-sm">
-        <div className="relative h-64 md:h-80">
-          <Image
-            src={PHOTOS.hero}
-            alt="Ana & Joshua"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-          <div className="absolute bottom-8 left-8 right-8">
-            <p className="text-xs uppercase tracking-[0.28em] text-emerald-200">
-              {t.label}
-            </p>
-            <h1 className="mt-2 font-serif text-5xl text-white">{t.title}</h1>
-            <p className="mt-3 max-w-xl text-sm leading-7 text-stone-200">{t.intro}</p>
-          </div>
-        </div>
-      </section>
+      {/* Header */}
+      <div className="px-1">
+        <p
+          className="text-xs uppercase tracking-[0.32em]"
+          style={{ color: "#c9a0a0" }}
+        >
+          {t.label}
+        </p>
+        <h1
+          className="mt-2 font-serif italic"
+          style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", color: "#2d1f14" }}
+        >
+          {t.title}
+        </h1>
+        <p className="mt-1 text-sm leading-6" style={{ color: "#8a7060" }}>
+          {t.intro}
+        </p>
+      </div>
 
       {/* Story chapters */}
       {STORY_CHAPTERS.map((chapter, i) => {

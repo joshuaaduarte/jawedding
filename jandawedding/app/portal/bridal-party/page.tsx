@@ -243,11 +243,23 @@ export default async function BridalPartyPage() {
   return (
     <div className="space-y-10">
       {/* Page header */}
-      <section className="rounded-3xl border border-stone-200 bg-white/90 p-8 shadow-sm">
-        <p className="text-xs uppercase tracking-[0.2em] text-stone-500">{t.label}</p>
-        <h1 className="mt-2 font-serif text-5xl text-stone-900">{t.title}</h1>
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-stone-600">{t.intro}</p>
-      </section>
+      <div className="px-1">
+        <p
+          className="text-xs uppercase tracking-[0.32em]"
+          style={{ color: "#c9a0a0" }}
+        >
+          {t.label}
+        </p>
+        <h1
+          className="mt-2 font-serif italic"
+          style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", color: "#2d1f14" }}
+        >
+          {t.title}
+        </h1>
+        <p className="mt-1 text-sm leading-6" style={{ color: "#8a7060" }}>
+          {t.intro}
+        </p>
+      </div>
 
       <section className="space-y-4">
         <div>
