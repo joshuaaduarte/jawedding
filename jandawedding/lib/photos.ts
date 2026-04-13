@@ -38,4 +38,8 @@ export const PHOTOS = {
   placeHalfMoon:    "https://picsum.photos/seed/half-moon-bay/1200/800",
   placeSF:          "https://picsum.photos/seed/san-francisco-bay/1200/800",
   placeOakland:     "https://picsum.photos/seed/oakland-temescal/1200/800",
+
+  // Honeymoon destinations — replace with real travel photos when ready
+  destJapan:     "https://picsum.photos/seed/japan-kyoto-temple/1200/800",
+  destGuatemala: "https://picsum.photos/seed/guatemala-lake-atitlan/1200/800",
 } as const;
