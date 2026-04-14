@@ -16,10 +16,14 @@ export default async function NewGuestPage() {
     const anecdoteEs = (formData.get("anecdoteEs") as string).trim();
     const inviteCode = (formData.get("inviteCode") as string).trim().toUpperCase();
     const displayName = (formData.get("displayName") as string).trim();
+    const partyMembers = (formData.get("partyMembers") as string)
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
 
     if (!firstName || !lastName || !inviteCode) return;
 
-    await createGuest({ firstName, lastName, email, group, anecdote, anecdoteEs, inviteCode, displayName });
+    await createGuest({ firstName, lastName, email, group, anecdote, anecdoteEs, inviteCode, displayName, partyMembers });
     redirect("/admin/guests");
   }
 
@@ -128,6 +132,20 @@ export default async function NewGuestPage() {
                 rows={4}
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
                 placeholder="Escribe una nota personal en español..."
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
+                Party Members{" "}
+                <span className="normal-case text-stone-400">
+                  (comma-separated names, e.g. "Joshua, Ana" — used for Travel Board dropdown)
+                </span>
+              </label>
+              <input
+                name="partyMembers"
+                type="text"
+                className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
+                placeholder="e.g. Joshua, Ana"
               />
             </div>
           </div>

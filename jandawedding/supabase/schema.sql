@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS guests (
   anecdote      TEXT NOT NULL DEFAULT '',
   anecdote_es   TEXT NOT NULL DEFAULT '',
   display_name  TEXT NOT NULL DEFAULT '',
+  party_members TEXT[] NOT NULL DEFAULT '{}',
   created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -45,18 +46,22 @@ CREATE TABLE IF NOT EXISTS rsvps (
   UNIQUE (guest_id)
 );
 
--- Carpool table
-CREATE TABLE IF NOT EXISTS carpool_entries (
-  id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  guest_id         UUID NOT NULL REFERENCES guests(id) ON DELETE CASCADE,
-  guest_name       TEXT NOT NULL,
-  invite_code      TEXT NOT NULL,
-  airport          TEXT NOT NULL,
-  arrival_date     TEXT NOT NULL,
-  seats_available  INTEGER NOT NULL CHECK (seats_available >= 1),
-  contact          TEXT NOT NULL,
-  notes            TEXT NOT NULL DEFAULT '',
-  created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
+-- Travel Board table (opt-in travel plan sharing)
+CREATE TABLE IF NOT EXISTS travel_posts (
+  id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  guest_id       UUID NOT NULL REFERENCES guests(id) ON DELETE CASCADE,
+  guest_name     TEXT NOT NULL,
+  invite_code    TEXT NOT NULL,
+  travel_mode    TEXT NOT NULL DEFAULT 'flying' CHECK (travel_mode IN ('flying', 'driving', 'other')),
+  flying_from    TEXT NOT NULL DEFAULT '',
+  flying_to      TEXT NOT NULL DEFAULT '',
+  arrival_date   TEXT NOT NULL DEFAULT '',
+  departure_date TEXT NOT NULL DEFAULT '',
+  contact        TEXT NOT NULL DEFAULT '',
+  notes          TEXT NOT NULL DEFAULT '',
+  traveler_name  TEXT NOT NULL DEFAULT '',
+  is_visible     BOOLEAN NOT NULL DEFAULT false,
+  created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 -- Groups table (source of truth for guest groups / event visibility)
@@ -86,3 +91,18 @@ INSERT INTO events (day_label, event_date, title, time, location, groups, sort_o
   ('Friday',    'September 4',  'Reception',        '5:00 PM',   'Fairview Laguna Seca, Monterey',    ARRAY['all'],                    4),
   ('Saturday',  'September 5',  'Farewell Brunch',  'Time TBD',  'Venue TBD',                         ARRAY['all'],                    5)
 ON CONFLICT DO NOTHING;
+
+-- ============================================================
+-- Migration: Replace carpool_entries with travel_posts
+-- Run in Supabase SQL Editor if upgrading an existing database:
+-- ============================================================
+-- DROP TABLE IF EXISTS carpool_entries;
+-- Then run the travel_posts CREATE TABLE above.
+
+-- ============================================================
+-- Migration: Multi-traveler Travel Board support
+-- Run in Supabase SQL Editor if upgrading an existing database:
+-- ============================================================
+-- ALTER TABLE guests ADD COLUMN party_members TEXT[] NOT NULL DEFAULT '{}';
+-- ALTER TABLE travel_posts DROP CONSTRAINT travel_posts_guest_id_key;
+-- ALTER TABLE travel_posts ADD COLUMN traveler_name TEXT NOT NULL DEFAULT '';

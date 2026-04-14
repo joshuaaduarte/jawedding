@@ -21,6 +21,10 @@ export default async function EditGuestPage({ params }: Props) {
       anecdoteEs: (formData.get("anecdoteEs") as string).trim(),
       inviteCode: (formData.get("inviteCode") as string).trim().toUpperCase(),
       displayName: (formData.get("displayName") as string).trim(),
+      partyMembers: (formData.get("partyMembers") as string)
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean),
     });
     redirect("/admin/guests");
   }
@@ -141,6 +145,21 @@ export default async function EditGuestPage({ params }: Props) {
                 defaultValue={guest.anecdoteEs}
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
                 placeholder="Escribe una nota personal en español..."
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
+                Party Members{" "}
+                <span className="normal-case text-stone-400">
+                  (comma-separated names, e.g. "Joshua, Ana" — used for Travel Board dropdown)
+                </span>
+              </label>
+              <input
+                name="partyMembers"
+                type="text"
+                defaultValue={guest.partyMembers.join(", ")}
+                className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
+                placeholder="e.g. Joshua, Ana"
               />
             </div>
           </div>

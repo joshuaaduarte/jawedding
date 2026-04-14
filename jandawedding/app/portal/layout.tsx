@@ -27,7 +27,7 @@ export default async function PortalLayout({
           registry: "Mesa De Regalos",
           stay: "Hospedaje",
           things: "Qué Hacer",
-          carpool: "Auto Compartido",
+          carpool: "Tablero De Viaje",
         }
       : {
           guestPortal: "Guest Portal",
@@ -41,7 +41,7 @@ export default async function PortalLayout({
           registry: "Registry",
           stay: "Stay",
           things: "To Do",
-          carpool: "Carpool",
+          carpool: "Travel Board",
         };
 
   const navItems = [

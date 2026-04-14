@@ -19,6 +19,7 @@ export type Guest = {
   anecdote: string;
   anecdoteEs: string;
   displayName: string;
+  partyMembers: string[];
 };
 
 export type WeddingEvent = {
@@ -59,6 +60,7 @@ function mapGuest(row: Record<string, unknown>): Guest {
     anecdote: (row.anecdote as string) ?? "",
     anecdoteEs: (row.anecdote_es as string) ?? "",
     displayName: (row.display_name as string) ?? "",
+    partyMembers: (row.party_members as string[]) ?? [],
   };
 }
 
@@ -144,6 +146,7 @@ export async function createGuest(input: {
   anecdoteEs?: string;
   inviteCode: string;
   displayName?: string;
+  partyMembers?: string[];
 }): Promise<Guest> {
   const { data, error } = await getSupabase()
     .from("guests")
@@ -156,6 +159,7 @@ export async function createGuest(input: {
       anecdote_es: input.anecdoteEs ?? "",
       invite_code: input.inviteCode,
       display_name: input.displayName ?? "",
+      party_members: input.partyMembers ?? [],
     })
     .select()
     .single();
@@ -174,6 +178,7 @@ export async function updateGuest(
     anecdoteEs: string;
     inviteCode: string;
     displayName: string;
+    partyMembers: string[];
   }>,
 ): Promise<Guest> {
   const patch: Record<string, unknown> = {};
@@ -185,6 +190,7 @@ export async function updateGuest(
   if (input.anecdoteEs !== undefined) patch.anecdote_es = input.anecdoteEs;
   if (input.inviteCode !== undefined) patch.invite_code = input.inviteCode;
   if (input.displayName !== undefined) patch.display_name = input.displayName;
+  if (input.partyMembers !== undefined) patch.party_members = input.partyMembers;
 
   const { data, error } = await getSupabase()
     .from("guests")
