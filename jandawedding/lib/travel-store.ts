@@ -8,7 +8,7 @@ export type TravelPost = {
   guestId: string;
   guestName: string;
   inviteCode: string;
-  travelerName: string;
+  travelerNames: string[];
   travelMode: TravelMode;
   flyingFrom: string;
   flyingTo: string;
@@ -26,7 +26,7 @@ function mapPost(row: Record<string, unknown>): TravelPost {
     guestId: row.guest_id as string,
     guestName: row.guest_name as string,
     inviteCode: row.invite_code as string,
-    travelerName: (row.traveler_name as string) ?? "",
+    travelerNames: (row.traveler_names as string[]) ?? [],
     travelMode: (row.travel_mode as TravelMode) ?? "flying",
     flyingFrom: (row.flying_from as string) ?? "",
     flyingTo: (row.flying_to as string) ?? "",
@@ -59,7 +59,7 @@ export async function getMyTravelPosts(guestId: string): Promise<TravelPost[]> {
 
 export async function createTravelPost(input: {
   guest: Guest;
-  travelerName: string;
+  travelerNames: string[];
   travelMode: TravelMode;
   flyingFrom: string;
   flyingTo: string;
@@ -75,7 +75,7 @@ export async function createTravelPost(input: {
       guest_id: input.guest.id,
       guest_name: `${input.guest.firstName} ${input.guest.lastName}`,
       invite_code: input.guest.inviteCode,
-      traveler_name: input.travelerName,
+      traveler_names: input.travelerNames,
       travel_mode: input.travelMode,
       flying_from: input.flyingFrom,
       flying_to: input.flyingTo,
@@ -95,7 +95,7 @@ export async function updateTravelPost(
   id: string,
   guestId: string,
   fields: {
-    travelerName: string;
+    travelerNames: string[];
     travelMode: TravelMode;
     flyingFrom: string;
     flyingTo: string;
@@ -109,7 +109,7 @@ export async function updateTravelPost(
   const { data, error } = await getSupabase()
     .from("travel_posts")
     .update({
-      traveler_name: fields.travelerName,
+      traveler_names: fields.travelerNames,
       travel_mode: fields.travelMode,
       flying_from: fields.flyingFrom,
       flying_to: fields.flyingTo,
@@ -158,7 +158,7 @@ export async function getTravelPostById(id: string): Promise<TravelPost | null> 
 export async function adminUpdateTravelPost(
   id: string,
   fields: Partial<{
-    travelerName: string;
+    travelerNames: string[];
     travelMode: TravelMode;
     flyingFrom: string;
     flyingTo: string;
@@ -170,7 +170,7 @@ export async function adminUpdateTravelPost(
   }>
 ): Promise<void> {
   const update: Record<string, unknown> = {};
-  if (fields.travelerName !== undefined) update.traveler_name = fields.travelerName;
+  if (fields.travelerNames !== undefined) update.traveler_names = fields.travelerNames;
   if (fields.travelMode !== undefined) update.travel_mode = fields.travelMode;
   if (fields.flyingFrom !== undefined) update.flying_from = fields.flyingFrom;
   if (fields.flyingTo !== undefined) update.flying_to = fields.flyingTo;

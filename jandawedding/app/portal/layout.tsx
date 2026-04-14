@@ -53,7 +53,7 @@ export default async function PortalLayout({
     { href: "/portal/registry", label: t.registry },
     { href: "/portal/stay", label: t.stay },
     { href: "/portal/things-to-do", label: t.things },
-    { href: "/portal/carpool", label: t.carpool },
+    { href: "/portal/travel-board", label: t.carpool },
   ];
 
   return (

@@ -29,7 +29,7 @@ export default async function PortalPage() {
             { href: "/portal/registry", title: "Mesa de Regalos", desc: "Nuestros deseos para el nuevo hogar." },
             { href: "/portal/stay", title: "Hospedaje", desc: "Hoteles y alojamiento recomendados." },
             { href: "/portal/things-to-do", title: "Qué Hacer", desc: "Descubre Monterey antes o después de la boda." },
-            { href: "/portal/carpool", title: "Auto Compartido", desc: "Coordina el transporte con otros invitados." },
+            { href: "/portal/travel-board", title: "Tablero De Viaje", desc: "Coordina el transporte con otros invitados." },
           ],
         }
       : {
@@ -48,7 +48,7 @@ export default async function PortalPage() {
             { href: "/portal/registry", title: "Registry", desc: "Our wishes for our new home together." },
             { href: "/portal/stay", title: "Stay", desc: "Recommended hotels and accommodations nearby." },
             { href: "/portal/things-to-do", title: "To Do", desc: "Discover Monterey before or after the wedding." },
-            { href: "/portal/carpool", title: "Carpool", desc: "Coordinate rides with other guests." },
+            { href: "/portal/travel-board", title: "Travel Board", desc: "Share your travel plans and connect with other guests." },
           ],
         };
 

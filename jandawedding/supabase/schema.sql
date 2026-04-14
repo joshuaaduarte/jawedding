@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS travel_posts (
   departure_date TEXT NOT NULL DEFAULT '',
   contact        TEXT NOT NULL DEFAULT '',
   notes          TEXT NOT NULL DEFAULT '',
-  traveler_name  TEXT NOT NULL DEFAULT '',
+  traveler_names TEXT[] NOT NULL DEFAULT '{}',
   is_visible     BOOLEAN NOT NULL DEFAULT false,
   created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -105,4 +105,5 @@ ON CONFLICT DO NOTHING;
 -- ============================================================
 -- ALTER TABLE guests ADD COLUMN party_members TEXT[] NOT NULL DEFAULT '{}';
 -- ALTER TABLE travel_posts DROP CONSTRAINT travel_posts_guest_id_key;
--- ALTER TABLE travel_posts ADD COLUMN traveler_name TEXT NOT NULL DEFAULT '';
+-- ALTER TABLE travel_posts DROP COLUMN IF EXISTS traveler_name;
+-- ALTER TABLE travel_posts ADD COLUMN traveler_names TEXT[] NOT NULL DEFAULT '{}';

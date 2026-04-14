@@ -13,7 +13,7 @@ export async function PUT(request: Request, { params }: Params) {
 
   const { id } = await params;
   const body = (await request.json()) as {
-    travelerName?: string;
+    travelerNames?: string[];
     travelMode?: string;
     flyingFrom?: string;
     flyingTo?: string;
@@ -29,7 +29,7 @@ export async function PUT(request: Request, { params }: Params) {
     : "flying";
 
   const post = await updateTravelPost(id, guest.id, {
-    travelerName: typeof body.travelerName === "string" ? body.travelerName.trim() : "",
+    travelerNames: Array.isArray(body.travelerNames) ? body.travelerNames.map((n) => String(n).trim()).filter(Boolean) : [],
     travelMode,
     flyingFrom: typeof body.flyingFrom === "string" ? body.flyingFrom.trim() : "",
     flyingTo: typeof body.flyingTo === "string" ? body.flyingTo.trim() : "",

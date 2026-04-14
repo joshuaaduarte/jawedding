@@ -19,8 +19,10 @@ export default async function EditTravelPostPage({ params }: Props) {
         ? travelModeRaw
         : "flying";
 
+    const travelerNamesRaw = (formData.get("travelerNames") as string ?? "").trim();
+    const travelerNames = travelerNamesRaw ? travelerNamesRaw.split(",").map((s) => s.trim()).filter(Boolean) : [];
     await adminUpdateTravelPost(id, {
-      travelerName: (formData.get("travelerName") as string).trim(),
+      travelerNames,
       travelMode,
       flyingFrom: (formData.get("flyingFrom") as string).trim(),
       flyingTo: (formData.get("flyingTo") as string).trim(),
@@ -52,14 +54,14 @@ export default async function EditTravelPostPage({ params }: Props) {
           <div className="grid gap-5 sm:grid-cols-2">
             <div className="sm:col-span-2">
               <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
-                Traveler Name{" "}
-                <span className="normal-case text-stone-400">(leave blank to show guest name)</span>
+                Traveler Names{" "}
+                <span className="normal-case text-stone-400">(comma-separated, leave blank for "Everyone")</span>
               </label>
               <input
-                name="travelerName"
+                name="travelerNames"
                 type="text"
-                defaultValue={post.travelerName}
-                placeholder="e.g. Joshua"
+                defaultValue={post.travelerNames.join(", ")}
+                placeholder="e.g. Joshua Duarte, Ana Lima"
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
               />
             </div>

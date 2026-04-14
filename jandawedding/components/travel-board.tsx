@@ -13,7 +13,7 @@ type TravelBoardProps = {
 
 type FormState = {
   id: string | null; // null = new post
-  travelerName: string;
+  travelerNames: string[];
   travelMode: TravelMode;
   flyingFrom: string;
   flyingTo: string;
@@ -24,10 +24,10 @@ type FormState = {
   isVisible: boolean;
 };
 
-function emptyForm(travelerName = ""): FormState {
+function emptyForm(): FormState {
   return {
     id: null,
-    travelerName,
+    travelerNames: [],
     travelMode: "flying",
     flyingFrom: "",
     flyingTo: "",
@@ -42,7 +42,7 @@ function emptyForm(travelerName = ""): FormState {
 function postToForm(post: TravelPost): FormState {
   return {
     id: post.id,
-    travelerName: post.travelerName,
+    travelerNames: post.travelerNames,
     travelMode: post.travelMode,
     flyingFrom: post.flyingFrom,
     flyingTo: post.flyingTo,
@@ -66,6 +66,7 @@ export function TravelBoard({ initialPosts, myInitialPosts, partyMembers, locale
           addPlan: "+ Agregar Plan De Viaje",
           editPlan: "Editar",
           cancelEdit: "Cancelar",
+          everyoneHint: "Sin selección = todos en el grupo",
           forWho: "¿Para quién es este plan?",
           everyone: "Todos en nuestro grupo",
           modeFlying: "Avión",
@@ -102,6 +103,7 @@ export function TravelBoard({ initialPosts, myInitialPosts, partyMembers, locale
           addPlan: "+ Add Travel Plan",
           editPlan: "Edit",
           cancelEdit: "Cancel",
+          everyoneHint: "No selection = everyone in the group",
           forWho: "Who is this plan for?",
           everyone: "Everyone in our group",
           modeFlying: "Flying",
@@ -169,7 +171,7 @@ export function TravelBoard({ initialPosts, myInitialPosts, partyMembers, locale
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          travelerName: activeForm.travelerName,
+          travelerNames: activeForm.travelerNames,
           travelMode: activeForm.travelMode,
           flyingFrom: activeForm.flyingFrom,
           flyingTo: activeForm.flyingTo,
@@ -186,7 +188,7 @@ export function TravelBoard({ initialPosts, myInitialPosts, partyMembers, locale
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          travelerName: activeForm.travelerName,
+          travelerNames: activeForm.travelerNames,
           travelMode: activeForm.travelMode,
           flyingFrom: activeForm.flyingFrom,
           flyingTo: activeForm.flyingTo,
@@ -222,20 +224,37 @@ export function TravelBoard({ initialPosts, myInitialPosts, partyMembers, locale
     setActiveForm((prev) => prev ? { ...prev, ...patch } : prev);
   }
 
-  // Traveler name label for display.
-  // For the current user's "Everyone in our group" posts, join all full names:
-  //   - 2 people  → "Ana Lima & Joshua Duarte"
-  //   - 3+ people → "Ana Lima, Joshua Duarte & Maria Garcia"
-  // For other guests' posts, fall back to their guest name.
   function travelerLabel(post: TravelPost, isMine = false) {
-    if (post.travelerName) return post.travelerName;
+    if (post.travelerNames.length > 0) {
+      const last = post.travelerNames[post.travelerNames.length - 1];
+      const rest = post.travelerNames.slice(0, -1);
+      return rest.length > 0 ? `${rest.join(", ")} & ${last}` : last;
+    }
+    // "Everyone" post
     if (isMine && partyMembers.length > 1) {
       const last = partyMembers[partyMembers.length - 1];
       const rest = partyMembers.slice(0, -1);
-      return `${rest.join(", ")} & ${last}`;
+      return rest.length > 0 ? `${rest.join(", ")} & ${last}` : last;
     }
     return post.guestName;
   }
+
+  // Coverage: which party members are already claimed by existing posts
+  function getCoveredNames(excludeId?: string): Set<string> {
+    const covered = new Set<string>();
+    for (const post of myPosts) {
+      if (post.id === excludeId) continue;
+      if (post.travelerNames.length === 0) {
+        partyMembers.forEach((n) => covered.add(n));
+      } else {
+        post.travelerNames.forEach((n) => covered.add(n));
+      }
+    }
+    return covered;
+  }
+
+  const coveredByOtherPosts = getCoveredNames(activeForm?.id ?? undefined);
+  const hasUncoveredMembers = !isGroup || partyMembers.some((n) => !coveredByOtherPosts.has(n));
 
   const visibleBoardPosts = boardPosts.filter((p) => p.isVisible);
 
@@ -295,6 +314,7 @@ export function TravelBoard({ initialPosts, myInitialPosts, partyMembers, locale
                 form={activeForm}
                 isGroup={isGroup}
                 partyMembers={partyMembers}
+                coveredNames={getCoveredNames(post.id)}
                 t={t}
                 saving={saving}
                 status={formStatus}
@@ -357,6 +377,7 @@ export function TravelBoard({ initialPosts, myInitialPosts, partyMembers, locale
             form={activeForm}
             isGroup={isGroup}
             partyMembers={partyMembers}
+            coveredNames={getCoveredNames()}
             t={t}
             saving={saving}
             status={formStatus}
@@ -366,8 +387,8 @@ export function TravelBoard({ initialPosts, myInitialPosts, partyMembers, locale
           />
         )}
 
-        {/* Add button — only show when no form is open */}
-        {!activeForm && (
+        {/* Add button — only show when under the per-group post limit */}
+        {!activeForm && hasUncoveredMembers && (
           <button
             onClick={() => { setActiveForm(emptyForm()); setFormStatus(null); }}
             className="rounded-full border border-stone-300 px-5 py-2.5 text-xs uppercase tracking-[0.16em] text-stone-600 transition hover:border-stone-500 hover:text-stone-900"
@@ -386,6 +407,7 @@ type TravelFormProps = {
   form: FormState;
   isGroup: boolean;
   partyMembers: string[];
+  coveredNames: Set<string>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   t: any;
   saving: boolean;
@@ -395,7 +417,16 @@ type TravelFormProps = {
   onCancel: () => void;
 };
 
-function TravelForm({ form, isGroup, partyMembers, t, saving, status, onChange, onSubmit, onCancel }: TravelFormProps) {
+function TravelForm({ form, isGroup, partyMembers, coveredNames, t, saving, status, onChange, onSubmit, onCancel }: TravelFormProps) {
+  function toggleName(name: string) {
+    const current = form.travelerNames;
+    if (current.includes(name)) {
+      onChange({ travelerNames: current.filter((n) => n !== name) });
+    } else {
+      onChange({ travelerNames: [...current, name] });
+    }
+  }
+
   return (
     <form
       onSubmit={onSubmit}
@@ -404,19 +435,35 @@ function TravelForm({ form, isGroup, partyMembers, t, saving, status, onChange, 
       {/* Who is this for — only shown for group guests */}
       {isGroup && (
         <div>
-          <label className="block text-xs uppercase tracking-[0.14em] text-stone-500 mb-2">
+          <label className="block text-xs uppercase tracking-[0.14em] text-stone-500 mb-3">
             {t.forWho}
           </label>
-          <select
-            value={form.travelerName}
-            onChange={(e) => onChange({ travelerName: e.target.value })}
-            className="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm text-stone-800 outline-none ring-stone-700/30 focus:ring-2"
-          >
-            <option value="">{t.everyone}</option>
-            {partyMembers.map((name) => (
-              <option key={name} value={name}>{name}</option>
-            ))}
-          </select>
+          <div className="flex flex-wrap gap-2">
+            {partyMembers.map((name) => {
+              const isSelected = form.travelerNames.includes(name);
+              const isDisabled = coveredNames.has(name) && !isSelected;
+              return (
+                <button
+                  key={name}
+                  type="button"
+                  disabled={isDisabled}
+                  onClick={() => toggleName(name)}
+                  className={`rounded-full border px-4 py-2 text-sm transition ${
+                    isSelected
+                      ? "border-stone-800 bg-stone-800 text-stone-50"
+                      : isDisabled
+                      ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400"
+                      : "border-stone-300 bg-white text-stone-700 hover:border-stone-500"
+                  }`}
+                >
+                  {name}
+                </button>
+              );
+            })}
+          </div>
+          {isGroup && form.travelerNames.length === 0 && (
+            <p className="mt-2 text-xs text-stone-400">{t.everyoneHint}</p>
+          )}
         </div>
       )}
 

@@ -30,7 +30,7 @@ export async function POST(request: Request) {
   }
 
   const body = (await request.json()) as {
-    travelerName?: string;
+    travelerNames?: string[];
     travelMode?: string;
     flyingFrom?: string;
     flyingTo?: string;
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
 
   const post = await createTravelPost({
     guest,
-    travelerName: typeof body.travelerName === "string" ? body.travelerName.trim() : "",
+    travelerNames: Array.isArray(body.travelerNames) ? body.travelerNames.map((n) => String(n).trim()).filter(Boolean) : [],
     travelMode,
     flyingFrom: typeof body.flyingFrom === "string" ? body.flyingFrom.trim() : "",
     flyingTo: typeof body.flyingTo === "string" ? body.flyingTo.trim() : "",
