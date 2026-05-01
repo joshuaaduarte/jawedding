@@ -9,7 +9,7 @@ export default async function Home() {
     locale === "es"
       ? {
           saveDate: "Reserva La Fecha",
-          guestLogin: "Ingresar",
+          guestLogin: "Entrar",
           weMarried: "Nos vamos a casar.",
           date: "Fecha",
           mainLocation: "Ubicación",
@@ -26,7 +26,7 @@ export default async function Home() {
         }
       : {
           saveDate: "Save The Date",
-          guestLogin: "Guest Login",
+          guestLogin: "Login",
           weMarried: "We are getting married.",
           date: "Date",
           mainLocation: "Location",
@@ -53,7 +53,7 @@ export default async function Home() {
       {/* ── Header ── */}
       <div className="mx-auto max-w-7xl px-6 pt-6 sm:px-10">
         <header
-          className="flex items-center justify-between rounded-2xl px-5 py-3 backdrop-blur-md"
+          className="flex items-center justify-between rounded-2xl px-3 py-2.5 sm:px-5 sm:py-3 backdrop-blur-md"
           style={{
             border: "1px solid #e8ddd4",
             background: "rgba(251, 244, 232, 0.88)",

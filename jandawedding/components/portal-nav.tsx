@@ -99,7 +99,13 @@ export function PortalNav({ items }: { items: NavItem[] }) {
         </div>
 
         {/* Dropdown menu */}
-        {open && (
+        <div
+          className="overflow-hidden transition-all duration-300 ease-in-out"
+          style={{
+            maxHeight: open ? `${items.length * 48 + 16}px` : "0px",
+            opacity: open ? 1 : 0,
+          }}
+        >
           <nav
             aria-label="Mobile portal navigation"
             className="border-b px-4 pb-3 pt-1"
@@ -131,7 +137,7 @@ export function PortalNav({ items }: { items: NavItem[] }) {
               );
             })}
           </nav>
-        )}
+        </div>
       </div>
     </>
   );
