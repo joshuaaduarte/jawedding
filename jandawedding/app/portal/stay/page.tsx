@@ -21,7 +21,7 @@ const HOTELS = [
     distVenueEs: "15 min al venue",
     note: "Waterfront property right on Cannery Row with a private ocean deck. Ideal for guests who want a splurge-worthy, scenic base.",
     noteEs: "Propiedad frente al mar en Cannery Row con terraza privada al océano. Ideal para quienes buscan una experiencia premium.",
-    bookingUrl: "#", // TODO: Replace with direct booking link
+    bookingUrl: "https://www.montereyplazahotel.com",
   },
   {
     name: "Portola Hotel & Spa",
@@ -35,7 +35,7 @@ const HOTELS = [
     distVenueEs: "12 min al venue",
     note: "The largest full-service hotel in Monterey — great for families and groups traveling together. Central location with easy parking.",
     noteEs: "El hotel de servicio completo más grande de Monterey — ideal para familias y grupos. Ubicación central con estacionamiento fácil.",
-    bookingUrl: "#", // TODO: Replace with direct booking link
+    bookingUrl: "https://www.portolahotel.com",
   },
   {
     name: "Carmel Mission Inn",
@@ -49,7 +49,7 @@ const HOTELS = [
     distVenueEs: "18 min al venue",
     note: "Best-value option closest to the Carmel Mission. Comfortable rooms, easy parking, and walking distance to Carmel village restaurants.",
     noteEs: "La mejor opción de precio más cerca de la Misión. Cómodas habitaciones, fácil estacionamiento y restaurantes a pie.",
-    bookingUrl: "#", // TODO: Replace with direct booking link
+    bookingUrl: "https://www.carmelmissioninn.com",
   },
 ] as const;
 
@@ -319,7 +319,6 @@ export default async function StayPage() {
         intro:
           "Recomendamos Monterey o Carmel para el mejor acceso a los eventos de la boda. Todo está a 20 minutos o menos.",
         searchHotels: "Buscar Hoteles",
-        searchAirbnb: "Buscar en Airbnb",
         viewMap: "Ver Mapa",
 
         // ── Areas ──
@@ -351,24 +350,14 @@ export default async function StayPage() {
           },
         ],
 
-        // ── Hotels ──
-        hotelsLabel: "Hoteles Destacados",
-        hotelsTitle: "Nuestras Recomendaciones",
+        // ── Accommodation Search ──
+        hotelsLabel: "Busca Hospedaje",
+        hotelsTitle: "Encuentra Dónde Quedarte",
         hotelsIntro:
-          "Opciones comprobadas que conocemos y recomendamos a nuestros invitados.",
+          "Busca hoteles, Airbnb y VRBO en el área de Monterey y Carmel. Para grupos de 4+, una casa de alquiler frecuentemente ofrece más espacio y valor.",
         checkAvailability: "Ver Disponibilidad →",
-
-        // ── Airbnb ──
-        airbnbLabel: "Alquiler Vacacional",
-        airbnbTitle: "Airbnb & VRBO",
-        airbnbIntro:
-          "¿Viajas en grupo o con familia? Una casa de alquiler puede ser más cómoda y económica.",
-        airbnbBody:
-          "Busca en Carmel-by-the-Sea, Pacific Grove o Monterey. Para grupos de 4+, una casa frecuentemente ofrece más espacio y valor que habitaciones de hotel. Busca propiedades con estacionamiento incluido.",
-        // TODO: Update Airbnb URL check-in/check-out dates when confirmed
-        airbnbCta: "Buscar en Airbnb →",
-        // TODO: Update VRBO search URL
-        vrboCta: "Buscar en VRBO →",
+        searchAirbnb: "Buscar en Airbnb",
+        searchVrbo: "Buscar en VRBO",
 
         // ── Map ──
         mapLabel: "Orientación",
@@ -415,7 +404,6 @@ export default async function StayPage() {
         intro:
           "We recommend staying in Monterey or Carmel for easiest access to all the wedding weekend events. Everything is within 20 minutes.",
         searchHotels: "Search Hotels",
-        searchAirbnb: "Search Airbnb",
         viewMap: "View Map",
 
         // ── Areas ──
@@ -447,24 +435,14 @@ export default async function StayPage() {
           },
         ],
 
-        // ── Hotels ──
-        hotelsLabel: "Featured Hotels",
-        hotelsTitle: "Our Recommendations",
+        // ── Accommodation Search ──
+        hotelsLabel: "Find Accommodation",
+        hotelsTitle: "Search & Book Your Stay",
         hotelsIntro:
-          "Tried-and-true properties we know and recommend for our guests.",
+          "Search hotels, Airbnb, and VRBO in the Monterey and Carmel area. For groups of 4+, a rental home often offers more space and better value.",
         checkAvailability: "Check Availability →",
-
-        // ── Airbnb ──
-        airbnbLabel: "Short-Term Rentals",
-        airbnbTitle: "Airbnb & VRBO",
-        airbnbIntro:
-          "Traveling with a group or family? A rental home can be more comfortable and better value.",
-        airbnbBody:
-          "Search Carmel-by-the-Sea, Pacific Grove, or the Monterey area. For groups of 4+, a house often offers more space and value than individual hotel rooms. Look for properties with included parking.",
-        // TODO: Update Airbnb URL check-in/check-out dates once confirmed (Sept 3–6, 2026)
-        airbnbCta: "Search Airbnb →",
-        // TODO: Update VRBO search URL
-        vrboCta: "Search VRBO →",
+        searchAirbnb: "Search Airbnb",
+        searchVrbo: "Search VRBO",
 
         // ── Map ──
         mapLabel: "Getting Oriented",
@@ -540,20 +518,36 @@ export default async function StayPage() {
         className="rounded-3xl p-7 sm:p-10"
         style={{ border: "1px solid #e8ddd4", background: "rgba(255,255,255,0.88)" }}
       >
-        <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <SectionLabel>{t.hotelsLabel}</SectionLabel>
-            <SectionTitle>{t.hotelsTitle}</SectionTitle>
-            <p className="mt-2 text-sm leading-6" style={{ color: "#8a7060", maxWidth: "52ch" }}>
-              {t.hotelsIntro}
-            </p>
+        <div className="mb-7">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <SectionLabel>{t.hotelsLabel}</SectionLabel>
+              <SectionTitle>{t.hotelsTitle}</SectionTitle>
+              <p className="mt-2 text-sm leading-6" style={{ color: "#8a7060", maxWidth: "52ch" }}>
+                {t.hotelsIntro}
+              </p>
+            </div>
           </div>
-          <QuickLink
-            href="https://www.google.com/travel/hotels/Monterey,CA?q=hotels+monterey+carmel+california+september+2026"
-            label={t.searchHotels}
-            icon="🏨"
-            isPrimary
-          />
+
+          {/* Search buttons for all three platforms */}
+          <div className="mt-5 flex flex-wrap gap-3">
+            <QuickLink
+              href="https://www.google.com/travel/hotels/Monterey,CA?q=hotels+monterey+carmel+california&dates=2026-09-03,2026-09-05"
+              label={t.searchHotels}
+              icon="🏨"
+              isPrimary
+            />
+            <QuickLink
+              href="https://www.airbnb.com/s/Carmel-by-the-Sea--CA--United-States/homes?checkin=2026-09-03&checkout=2026-09-05"
+              label={t.searchAirbnb}
+              icon="🏡"
+            />
+            <QuickLink
+              href="https://www.vrbo.com/search?destination=Monterey%2C+CA&startDate=2026-09-03&endDate=2026-09-05"
+              label={t.searchVrbo}
+              icon="🔍"
+            />
+          </div>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -564,77 +558,6 @@ export default async function StayPage() {
               checkAvailability={t.checkAvailability}
             />
           ))}
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────────────
-          AIRBNB / SHORT-TERM RENTALS
-          ───────────────────────────────────────────────────────────────────── */}
-      <section
-        className="rounded-3xl p-7 sm:p-10"
-        style={{ border: "1px solid #e8ddd4", background: "rgba(255,255,255,0.88)" }}
-      >
-        <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-center">
-          {/* Copy side */}
-          <div>
-            <SectionLabel>{t.airbnbLabel}</SectionLabel>
-            <SectionTitle>{t.airbnbTitle}</SectionTitle>
-            <p className="mt-2 text-sm leading-6" style={{ color: "#8a7060" }}>
-              {t.airbnbIntro}
-            </p>
-            <p className="mt-3 text-xs leading-6" style={{ color: "#7a6050" }}>
-              {t.airbnbBody}
-            </p>
-
-            {/* Search CTAs */}
-            <div className="mt-6 flex flex-wrap gap-3">
-              {/* TODO: Update Airbnb URL with confirmed check-in/check-out dates */}
-              <a
-                href="https://www.airbnb.com/s/Carmel-by-the-Sea--CA--United-States/homes?checkin=2026-09-03&checkout=2026-09-06"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full px-5 py-2.5 text-xs uppercase tracking-[0.14em] transition hover:opacity-80"
-                style={{ background: "#2d1f14", color: "#fbf4e8" }}
-              >
-                <span aria-hidden>🏡</span>
-                {t.airbnbCta}
-              </a>
-              {/* TODO: Update VRBO URL with confirmed destination and dates */}
-              <a
-                href="https://www.vrbo.com/search?destination=Monterey%2C+CA&startDate=2026-09-03&endDate=2026-09-06"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full px-5 py-2.5 text-xs uppercase tracking-[0.14em] transition hover:opacity-80"
-                style={{
-                  background: "rgba(251,244,232,0.7)",
-                  color: "#2d1f14",
-                  border: "1px solid #e8ddd4",
-                }}
-              >
-                <span aria-hidden>🔍</span>
-                {t.vrboCta}
-              </a>
-            </div>
-          </div>
-
-          {/* Photo grid side */}
-          <div className="grid grid-cols-2 gap-3">
-            {[PHOTOS.moment1, PHOTOS.moment3, PHOTOS.moment4, PHOTOS.moment6].map((src, i) => (
-              <div
-                key={src}
-                className="relative overflow-hidden rounded-2xl"
-                style={{ aspectRatio: "4/3", border: "1px solid #e8ddd4" }}
-              >
-                {/* TODO: Replace with real photos of the Carmel/Monterey area or rental homes */}
-                <Image
-                  src={src}
-                  alt={`Rental area photo ${i + 1}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

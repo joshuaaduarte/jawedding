@@ -46,54 +46,54 @@ const BRIDESMAIDS = [
 const BEST_MEN = [
   {
     name: "Roberto Gonzalez",
-    bio: "Write a short bio or note about this person here.",
-    bioEs: "Escribe una nota corta sobre esta persona aquí.",
+    bio: "Roberto is one of Josh’s best men and someone he has shared a strong bond with since meeting in eighth grade after moving to Waxahachie. Their friendship grew through years of challenging classes, late night calls, and pushing each other to succeed. Whether it was cramming for exams at the last minute or simply being there when it mattered, Roberto has always been someone Josh can trust and depend on. Kind, genuine, and easygoing, he is the type of person who gets along with anyone he meets.",
+    bioEs: "Roberto es uno de los padrinos de Josh y alguien con quien ha forjado una fuerte amistad desde que se conocieron en octavo grado, tras mudarse a Waxahachie. Su amistad creció a través de años de clases exigentes, llamadas nocturnas y apoyo mutuo para alcanzar el éxito. Ya fuera estudiando a última hora para los exámenes o simplemente estando presente cuando más se le necesitaba, Roberto siempre ha sido alguien en quien Josh puede confiar plenamente. Amable, sincero y de trato fácil, es el tipo de persona que se lleva bien con todo el mundo.",
   },
   {
     name: "Pavan Reddy",
-    bio: "Write a short bio or note about this person here.",
-    bioEs: "Escribe una nota corta sobre esta persona aquí.",
+    bio: "Pavan is one of Josh’s best men and a close friend he met while living at the International House at the University of California, Berkeley, where they were both pursuing their master’s in mechanical engineering. Their friendship grew through long nights working on their capstone project, frequent trips to La Burrita, and the occasional Shakira jam session. Pavan is always willing to help anyone in need, whether it is lending a hand or simply being there to listen. His kindness, generosity, and easygoing nature are what make him such a valued friend in Josh’s life.",
+    bioEs: "Pavan es uno de los padrinos de Josh y un amigo cercano que conoció mientras vivía en la Residencia Internacional de la Universidad de California, Berkeley, donde ambos cursaban su maestría en ingeniería mecánica. Su amistad se forjó a través de largas noches trabajando en su proyecto final, frecuentes visitas a La Burrita y alguna que otra sesión improvisada de Shakira. Pavan siempre está dispuesto a ayudar a quien lo necesite, ya sea echando una mano o simplemente escuchando. Su amabilidad, generosidad y carácter afable lo convierten en un amigo tan valioso para Josh.",
   },
 ];
 
 const GROOMSMEN = [
   { name: "Jonathan Gaytan", 
-    bio: "Write a short bio or note about this person here.", 
-    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+    bio: "Jonathan is a close friend Josh met freshman year, quickly standing out for his intelligence and thoughtfulness. Their friendship grew through shared experiences, from winning a hackathon together to spending a summer living and working in Seattle. While Jonathan may seem reserved at first, those who get to know him quickly discover one of the funniest people around. He has a natural ability to teach and share what he knows, and his expressive reactions, especially to smells, have made for some unforgettable moments. Jonathan’s wit, intellect, and quiet humor are what make him such a valued friend in Josh’s life.", 
+    bioEs: "Jonathan es un amigo íntimo que Josh conoció en su primer año de universidad y que rápidamente destacó por su inteligencia y consideración. Su amistad creció gracias a experiencias compartidas, desde ganar juntos un hackathon hasta pasar un verano viviendo y trabajando en Seattle. Aunque Jonathan puede parecer reservado al principio, quienes lo conocen pronto descubren a una de las personas más divertidas que existen. Tiene una habilidad natural para enseñar y compartir sus conocimientos, y sus expresivas reacciones, especialmente ante los olores, han dado lugar a momentos inolvidables. El ingenio, la inteligencia y el humor sutil de Jonathan son lo que lo convierten en un amigo tan valioso en la vida de Josh." 
   },
   { name: "Eddie Gracia", 
-    bio: "Write a short bio or note about this person here.", 
-    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+    bio: "Eddie is someone Josh met through a mutual friend, and their connection quickly grew into a brother-like bond. Known for his constant laughter, positive energy, and unmistakable sense of style, Eddie has a way of lifting the mood wherever he goes. Whether it is through jokes, his infectious personality, or even his not so great dance moves, he brings life to every moment. Beyond that, Eddie is deeply caring and dependable, always showing up for the people around him. His presence has made a lasting impact on Josh’s life.", 
+    bioEs: "Josh conoció a Eddie a través de un amigo en común, y su conexión rápidamente se convirtió en un vínculo fraternal. Conocido por su risa contagiosa, su energía positiva y su estilo inconfundible, Eddie tiene la capacidad de alegrar el ambiente allá donde va. Ya sea con sus bromas, su personalidad arrolladora o incluso sus peculiares pasos de baile, le da vida a cada momento. Además, Eddie es una persona muy cariñosa y confiable, siempre presente para quienes lo rodean. Su presencia ha dejado una huella imborrable en la vida de Josh." 
   },
   { name: "Jose Lima", 
-    bio: "Write a short bio or note about this person here.", 
-    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+    bio: "Jose is Josh’s future brother-in-law and the little brother he never had. From the start, Josh has always enjoyed being around him and admires the way Jose shows love so freely and is always willing to go out of his way to help others. A strong and dependable presence in Ana’s family, Jose is someone people naturally lean on. Whether it is their competitive games, constant jokes, or teaming up to get a reaction out of Ana, Jose has become not just family, but a true brother to Josh.", 
+    bioEs: "José es el futuro cuñado de Josh y el hermanito que nunca tuvo. Desde el principio, Josh siempre ha disfrutado de su compañía y admira la generosidad con la que José demuestra su cariño y su disposición a ayudar a los demás. José es una presencia sólida y confiable en la familia de Ana, alguien en quien todos pueden apoyarse fácilmente. Ya sea en sus juegos competitivos, sus bromas constantes o sus intentos de provocar una reacción en Ana, José se ha convertido no solo en parte de la familia, sino en un verdadero hermano para Josh." 
   },
   { name: "Dustin Acosta", 
-    bio: "Write a short bio or note about this person here.", 
-    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+    bio: "Dustin is someone Josh met through a mutual friend and quickly grew to admire for his charm and ability to connect with anyone around him. Instantly likable and easy to talk to, Dustin has a way of making people feel comfortable wherever he goes. From celebrating Josh’s 21st birthday together in Cabo to sharing countless conversations, he has been a source of great advice and perspective. Passionate, driven, and genuine, Dustin is someone Josh deeply respects and is grateful to call a friend.", 
+    bioEs: "Josh conoció a Dustin a través de un amigo en común y rápidamente lo admiró por su encanto y su facilidad para conectar con cualquiera. De trato agradable y conversador, Dustin tiene la habilidad de hacer que la gente se sienta cómoda allá donde va. Desde celebrar juntos el 21 cumpleaños de Josh en Cabo hasta compartir innumerables conversaciones, ha sido una fuente de valiosos consejos y perspectivas. Apasionado, motivado y auténtico, Josh respeta profundamente a Dustin y se siente agradecido de tenerlo como amigo." 
   },
   { name: "Luis Garduno", 
-    bio: "Write a short bio or note about this person here.", 
-    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+    bio: "Luis, better known as Garduno, is a close friend Josh met freshman year of high school while playing soccer, and someone who has always felt like an older brother. Known for his strong work ethic and drive, he played a major role in introducing Josh to Texas A&M University, a decision that ultimately shaped much of his life. From late nights and New Year’s traditions spent working on personal projects to making the best of a 7-Eleven pizza when nothing else was open, their friendship is built on shared experiences and mutual respect. Passionate and strong willed, Garduno is someone Josh deeply values and is grateful to now have nearby in San Francisco.", 
+    bioEs: "Luis, más conocido como Garduno, es un amigo íntimo que Josh conoció en su primer año de preparatoria jugando fútbol, ​​y alguien a quien siempre ha considerado como un hermano mayor. Conocido por su gran ética de trabajo y su determinación, desempeñó un papel fundamental al presentarle a Josh la Universidad de Texas A&M, una decisión que, en última instancia, marcó gran parte de su vida. Desde noches en vela y tradiciones de Año Nuevo dedicadas a proyectos personales hasta disfrutar de una pizza de 7-Eleven cuando no había nada más abierto, su amistad se basa en experiencias compartidas y respeto mutuo. Apasionado y con una gran fuerza de voluntad, Garduno es alguien a quien Josh valora profundamente y por quien agradece tener ahora cerca en San Francisco." 
   },
   { name: "Abraham Diaz", 
-    bio: "Write a short bio or note about this person here.", 
-    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+    bio: "Abraham, better known as Abe, is a close friend Josh met through a mutual friend and grew alongside while serving on the SHPE board. Their friendship strengthened during the isolation of COVID, where daily Zoom calls became a way to stay connected and build lasting memories. Abe is known for the care and love he shows others, along with a level of discipline and dedication that stands out in everything he does. Whether it is his commitment to his goals or his willingness to help anyone in need, Abe is someone Josh deeply respects and values.", 
+    bioEs: "Abraham, más conocido como Abe, es un amigo cercano que Josh conoció a través de un amigo en común y con quien creció mientras formaban parte de la junta directiva de SHPE. Su amistad se fortaleció durante el aislamiento por la COVID-19, cuando las videollamadas diarias por Zoom se convirtieron en una forma de mantenerse conectados y crear recuerdos imborrables. Abe es conocido por el cariño y la dedicación que demuestra hacia los demás, así como por su disciplina y entrega, que se reflejan en todo lo que hace. Ya sea por su compromiso con sus objetivos o por su disposición a ayudar a quien lo necesite, Josh respeta y valora profundamente a Abe." 
   },
 ];
 
 const PARENTS = [
   { name: "Francisco Duarte", 
     role: "Joshua's Parent", 
-    roleEs: "Padre de Joshua", bio: "Write a short bio or note about this person here.", 
-    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+    roleEs: "Padre de Joshua", bio: "Francisco is Josh’s dad and a constant example of what it means to lead through action. While he always had something to say, it was his actions that taught Josh the most. He showed him the value of patience, perseverance, and a strong work ethic, always leading with love and putting his family first. Patient, humorous, and dependable, Francisco has always been someone Josh could count on in any moment, offering support, encouragement, and guidance. His presence and example have shaped Josh into the man he is today in ways that will always stay with him.", 
+    bioEs: "Francisco es el padre de Josh y un ejemplo constante de liderazgo con el ejemplo. Si bien siempre tenía algo que decir, fueron sus acciones las que más le enseñaron a Josh. Le mostró el valor de la paciencia, la perseverancia y una sólida ética de trabajo, siempre actuando con amor y anteponiendo a su familia. Paciente, con sentido del humor y confiable, Francisco siempre fue alguien con quien Josh podía contar en cualquier momento, ofreciéndole apoyo, ánimo y orientación. Su presencia y ejemplo han moldeado a Josh hasta convertirlo en el hombre que es hoy, una huella que siempre lo acompañará." 
   },
   { name: "Julissa Duarte", 
     role: "Joshua's Parent", 
     roleEs: "Padre de Joshua", 
-    bio: "Write a short bio or note about this person here.", 
-    bioEs: "Escribe una nota corta sobre esta persona aquí." 
+    bio: "Julissa is Josh’s mom and the heart of his family, known for her endless love, energy, and selflessness. She always put her children first and never hesitated to give up anything if it meant making them happy. From working tirelessly to get Josh to soccer tournaments across the country to hosting unforgettable sleepovers where everyone looked forward to her breakfast, she created a home full of warmth and life. Whether she is cooking a meal on the spot or talking a little too loudly on the phone, Julissa’s spirit is unforgettable and deeply admired by Josh.", 
+    bioEs: "Julissa es la madre de Josh y el alma de su familia, conocida por su amor, energía y generosidad infinitos. Siempre antepuso a sus hijos y nunca dudó en sacrificarlo todo con tal de hacerlos felices. Desde trabajar incansablemente para llevar a Josh a torneos de fútbol por todo el país hasta organizar pijamadas inolvidables donde todos esperaban con ilusión su desayuno, creó un hogar lleno de calidez y alegría. Ya sea cocinando una comida improvisada o hablando por teléfono con un tono algo alto, el espíritu de Julissa es inolvidable y Josh la admira profundamente." 
   },
   { name: "Roberto Lima", 
     role: "Ana's Parent", 

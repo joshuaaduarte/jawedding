@@ -14,7 +14,7 @@ export const PHOTOS = {
   hero: "https://onuxjtvcfocptampxthj.supabase.co/storage/v1/object/public/photos/hero.jpg",
 
   // Venue / location photos
-  coast:    "https://picsum.photos/seed/montereycoast/1600/1000",
+  coast:    "https://images.unsplash.com/photo-1559505520-a7f905ccea87?w=1600&h=1000&fit=crop&q=80",
   venue:    "https://picsum.photos/seed/weddingvenue/1600/1000",
   portrait: "https://picsum.photos/seed/weddingportrait/1200/1200",
 
@@ -26,18 +26,18 @@ export const PHOTOS = {
   moment5: "https://picsum.photos/seed/weddingmoment5/1200/900",
   moment6: "https://picsum.photos/seed/weddingmoment6/1200/900",
 
-  // Things to do — replace each URL with a real photo of that location
-  placeAquarium:    "https://picsum.photos/seed/monterey-aquarium/1200/800",
-  placeCanneryRow:  "https://picsum.photos/seed/cannery-row/1200/800",
-  placeCarmel:      "https://picsum.photos/seed/carmel-by-the-sea/1200/800",
-  placePointLobos:  "https://picsum.photos/seed/point-lobos/1200/800",
-  place17Mile:      "https://picsum.photos/seed/17-mile-drive/1200/800",
-  placeCarmelVal:   "https://picsum.photos/seed/carmel-valley-wine/1200/800",
-  placeBigSur:      "https://picsum.photos/seed/big-sur-highway/1200/800",
-  placeSantaCruz:   "https://picsum.photos/seed/santa-cruz-boardwalk/1200/800",
-  placeHalfMoon:    "https://picsum.photos/seed/half-moon-bay/1200/800",
-  placeSF:          "https://picsum.photos/seed/san-francisco-bay/1200/800",
-  placeOakland:     "https://picsum.photos/seed/oakland-temescal/1200/800",
+  // Things to do — real photos of each location (Unsplash, free to use)
+  placeAquarium:    "https://images.unsplash.com/photo-1536094517470-a9784e41e283?w=1200&h=800&fit=crop&q=80",
+  placeCanneryRow:  "https://images.unsplash.com/photo-1640919570875-f3cf2b3a6320?w=1200&h=800&fit=crop&q=80",
+  placeCarmel:      "https://images.unsplash.com/photo-1553482040-74fd9f7eff29?w=1200&h=800&fit=crop&q=80",
+  placePointLobos:  "https://images.unsplash.com/photo-1721707037238-3ed427483949?w=1200&h=800&fit=crop&q=80",
+  place17Mile:      "https://images.unsplash.com/photo-1713811248658-266de384a9ff?w=1200&h=800&fit=crop&q=80",
+  placeCarmelVal:   "https://images.unsplash.com/photo-1717351112327-e5c50e7a2ee0?w=1200&h=800&fit=crop&q=80",
+  placeBigSur:      "https://images.unsplash.com/photo-1757715661266-70ec8851cef0?w=1200&h=800&fit=crop&q=80",
+  placeSantaCruz:   "https://images.unsplash.com/photo-1630220123539-c020fbae7813?w=1200&h=800&fit=crop&q=80",
+  placeHalfMoon:    "https://images.unsplash.com/photo-1578494183711-0fef04267c03?w=1200&h=800&fit=crop&q=80",
+  placeSF:          "https://images.unsplash.com/photo-1610312278520-bcc893a3ff1d?w=1200&h=800&fit=crop&q=80",
+  placeOakland:     "https://images.unsplash.com/photo-1576848444197-a582052713b7?w=1200&h=800&fit=crop&q=80",
 
   // Honeymoon destinations — replace with real travel photos when ready
   destJapan:     "https://picsum.photos/seed/japan-kyoto-temple/1200/800",
