@@ -23,7 +23,7 @@ export default async function AdminGuestsPage() {
           href="/admin/guests/new"
           className="inline-flex h-10 items-center rounded-full bg-stone-800 px-6 text-xs uppercase tracking-[0.18em] text-white transition hover:bg-stone-700"
         >
-          + Add Guest
+          + Add Guests
         </Link>
       </div>
 

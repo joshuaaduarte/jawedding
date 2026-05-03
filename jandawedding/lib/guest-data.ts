@@ -202,6 +202,44 @@ export async function updateGuest(
   return mapGuest(data);
 }
 
+export async function createGuestsBatch(
+  shared: {
+    inviteCode: string;
+    group: GuestGroup;
+    displayName: string;
+    anecdote: string;
+    anecdoteEs: string;
+  },
+  members: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    customAnecdote?: string;
+    customAnecdoteEs?: string;
+  }[],
+): Promise<Guest[]> {
+  const partyMembers = members.map((m) => m.firstName);
+
+  const rows = members.map((m) => ({
+    first_name: m.firstName,
+    last_name: m.lastName,
+    email: m.email,
+    group: shared.group,
+    invite_code: shared.inviteCode,
+    display_name: shared.displayName,
+    anecdote: m.customAnecdote ?? shared.anecdote,
+    anecdote_es: m.customAnecdoteEs ?? shared.anecdoteEs,
+    party_members: partyMembers,
+  }));
+
+  const { data, error } = await getSupabase()
+    .from("guests")
+    .insert(rows)
+    .select();
+  if (error) throw error;
+  return (data ?? []).map(mapGuest);
+}
+
 export async function deleteGuest(id: string): Promise<void> {
   const { error } = await getSupabase().from("guests").delete().eq("id", id);
   if (error) throw error;
