@@ -8,6 +8,7 @@ export async function batchCreateGuests(formJson: string) {
     inviteCode: string;
     group: GuestGroup;
     displayName: string;
+    familyName: string;
     anecdote: string;
     anecdoteEs: string;
     members: {
@@ -32,6 +33,7 @@ export async function batchCreateGuests(formJson: string) {
       inviteCode: data.inviteCode.trim().toUpperCase(),
       group: data.group,
       displayName: data.displayName.trim(),
+      familyName: data.familyName.trim(),
       anecdote: data.anecdote.trim(),
       anecdoteEs: data.anecdoteEs.trim(),
     },

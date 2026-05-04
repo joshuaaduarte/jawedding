@@ -118,7 +118,12 @@ export default async function PortalLayout({
                 className="mt-2 font-serif italic text-white"
                 style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)" }}
               >
-                {t.welcome}, {guest.displayName || guest.firstName}
+                {t.welcome},{" "}
+                {guest.familyName
+                  ? locale === "es"
+                    ? `la familia ${guest.familyName}`
+                    : `the ${guest.familyName} Family`
+                  : guest.displayName || guest.firstName}
               </h1>
             </div>
           </div>

@@ -19,6 +19,7 @@ export type Guest = {
   anecdote: string;
   anecdoteEs: string;
   displayName: string;
+  familyName: string;
   partyMembers: string[];
 };
 
@@ -60,6 +61,7 @@ function mapGuest(row: Record<string, unknown>): Guest {
     anecdote: (row.anecdote as string) ?? "",
     anecdoteEs: (row.anecdote_es as string) ?? "",
     displayName: (row.display_name as string) ?? "",
+    familyName: (row.family_name as string) ?? "",
     partyMembers: (row.party_members as string[]) ?? [],
   };
 }
@@ -146,6 +148,7 @@ export async function createGuest(input: {
   anecdoteEs?: string;
   inviteCode: string;
   displayName?: string;
+  familyName?: string;
   partyMembers?: string[];
 }): Promise<Guest> {
   const { data, error } = await getSupabase()
@@ -159,6 +162,7 @@ export async function createGuest(input: {
       anecdote_es: input.anecdoteEs ?? "",
       invite_code: input.inviteCode,
       display_name: input.displayName ?? "",
+      family_name: input.familyName ?? "",
       party_members: input.partyMembers ?? [],
     })
     .select()
@@ -178,6 +182,7 @@ export async function updateGuest(
     anecdoteEs: string;
     inviteCode: string;
     displayName: string;
+    familyName: string;
     partyMembers: string[];
   }>,
 ): Promise<Guest> {
@@ -190,6 +195,7 @@ export async function updateGuest(
   if (input.anecdoteEs !== undefined) patch.anecdote_es = input.anecdoteEs;
   if (input.inviteCode !== undefined) patch.invite_code = input.inviteCode;
   if (input.displayName !== undefined) patch.display_name = input.displayName;
+  if (input.familyName !== undefined) patch.family_name = input.familyName;
   if (input.partyMembers !== undefined) patch.party_members = input.partyMembers;
 
   const { data, error } = await getSupabase()
@@ -207,6 +213,7 @@ export async function createGuestsBatch(
     inviteCode: string;
     group: GuestGroup;
     displayName: string;
+    familyName: string;
     anecdote: string;
     anecdoteEs: string;
   },
@@ -227,6 +234,7 @@ export async function createGuestsBatch(
     group: shared.group,
     invite_code: shared.inviteCode,
     display_name: shared.displayName,
+    family_name: shared.familyName,
     anecdote: m.customAnecdote ?? shared.anecdote,
     anecdote_es: m.customAnecdoteEs ?? shared.anecdoteEs,
     party_members: partyMembers,

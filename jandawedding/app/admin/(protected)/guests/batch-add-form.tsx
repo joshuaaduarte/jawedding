@@ -78,6 +78,7 @@ export function BatchAddForm({ groups }: { groups: GroupOption[] }) {
       inviteCode,
       group,
       displayName,
+      familyName: familyLastName,
       anecdote,
       anecdoteEs,
       members: members.map((m) => ({

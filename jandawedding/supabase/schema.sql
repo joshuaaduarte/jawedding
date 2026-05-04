@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS guests (
   anecdote      TEXT NOT NULL DEFAULT '',
   anecdote_es   TEXT NOT NULL DEFAULT '',
   display_name  TEXT NOT NULL DEFAULT '',
+  family_name   TEXT NOT NULL DEFAULT '',
   party_members TEXT[] NOT NULL DEFAULT '{}',
   created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

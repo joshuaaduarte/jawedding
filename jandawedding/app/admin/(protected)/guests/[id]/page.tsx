@@ -21,6 +21,7 @@ export default async function EditGuestPage({ params }: Props) {
       anecdoteEs: (formData.get("anecdoteEs") as string).trim(),
       inviteCode: (formData.get("inviteCode") as string).trim().toUpperCase(),
       displayName: (formData.get("displayName") as string).trim(),
+      familyName: (formData.get("familyName") as string).trim(),
       partyMembers: (formData.get("partyMembers") as string)
         .split(",")
         .map((s) => s.trim())
@@ -104,6 +105,21 @@ export default async function EditGuestPage({ params }: Props) {
                 defaultValue={guest.displayName}
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
                 placeholder='e.g. "The Lima Family" or "Ana &amp; Jorge"'
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
+                Family Name{" "}
+                <span className="normal-case text-stone-400">
+                  (optional — used for locale-aware greeting: EN &quot;the Lima Family&quot; / ES &quot;la familia Lima&quot;)
+                </span>
+              </label>
+              <input
+                name="familyName"
+                type="text"
+                defaultValue={guest.familyName}
+                className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm text-stone-900 outline-none ring-stone-700/30 transition focus:ring-2"
+                placeholder="e.g. Lima"
               />
             </div>
             <div className="sm:col-span-2">
