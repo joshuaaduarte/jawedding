@@ -76,10 +76,11 @@ export default async function PortalLayout({
           {/* Banner image */}
           <div className="relative h-56 sm:h-64">
             <Image
-              src={PHOTOS.coast}
+              src={PHOTOS.moment12}
               alt="Portal banner"
               fill
               className="object-cover"
+              style={{ objectPosition: "center 40%" }}
             />
             <div
               className="absolute inset-0"

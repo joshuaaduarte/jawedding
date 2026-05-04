@@ -10,7 +10,7 @@ export default async function Home() {
       ? {
           saveDate: "Reserva La Fecha",
           guestLogin: "Entrar",
-          weMarried: "Nos vamos a casar.",
+          weMarried: "Nos vamos a casar!",
           date: "Fecha",
           mainLocation: "Ubicación",
           ceremony: "Ceremonia",
@@ -27,7 +27,7 @@ export default async function Home() {
       : {
           saveDate: "Save The Date",
           guestLogin: "Login",
-          weMarried: "We are getting married.",
+          weMarried: "We are getting married!",
           date: "Date",
           mainLocation: "Location",
           ceremony: "Ceremony",
@@ -184,12 +184,12 @@ export default async function Home() {
             </p>
           </div>
 
-          {/* Asymmetric editorial grid */}
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-12">
-            {/* Large feature left */}
+          {/* Portrait-friendly masonry grid */}
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            {/* Tall feature — spans 2 rows */}
             <div
-              className="relative overflow-hidden rounded-[1.5rem] md:col-span-7"
-              style={{ height: "clamp(260px, 38vw, 490px)" }}
+              className="relative col-span-1 row-span-2 overflow-hidden rounded-[1.5rem]"
+              style={{ minHeight: "clamp(360px, 52vw, 620px)" }}
             >
               <Image
                 src={PHOTOS.moment1}
@@ -198,45 +198,90 @@ export default async function Home() {
                 className="object-cover"
               />
             </div>
-            {/* Right column stacked */}
-            <div className="flex flex-col gap-3 md:col-span-5">
-              <div
-                className="relative overflow-hidden rounded-[1.5rem]"
-                style={{ height: "clamp(130px, 18vw, 238px)" }}
-              >
-                <Image
-                  src={PHOTOS.moment2}
-                  alt="Moment 2"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div
-                className="relative overflow-hidden rounded-[1.5rem]"
-                style={{ height: "clamp(130px, 18vw, 238px)" }}
-              >
-                <Image
-                  src={PHOTOS.moment3}
-                  alt="Moment 3"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+
+            {/* Top-right portraits */}
+            <div
+              className="relative overflow-hidden rounded-[1.5rem]"
+              style={{ height: "clamp(170px, 25vw, 300px)" }}
+            >
+              <Image
+                src={PHOTOS.moment2}
+                alt="Moment 2"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div
+              className="relative overflow-hidden rounded-[1.5rem]"
+              style={{ height: "clamp(170px, 25vw, 300px)" }}
+            >
+              <Image
+                src={PHOTOS.moment3}
+                alt="Moment 3"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div
+              className="relative overflow-hidden rounded-[1.5rem]"
+              style={{ height: "clamp(170px, 25vw, 300px)" }}
+            >
+              <Image
+                src={PHOTOS.moment7}
+                alt="Moment 7"
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            {/* Bottom row portraits */}
+            <div
+              className="relative overflow-hidden rounded-[1.5rem]"
+              style={{ height: "clamp(170px, 25vw, 300px)" }}
+            >
+              <Image
+                src={PHOTOS.moment4}
+                alt="Moment 4"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div
+              className="relative overflow-hidden rounded-[1.5rem]"
+              style={{ height: "clamp(170px, 25vw, 300px)" }}
+            >
+              <Image
+                src={PHOTOS.moment5}
+                alt="Moment 5"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div
+              className="relative overflow-hidden rounded-[1.5rem]"
+              style={{ height: "clamp(170px, 25vw, 300px)" }}
+            >
+              <Image
+                src={PHOTOS.moment8}
+                alt="Moment 8"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
 
-          {/* Lower strip */}
+          {/* Lower portrait strip */}
           <div className="mt-3 grid grid-cols-3 gap-3">
-            {([PHOTOS.moment4, PHOTOS.moment5, PHOTOS.moment6] as const).map(
+            {([PHOTOS.moment6, PHOTOS.coast, PHOTOS.portrait] as const).map(
               (src, i) => (
                 <div
                   key={src}
                   className="relative overflow-hidden rounded-2xl"
-                  style={{ height: "clamp(100px, 14vw, 190px)" }}
+                  style={{ height: "clamp(180px, 28vw, 340px)" }}
                 >
                   <Image
                     src={src}
-                    alt={`Moment ${i + 4}`}
+                    alt={`Portrait ${i + 1}`}
                     fill
                     className="object-cover"
                   />
@@ -245,26 +290,6 @@ export default async function Home() {
             )}
           </div>
         </section>
-
-        {/* ── Cinematic bottom trio ── */}
-        <div className="mt-3 grid grid-cols-3 gap-3">
-          {([PHOTOS.coast, PHOTOS.venue, PHOTOS.portrait] as const).map(
-            (src, i) => (
-              <div
-                key={src}
-                className="relative overflow-hidden rounded-2xl"
-                style={{ height: "clamp(100px, 14vw, 190px)" }}
-              >
-                <Image
-                  src={src}
-                  alt={`Preview ${i + 1}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ),
-          )}
-        </div>
 
         {/* ── Footer whisper ── */}
         <p

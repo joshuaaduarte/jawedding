@@ -1,30 +1,38 @@
 // ============================================================
 // Photo Configuration
 // ============================================================
-// Replace the placeholder URLs below with real photo URLs when
-// you're ready. No other code changes are needed — the entire
-// site reads images from this single file.
-//
-// To upload photos easily, use the Vercel Blob upload in the
-// admin panel (coming soon), or paste any direct image URL.
+// All engagement photos are stored in Supabase Storage under
+// the "photos/engagement/" prefix in the public "photos" bucket.
+// Location photos for "Things to Do" use Unsplash URLs.
 // ============================================================
+
+const SB = "https://onuxjtvcfocptampxthj.supabase.co/storage/v1/object/public/photos";
 
 export const PHOTOS = {
   // Hero image on the public landing page
-  hero: "https://onuxjtvcfocptampxthj.supabase.co/storage/v1/object/public/photos/hero.jpg",
+  hero: `${SB}/engagement/golden-kiss-bouquet.jpg`,
 
-  // Venue / location photos
-  coast:    "https://images.unsplash.com/photo-1559505520-a7f905ccea87?w=1600&h=1000&fit=crop&q=80",
-  venue:    "https://picsum.photos/seed/weddingvenue/1600/1000",
-  portrait: "https://picsum.photos/seed/weddingportrait/1200/1200",
+  // Engagement photos — featured / editorial slots
+  coast:    `${SB}/engagement/walking-away-coastal.jpg`,
+  venue:    `${SB}/engagement/bench-forest.jpg`,
+  portrait: `${SB}/engagement/face-touch-sky.jpg`,
 
-  // Couple moments — appear in the photo wall and gallery sections
-  moment1: "https://picsum.photos/seed/weddingmoment1/1200/900",
-  moment2: "https://picsum.photos/seed/weddingmoment2/1200/900",
-  moment3: "https://picsum.photos/seed/weddingmoment3/1200/900",
-  moment4: "https://picsum.photos/seed/weddingmoment4/1200/900",
-  moment5: "https://picsum.photos/seed/weddingmoment5/1200/900",
-  moment6: "https://picsum.photos/seed/weddingmoment6/1200/900",
+  // Couple moments — photo wall (landing page) + Our Story chapters
+  moment1: `${SB}/engagement/kiss-bouquet-ocean.jpg`,
+  moment2: `${SB}/engagement/looking-down-bouquet.jpg`,
+  moment3: `${SB}/engagement/embrace-rocks.jpg`,
+  moment4: `${SB}/engagement/smiling-bouquet-splash.jpg`,
+  moment5: `${SB}/engagement/walking-sandy-path.jpg`,
+  moment6: `${SB}/engagement/closeup-bouquet-ocean.jpg`,
+
+  // Additional engagement photos — available for future use
+  moment7:  `${SB}/engagement/standing-rocks-waves.jpg`,
+  moment8:  `${SB}/engagement/cheek-kiss-ocean.jpg`,
+  moment9:  `${SB}/engagement/hands-holding-ring.jpg`,
+  moment10: `${SB}/engagement/hands-reaching-rocks.jpg`,
+  moment11: `${SB}/engagement/sitting-path-ring.jpg`,
+  moment12: `${SB}/engagement/walking-rocks-aerial.jpg`,
+  moment13: `${SB}/engagement/kiss-bouquet-ocean.jpg`,
 
   // Things to do — real photos of each location (Unsplash, free to use)
   placeAquarium:    "https://images.unsplash.com/photo-1536094517470-a9784e41e283?w=1200&h=800&fit=crop&q=80",
