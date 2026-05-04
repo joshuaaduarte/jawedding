@@ -18,7 +18,7 @@ export const PHOTOS = {
   portrait: `${SB}/engagement/face-touch-sky.jpg`,
 
   // Couple moments — photo wall (landing page) + Our Story chapters
-  moment1: `${SB}/engagement/kiss-bouquet-ocean.jpg`,
+  moment1: `${SB}/engagement/standing-rocks-waves.jpg`,
   moment2: `${SB}/engagement/looking-down-bouquet.jpg`,
   moment3: `${SB}/engagement/embrace-rocks.jpg`,
   moment4: `${SB}/engagement/smiling-bouquet-splash.jpg`,
@@ -26,7 +26,7 @@ export const PHOTOS = {
   moment6: `${SB}/engagement/closeup-bouquet-ocean.jpg`,
 
   // Additional engagement photos — available for future use
-  moment7:  `${SB}/engagement/standing-rocks-waves.jpg`,
+  moment7:  `${SB}/engagement/kiss-bouquet-ocean.jpg`,
   moment8:  `${SB}/engagement/cheek-kiss-ocean.jpg`,
   moment9:  `${SB}/engagement/hands-holding-ring.jpg`,
   moment10: `${SB}/engagement/hands-reaching-rocks.jpg`,
