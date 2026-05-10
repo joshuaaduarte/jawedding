@@ -123,7 +123,7 @@ export default async function PortalLayout({
                 {guest.familyName
                   ? locale === "es"
                     ? `la familia ${guest.familyName}`
-                    : `the ${guest.familyName} Family`
+                    : `The ${guest.familyName} Family`
                   : guest.displayName || guest.firstName}
               </h1>
             </div>
