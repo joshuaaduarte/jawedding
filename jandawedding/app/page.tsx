@@ -205,8 +205,8 @@ export default async function Home() {
               style={{ height: "clamp(170px, 25vw, 300px)" }}
             >
               <Image
-                src={PHOTOS.moment2}
-                alt="Moment 2"
+                src={PHOTOS.moment11}
+                alt="Sitting on path with ring"
                 fill
                 className="object-cover"
               />

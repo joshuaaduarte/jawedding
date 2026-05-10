@@ -12,6 +12,9 @@ export const PHOTOS = {
   // Hero image on the public landing page
   hero: `${SB}/engagement/golden-kiss-bouquet.jpg`,
 
+  // Portal banner
+  portalBanner: `${SB}/hero.jpg`,
+
   // Engagement photos — featured / editorial slots
   coast:    `${SB}/engagement/walking-away-coastal.jpg`,
   venue:    `${SB}/engagement/bench-forest.jpg`,
@@ -47,7 +50,11 @@ export const PHOTOS = {
   placeSF:          "https://images.unsplash.com/photo-1610312278520-bcc893a3ff1d?w=1200&h=800&fit=crop&q=80",
   placeOakland:     "https://images.unsplash.com/photo-1576848444197-a582052713b7?w=1200&h=800&fit=crop&q=80",
 
-  // Honeymoon destinations — replace with real travel photos when ready
-  destJapan:     "https://picsum.photos/seed/japan-kyoto-temple/1200/800",
-  destGuatemala: "https://picsum.photos/seed/guatemala-lake-atitlan/1200/800",
+  // Stay page — real location photos (Unsplash)
+  placePacificGrove: "https://images.unsplash.com/photo-1591164115502-09f4edf9f005?w=1200&h=800&fit=crop&q=80",
+  placeMontereyPlaza: "https://images.unsplash.com/photo-1674314322081-a1c47e411229?w=1200&h=800&fit=crop&q=80",
+  placeDowntownMonterey: "https://images.unsplash.com/photo-1705796271317-28f7f0cf3dc1?w=1200&h=800&fit=crop&q=80",
+
+  // Honeymoon destination
+  destJapan: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=1200&h=800&fit=crop&q=80",
 } as const;

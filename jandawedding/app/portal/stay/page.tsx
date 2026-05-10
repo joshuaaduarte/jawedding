@@ -6,52 +6,6 @@ import { getLocale } from "@/lib/locale";
 // DATA
 // ─────────────────────────────────────────────────────────────────────────────
 
-// TODO: Replace bookingUrl values with direct hotel website or booking.com links.
-// TODO: Adjust priceRange, distCeremony, distVenue to match confirmed venues.
-const HOTELS = [
-  {
-    name: "Monterey Plaza Hotel & Spa",
-    area: "Cannery Row, Monterey",
-    areaEs: "Cannery Row, Monterey",
-    imageSrc: PHOTOS.coast,
-    priceRange: "$$$",
-    distCeremony: "20 min to ceremony",
-    distCeremonyEs: "20 min a la ceremonia",
-    distVenue: "15 min to reception",
-    distVenueEs: "15 min al venue",
-    note: "Waterfront property right on Cannery Row with a private ocean deck. Ideal for guests who want a splurge-worthy, scenic base.",
-    noteEs: "Propiedad frente al mar en Cannery Row con terraza privada al océano. Ideal para quienes buscan una experiencia premium.",
-    bookingUrl: "https://www.montereyplazahotel.com",
-  },
-  {
-    name: "Portola Hotel & Spa",
-    area: "Downtown Monterey",
-    areaEs: "Centro de Monterey",
-    imageSrc: PHOTOS.venue,
-    priceRange: "$$$",
-    distCeremony: "20 min to ceremony",
-    distCeremonyEs: "20 min a la ceremonia",
-    distVenue: "12 min to reception",
-    distVenueEs: "12 min al venue",
-    note: "The largest full-service hotel in Monterey — great for families and groups traveling together. Central location with easy parking.",
-    noteEs: "El hotel de servicio completo más grande de Monterey — ideal para familias y grupos. Ubicación central con estacionamiento fácil.",
-    bookingUrl: "https://www.portolahotel.com",
-  },
-  {
-    name: "Carmel Mission Inn",
-    area: "Carmel-by-the-Sea",
-    areaEs: "Carmel junto al Mar",
-    imageSrc: PHOTOS.placeCarmel,
-    priceRange: "$$",
-    distCeremony: "5 min to ceremony",
-    distCeremonyEs: "5 min a la ceremonia",
-    distVenue: "18 min to reception",
-    distVenueEs: "18 min al venue",
-    note: "Best-value option closest to the Carmel Mission. Comfortable rooms, easy parking, and walking distance to Carmel village restaurants.",
-    noteEs: "La mejor opción de precio más cerca de la Misión. Cómodas habitaciones, fácil estacionamiento y restaurantes a pie.",
-    bookingUrl: "https://www.carmelmissioninn.com",
-  },
-] as const;
 
 // TODO: Adjust drive times once ceremony/reception addresses are confirmed.
 const DISTANCES = [
@@ -205,81 +159,49 @@ function AreaCard({
   );
 }
 
-// Full hotel card with image, price range, distances, and booking CTA
-function HotelCard({
-  hotel,
-  checkAvailability,
+// Search platform card for the booking section
+function SearchCard({
+  href,
+  icon,
+  name,
+  description,
 }: {
-  hotel: (typeof HOTELS)[number];
-  checkAvailability: string;
+  href: string;
+  icon: string;
+  name: string;
+  description: string;
 }) {
   return (
-    <article
-      className="overflow-hidden rounded-2xl flex flex-col"
-      style={{ border: "1px solid #e8ddd4", background: "rgba(255,255,255,0.88)" }}
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex items-center gap-4 rounded-2xl px-5 py-5 transition hover:shadow-sm"
+      style={{ border: "1px solid #e8ddd4", background: "rgba(251,244,232,0.35)" }}
     >
-      <div className="relative h-44 w-full overflow-hidden shrink-0">
-        <Image src={hotel.imageSrc} alt={hotel.name} fill className="object-cover" />
-      </div>
-      <div className="flex flex-col flex-1 px-5 py-5">
-        {/* Header row */}
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <h3
-              className="font-serif text-xl leading-tight"
-              style={{ color: "#2d1f14" }}
-            >
-              {hotel.name}
-            </h3>
-            <p
-              className="mt-0.5 text-[10px] uppercase tracking-[0.14em]"
-              style={{ color: "#c9a0a0" }}
-            >
-              {hotel.area}
-            </p>
-          </div>
-          <span
-            className="shrink-0 rounded-full px-3 py-1 text-xs font-medium"
-            style={{ background: "rgba(201,160,160,0.14)", color: "#a07070" }}
-          >
-            {hotel.priceRange}
-          </span>
-        </div>
-
-        {/* Distance chips */}
-        <div className="mt-3 flex flex-wrap gap-2">
-          <span
-            className="rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.1em]"
-            style={{ border: "1px solid #e8ddd4", color: "#7a6050" }}
-          >
-            ⛪ {hotel.distCeremony}
-          </span>
-          <span
-            className="rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.1em]"
-            style={{ border: "1px solid #e8ddd4", color: "#7a6050" }}
-          >
-            🥂 {hotel.distVenue}
-          </span>
-        </div>
-
-        {/* Description */}
-        <p className="mt-3 text-xs leading-5 flex-1" style={{ color: "#8a7060" }}>
-          {hotel.note}
+      <span
+        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl"
+        style={{ background: "rgba(201,160,160,0.12)" }}
+        aria-hidden
+      >
+        {icon}
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-medium" style={{ color: "#2d1f14" }}>
+          {name}
         </p>
-
-        {/* CTA */}
-        {/* TODO: Replace hotel.bookingUrl with the actual hotel or Booking.com URL */}
-        <a
-          href={hotel.bookingUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-4 flex w-full items-center justify-center rounded-full py-2.5 text-[11px] uppercase tracking-[0.16em] transition hover:opacity-80"
-          style={{ border: "1px solid #d4c4b4", color: "#2d1f14" }}
-        >
-          {checkAvailability}
-        </a>
+        <p className="mt-0.5 text-xs leading-5" style={{ color: "#8a7060" }}>
+          {description}
+        </p>
       </div>
-    </article>
+      <span
+        className="shrink-0 text-xs transition group-hover:translate-x-0.5"
+        style={{ color: "#c9a0a0" }}
+        aria-hidden
+      >
+        &rarr;
+      </span>
+    </a>
   );
 }
 
@@ -345,7 +267,7 @@ export default async function StayPage() {
             name: "Pacific Grove",
             tagline: "Tranquilo y pintoresco",
             note: "Tranquilo pueblo costero entre Monterey y 17-Mile Drive. Más calmado que el centro, con posadas victorianas y vistas al mar.",
-            imageSrc: PHOTOS.coast,
+            imageSrc: PHOTOS.placePacificGrove,
             badge: "~20 min a los eventos",
           },
         ],
@@ -355,9 +277,11 @@ export default async function StayPage() {
         hotelsTitle: "Encuentra Dónde Quedarte",
         hotelsIntro:
           "Busca hoteles, Airbnb y VRBO en el área de Monterey y Carmel. Para grupos de 4+, una casa de alquiler frecuentemente ofrece más espacio y valor.",
-        checkAvailability: "Ver Disponibilidad →",
+        searchHotelsDesc: "Compara precios y disponibilidad de hoteles en Monterey y Carmel",
         searchAirbnb: "Buscar en Airbnb",
+        searchAirbnbDesc: "Casas y departamentos perfectos para grupos o estancias largas",
         searchVrbo: "Buscar en VRBO",
+        searchVrboDesc: "Casas de vacaciones con espacio extra para familias y grupos",
 
         // ── Map ──
         mapLabel: "Orientación",
@@ -430,7 +354,7 @@ export default async function StayPage() {
             name: "Pacific Grove",
             tagline: "Quiet & scenic",
             note: "Quaint coastal town between Monterey and 17-Mile Drive. Quieter than downtown, with lovely Victorian inns and ocean views.",
-            imageSrc: PHOTOS.coast,
+            imageSrc: PHOTOS.placePacificGrove,
             badge: "~20 min to venues",
           },
         ],
@@ -440,9 +364,11 @@ export default async function StayPage() {
         hotelsTitle: "Search & Book Your Stay",
         hotelsIntro:
           "Search hotels, Airbnb, and VRBO in the Monterey and Carmel area. For groups of 4+, a rental home often offers more space and better value.",
-        checkAvailability: "Check Availability →",
+        searchHotelsDesc: "Compare prices and availability for hotels in Monterey and Carmel",
         searchAirbnb: "Search Airbnb",
+        searchAirbnbDesc: "Homes and apartments perfect for groups or longer stays",
         searchVrbo: "Search VRBO",
+        searchVrboDesc: "Vacation homes with extra space for families and groups",
 
         // ── Map ──
         mapLabel: "Getting Oriented",
@@ -512,52 +438,39 @@ export default async function StayPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────────────
-          FEATURED HOTELS
+          SEARCH & BOOK
           ───────────────────────────────────────────────────────────────────── */}
       <section
         className="rounded-3xl p-7 sm:p-10"
         style={{ border: "1px solid #e8ddd4", background: "rgba(255,255,255,0.88)" }}
       >
-        <div className="mb-7">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <SectionLabel>{t.hotelsLabel}</SectionLabel>
-              <SectionTitle>{t.hotelsTitle}</SectionTitle>
-              <p className="mt-2 text-sm leading-6" style={{ color: "#8a7060", maxWidth: "52ch" }}>
-                {t.hotelsIntro}
-              </p>
-            </div>
-          </div>
-
-          {/* Search buttons for all three platforms */}
-          <div className="mt-5 flex flex-wrap gap-3">
-            <QuickLink
-              href="https://www.google.com/travel/hotels/Monterey,CA?q=hotels+monterey+carmel+california&dates=2026-09-03,2026-09-05"
-              label={t.searchHotels}
-              icon="🏨"
-              isPrimary
-            />
-            <QuickLink
-              href="https://www.airbnb.com/s/Carmel-by-the-Sea--CA--United-States/homes?checkin=2026-09-03&checkout=2026-09-05"
-              label={t.searchAirbnb}
-              icon="🏡"
-            />
-            <QuickLink
-              href="https://www.vrbo.com/search?destination=Monterey%2C+CA&startDate=2026-09-03&endDate=2026-09-05"
-              label={t.searchVrbo}
-              icon="🔍"
-            />
-          </div>
+        <div className="mb-6">
+          <SectionLabel>{t.hotelsLabel}</SectionLabel>
+          <SectionTitle>{t.hotelsTitle}</SectionTitle>
+          <p className="mt-2 text-sm leading-6" style={{ color: "#8a7060", maxWidth: "52ch" }}>
+            {t.hotelsIntro}
+          </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {HOTELS.map((hotel) => (
-            <HotelCard
-              key={hotel.name}
-              hotel={hotel}
-              checkAvailability={t.checkAvailability}
-            />
-          ))}
+        <div className="grid gap-3 sm:grid-cols-3">
+          <SearchCard
+            href="https://www.google.com/travel/hotels/Monterey,CA?q=hotels+monterey+carmel+california&dates=2026-09-03,2026-09-05"
+            icon="🏨"
+            name={t.searchHotels}
+            description={t.searchHotelsDesc}
+          />
+          <SearchCard
+            href="https://www.airbnb.com/s/Carmel-by-the-Sea--CA--United-States/homes?checkin=2026-09-03&checkout=2026-09-05"
+            icon="🏡"
+            name={t.searchAirbnb}
+            description={t.searchAirbnbDesc}
+          />
+          <SearchCard
+            href="https://www.vrbo.com/search?destination=Monterey%2C+CA&startDate=2026-09-03&endDate=2026-09-05"
+            icon="🔍"
+            name={t.searchVrbo}
+            description={t.searchVrboDesc}
+          />
         </div>
       </section>
 

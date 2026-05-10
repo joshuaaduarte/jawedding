@@ -20,17 +20,6 @@ const DESTINATIONS = [
     photo: "destJapan" as const,
     accent: "#c9a0a0",
   },
-  {
-    flag: "🇬🇹",
-    country: "Guatemala",
-    countryEs: "Guatemala",
-    label: "A Return to Our Roots",
-    labelEs: "Un Regreso a Nuestras Raíces",
-    body: "Guatemala holds a very special place in our hearts — it's where both of our families come from. While we've each grown up hearing stories about this beautiful country, we've never had the chance to experience it together. Our honeymoon will be our first time going back as a couple, and now, as husband and wife. Walking the same land our families walked, surrounded by its culture, its warmth, and its beauty — there's nothing more meaningful we could imagine.",
-    bodyEs: "Guatemala tiene un lugar muy especial en nuestros corazones: es de donde provienen las familias de ambos. Aunque crecimos escuchando historias sobre este hermoso país, nunca hemos tenido la oportunidad de vivirlo juntos. Nuestra luna de miel será nuestro primer viaje de regreso como pareja y, ahora, como esposo y esposa. Caminar la misma tierra que recorrieron nuestras familias, rodeados de su cultura, su calidez y su belleza, es lo más significativo que podríamos imaginar.",
-    photo: "destGuatemala" as const,
-    accent: "#7a9e7e",
-  },
 ];
 
 const PAYMENT_METHODS = [
@@ -140,7 +129,7 @@ export default async function RegistryPage() {
         </p>
       </div>
 
-      {/* Destination cards */}
+      {/* Destination — Japan */}
       <section>
         <p
           className="px-1 mb-5 text-xs uppercase tracking-[0.32em]"
@@ -148,45 +137,63 @@ export default async function RegistryPage() {
         >
           {t.destinationsLabel}
         </p>
-        <div className="grid gap-5 md:grid-cols-2">
-          {DESTINATIONS.map((dest) => (
+
+        {(() => {
+          const dest = DESTINATIONS[0];
+          return (
             <article
-              key={dest.country}
-              className="rounded-3xl overflow-hidden"
+              className="rounded-3xl overflow-hidden md:flex"
               style={{
                 border: "1px solid #e8ddd4",
                 background: "rgba(251, 244, 232, 0.92)",
               }}
             >
-              <div className="relative h-48 w-full">
+              {/* Image — tall on mobile, side panel on desktop */}
+              <div className="relative h-64 md:h-auto md:w-1/2 md:min-h-[320px]">
                 <Image
                   src={PHOTOS[dest.photo]}
                   alt={isEs ? dest.countryEs : dest.country}
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(45,31,20,0.45) 0%, transparent 60%)" }} />
-                <div className="absolute bottom-4 left-5 flex items-center gap-2">
-                  <span className="text-2xl" role="img" aria-label={dest.country}>{dest.flag}</span>
-                  <p className="font-serif italic text-white drop-shadow" style={{ fontSize: "1.2rem" }}>
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(to top, rgba(45,31,20,0.5) 0%, transparent 50%)",
+                  }}
+                />
+                <div className="absolute bottom-5 left-5 flex items-center gap-2">
+                  <span className="text-3xl" role="img" aria-label={dest.country}>
+                    {dest.flag}
+                  </span>
+                  <p
+                    className="font-serif italic text-white drop-shadow-lg"
+                    style={{ fontSize: "1.4rem" }}
+                  >
                     {isEs ? dest.countryEs : dest.country}
                   </p>
                 </div>
               </div>
-              <div className="p-6 space-y-2">
+
+              {/* Text */}
+              <div className="p-7 md:p-9 md:w-1/2 flex flex-col justify-center space-y-3">
                 <p
                   className="text-xs uppercase tracking-[0.18em]"
                   style={{ color: dest.accent }}
                 >
                   {isEs ? dest.labelEs : dest.label}
                 </p>
-                <p className="text-sm leading-7" style={{ color: "#6b5444" }}>
+                <p
+                  className="text-sm leading-7"
+                  style={{ color: "#6b5444" }}
+                >
                   {isEs ? dest.bodyEs : dest.body}
                 </p>
               </div>
             </article>
-          ))}
-        </div>
+          );
+        })()}
       </section>
 
       {/* Payment section */}
