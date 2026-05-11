@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS events (
   time           TEXT NOT NULL,
   location       TEXT NOT NULL,
   groups         TEXT[] NOT NULL DEFAULT ARRAY['all'],
+  address        TEXT NOT NULL DEFAULT '',
   sort_order     INTEGER NOT NULL DEFAULT 0,
   start_datetime TIMESTAMPTZ,
   created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -85,12 +86,12 @@ ON CONFLICT DO NOTHING;
 -- ============================================================
 -- Seed: Initial wedding events
 -- ============================================================
-INSERT INTO events (day_label, event_date, title, time, location, groups, sort_order) VALUES
-  ('Thursday',  'September 3',  'Rehearsal',        'Time TBD',  'Carmel Mission Basilica, Monterey', ARRAY['bridal-party', 'parents'], 1),
-  ('Thursday',  'September 3',  'Rehearsal Dinner', 'Time TBD',  'Venue TBD',                         ARRAY['bridal-party', 'parents'], 2),
-  ('Friday',    'September 4',  'Ceremony',         '2:00 PM',   'Carmel Mission Basilica, Monterey', ARRAY['all'],                    3),
-  ('Friday',    'September 4',  'Reception',        '5:00 PM',   'Fairview Laguna Seca, Monterey',    ARRAY['all'],                    4),
-  ('Saturday',  'September 5',  'Farewell Brunch',  'Time TBD',  'Venue TBD',                         ARRAY['all'],                    5)
+INSERT INTO events (day_label, event_date, title, time, location, address, groups, sort_order) VALUES
+  ('Thursday',  'September 3',  'Rehearsal',        'Time TBD',  'Carmel Mission Basilica, Monterey', '3080 Rio Rd, Carmel-By-The-Sea, CA 93923',  ARRAY['bridal-party', 'parents'], 1),
+  ('Thursday',  'September 3',  'Rehearsal Dinner', 'Time TBD',  'Venue TBD',                         '',                                          ARRAY['bridal-party', 'parents'], 2),
+  ('Friday',    'September 4',  'Ceremony',         '2:00 PM',   'Carmel Mission Basilica, Monterey', '3080 Rio Rd, Carmel-By-The-Sea, CA 93923',  ARRAY['all'],                    3),
+  ('Friday',    'September 4',  'Reception',        '5:00 PM',   'Fairview Laguna Seca, Monterey',    '',                                          ARRAY['all'],                    4),
+  ('Saturday',  'September 5',  'Farewell Brunch',  'Time TBD',  'Venue TBD',                         '',                                          ARRAY['all'],                    5)
 ON CONFLICT DO NOTHING;
 
 -- ============================================================
@@ -100,6 +101,16 @@ ON CONFLICT DO NOTHING;
 -- DROP TABLE IF EXISTS carpool_entries;
 -- Then run the travel_posts CREATE TABLE above.
 
+-- Messages table (multiple messages per invite code group)
+CREATE TABLE IF NOT EXISTS messages (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  guest_id     UUID NOT NULL REFERENCES guests(id) ON DELETE CASCADE,
+  invite_code  TEXT NOT NULL,
+  guest_name   TEXT NOT NULL,
+  body         TEXT NOT NULL,
+  submitted_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 -- ============================================================
 -- Migration: Multi-traveler Travel Board support
 -- Run in Supabase SQL Editor if upgrading an existing database:
@@ -108,3 +119,9 @@ ON CONFLICT DO NOTHING;
 -- ALTER TABLE travel_posts DROP CONSTRAINT travel_posts_guest_id_key;
 -- ALTER TABLE travel_posts DROP COLUMN IF EXISTS traveler_name;
 -- ALTER TABLE travel_posts ADD COLUMN traveler_names TEXT[] NOT NULL DEFAULT '{}';
+
+-- ============================================================
+-- Migration: Add address field to events
+-- Run in Supabase SQL Editor if upgrading an existing database:
+-- ============================================================
+-- ALTER TABLE events ADD COLUMN address TEXT NOT NULL DEFAULT '';

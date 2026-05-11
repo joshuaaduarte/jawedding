@@ -168,6 +168,65 @@ export default async function ItineraryPage() {
                         {event.location}
                       </p>
 
+                      {/* Address with map links */}
+                      {event.address ? (
+                        <p className="mt-1.5 flex items-center gap-1.5 text-xs" style={{ color: "#8a7060" }}>
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden
+                            className="shrink-0"
+                          >
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                          </svg>
+                          <a
+                            href={`https://maps.apple.com/?q=${encodeURIComponent(event.address)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline underline-offset-2 transition hover:opacity-70"
+                            style={{ color: "#8a5c5c" }}
+                          >
+                            {event.address}
+                          </a>
+                          <span className="mx-0.5" style={{ color: "#c9a0a0" }} aria-hidden>·</span>
+                          <a
+                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.address)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline underline-offset-2 transition hover:opacity-70"
+                            style={{ color: "#8a5c5c" }}
+                          >
+                            Google Maps
+                          </a>
+                        </p>
+                      ) : (
+                        <p className="mt-1.5 flex items-center gap-1.5 text-xs" style={{ color: "#b0a090" }}>
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden
+                            className="shrink-0"
+                          >
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                          </svg>
+                          {locale === "es" ? "Dirección por confirmar" : "Address TBD"}
+                        </p>
+                      )}
+
                       {googleUrl && (
                         <div className="mt-4 flex flex-wrap gap-2">
                           <a

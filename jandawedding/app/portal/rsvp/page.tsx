@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation";
 import { getAuthenticatedGuest } from "@/lib/auth";
-import { eventsForGuestGroup, getGuestsByInviteCode } from "@/lib/guest-data";
+import { getGuestsByInviteCode } from "@/lib/guest-data";
 import { getRsvpsByGuestIds } from "@/lib/rsvp-store";
+import { getMessagesByInviteCode } from "@/lib/message-store";
 import { RsvpForm } from "@/components/rsvp-form";
 import { MessageForm } from "@/components/message-form";
 import { getLocale } from "@/lib/locale";
@@ -14,7 +15,10 @@ export default async function RsvpPage() {
     getGuestsByInviteCode(guest.inviteCode),
     getLocale(),
   ]);
-  const existingRsvps = await getRsvpsByGuestIds(groupGuests.map((g) => g.id));
+  const [existingRsvps, existingMessages] = await Promise.all([
+    getRsvpsByGuestIds(groupGuests.map((g) => g.id)),
+    getMessagesByInviteCode(guest.inviteCode),
+  ]);
 
   const t =
     locale === "es"
@@ -64,7 +68,7 @@ export default async function RsvpPage() {
         style={{ background: "rgba(201,160,160,0.2)" }}
       />
 
-      <MessageForm locale={locale} />
+      <MessageForm locale={locale} existingMessages={existingMessages} />
     </section>
   );
 }

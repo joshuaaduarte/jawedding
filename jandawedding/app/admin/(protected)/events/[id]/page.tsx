@@ -23,6 +23,7 @@ export default async function EditEventPage({ params }: Props) {
       title: (formData.get("title") as string).trim(),
       time: (formData.get("time") as string).trim(),
       location: (formData.get("location") as string).trim(),
+      address: (formData.get("address") as string).trim(),
       groups: selectedGroups.length > 0 ? selectedGroups : ["all"],
       startDatetime: rawDatetime || null,
     });
@@ -104,6 +105,21 @@ export default async function EditEventPage({ params }: Props) {
                 defaultValue={event.location}
                 className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm outline-none ring-stone-700/30 transition focus:ring-2"
               />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">
+                Address
+              </label>
+              <input
+                name="address"
+                type="text"
+                defaultValue={event.address}
+                placeholder="e.g. 3080 Rio Rd, Carmel-By-The-Sea, CA 93923 (leave blank for TBD)"
+                className="mt-2 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm outline-none ring-stone-700/30 transition focus:ring-2"
+              />
+              <p className="mt-1 text-xs text-stone-400">
+                Shown on the guest itinerary with a link to open in Maps. Leave blank if TBD.
+              </p>
             </div>
             <div className="sm:col-span-2">
               <label className="block text-xs uppercase tracking-[0.16em] text-stone-600">

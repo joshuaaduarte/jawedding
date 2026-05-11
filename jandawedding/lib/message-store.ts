@@ -40,6 +40,18 @@ export async function saveMessage(input: {
   return mapMessage(data as Record<string, unknown>);
 }
 
+export async function getMessagesByInviteCode(
+  inviteCode: string,
+): Promise<GuestMessage[]> {
+  const { data, error } = await getSupabase()
+    .from("messages")
+    .select("*")
+    .eq("invite_code", inviteCode)
+    .order("submitted_at", { ascending: true });
+  if (error) throw error;
+  return (data ?? []).map((row) => mapMessage(row as Record<string, unknown>));
+}
+
 export async function getAllMessages(): Promise<GuestMessage[]> {
   const { data, error } = await getSupabase()
     .from("messages")

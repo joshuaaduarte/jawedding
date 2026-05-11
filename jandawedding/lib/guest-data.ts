@@ -30,6 +30,7 @@ export type WeddingEvent = {
   title: string;
   time: string;
   location: string;
+  address: string;
   groups: string[];
   sortOrder: number;
   startDatetime: string | null;
@@ -74,6 +75,7 @@ function mapEvent(row: Record<string, unknown>): WeddingEvent {
     title: row.title as string,
     time: row.time as string,
     location: row.location as string,
+    address: (row.address as string) ?? "",
     groups: (row.groups as string[]) ?? ["all"],
     sortOrder: (row.sort_order as number) ?? 0,
     startDatetime: (row.start_datetime as string) ?? null,
@@ -365,6 +367,7 @@ export async function createEvent(input: {
   title: string;
   time: string;
   location: string;
+  address?: string;
   groups: string[];
   sortOrder?: number;
   startDatetime?: string | null;
@@ -377,6 +380,7 @@ export async function createEvent(input: {
       title: input.title,
       time: input.time,
       location: input.location,
+      address: input.address ?? "",
       groups: input.groups,
       sort_order: input.sortOrder ?? 0,
       start_datetime: input.startDatetime ?? null,
@@ -395,6 +399,7 @@ export async function updateEvent(
     title: string;
     time: string;
     location: string;
+    address: string;
     groups: string[];
     sortOrder: number;
     startDatetime: string | null;
@@ -406,6 +411,7 @@ export async function updateEvent(
   if (input.title !== undefined) patch.title = input.title;
   if (input.time !== undefined) patch.time = input.time;
   if (input.location !== undefined) patch.location = input.location;
+  if (input.address !== undefined) patch.address = input.address;
   if (input.groups !== undefined) patch.groups = input.groups;
   if (input.sortOrder !== undefined) patch.sort_order = input.sortOrder;
   if ("startDatetime" in input) patch.start_datetime = input.startDatetime ?? null;
