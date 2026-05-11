@@ -26,7 +26,7 @@ export default async function PortalPage() {
           moreLabel: "Más información",
           links: [
             { href: "/portal/bridal-party", title: "Familia de la Boda", desc: "Conoce a las personas especiales del día." },
-            { href: "/portal/registry", title: "Mesa de Regalos", desc: "Nuestros deseos para el nuevo hogar." },
+            { href: "/portal/registry", title: "Luna de Miel", desc: "Contribuye a nuestra aventura y viajes juntos." },
             { href: "/portal/stay", title: "Hospedaje", desc: "Hoteles y alojamiento recomendados." },
             { href: "/portal/things-to-do", title: "Qué Hacer", desc: "Descubre Monterey antes o después de la boda." },
             { href: "/portal/travel-board", title: "Tablero De Viaje", desc: "Coordina el transporte con otros invitados." },
@@ -45,7 +45,7 @@ export default async function PortalPage() {
           moreLabel: "More",
           links: [
             { href: "/portal/bridal-party", title: "Wedding Party", desc: "Meet the special people standing by our side." },
-            { href: "/portal/registry", title: "Registry", desc: "Our wishes for our new home together." },
+            { href: "/portal/registry", title: "Honeymoon Fund", desc: "Contribute to our adventure and travels together." },
             { href: "/portal/stay", title: "Stay", desc: "Recommended hotels and accommodations nearby." },
             { href: "/portal/things-to-do", title: "To Do", desc: "Discover Monterey before or after the wedding." },
             { href: "/portal/travel-board", title: "Travel Board", desc: "Share your travel plans and connect with other guests." },

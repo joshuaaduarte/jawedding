@@ -1,58 +1,83 @@
-Wedding website built with [Next.js](https://nextjs.org).
+# jandawedding
+Wedding website for Ana Lima and Joshua Duarte, built with Next.js.
 
-## Getting Started
+## What this app includes
 
-1. Copy environment variables:
+- Public landing page with wedding details and photos
+- Guest login with invite code + last name
+- Protected guest portal with itinerary, RSVP, travel info, and more
+- Honeymoon fund page
+- Admin dashboard for guests, events, messages, RSVPs, and travel posts
+- English and Spanish support
+
+## Getting started
+
+1. Install dependencies:
 
 ```bash
-cp .env.example .env.local
+npm install
 ```
 
-2. Run the development server:
+2. Create `.env.local` with the required values:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+ADMIN_PORTAL_PASSWORD=your_admin_password
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-3. Open [http://localhost:3000](http://localhost:3000) with your browser.
+4. Open [http://localhost:3000](http://localhost:3000).
 
-## Routes
+## Main routes
 
-- `/` public landing page with generic wedding information
-- `/login` invite-code guest login
-- `/portal` protected page with personalized timeline and RSVP content
-- `/portal/registry` protected registry page
-- `/portal/stay` protected places-to-stay page
-- `/portal/things-to-do` protected local activities page
-- `/portal/carpool` protected ride-share board for SFO/OAK/SJC arrivals
-- `/admin/login` admin login
-- `/admin` admin dashboard for RSVP submissions
+### Public
+- `/` landing page
+- `/login` guest login
 
-## Environment Variables
+### Guest portal
+- `/portal`
+- `/portal/rsvp`
+- `/portal/itinerary`
+- `/portal/our-story`
+- `/portal/bridal-party`
+- `/portal/registry`
+- `/portal/stay`
+- `/portal/things-to-do`
+- `/portal/travel-board`
 
-- `AUTH_SESSION_SECRET`: reserved for future auth hardening/custom secrets
-- `ADMIN_PORTAL_PASSWORD`: password for admin dashboard access
+### Admin
+- `/admin/login`
+- `/admin`
+- `/admin/guests`
+- `/admin/groups`
+- `/admin/events`
+- `/admin/messages`
+- `/admin/travel`
+
+## Authentication
+
+- Guest login uses invite code + last name, then stores a secure HTTP-only cookie with the authenticated guest ID.
+- `/portal/*` routes are protected by `proxy.ts` plus server-side auth checks.
+- Admin login uses `ADMIN_PORTAL_PASSWORD` and an admin auth cookie.
+
+## Data storage
+
+This app uses Supabase for application data, including:
+
+- `guests`
+- `groups`
+- `events`
+- `rsvps`
+- `messages`
+- `travel_posts`
 
 ## Notes
 
-- Guest records and invite codes live in `/Users/joshuaduarte/Documents/projects/jawedding/jandawedding/lib/guest-data.ts`.
-- The `/portal` route is protected by `/Users/joshuaduarte/Documents/projects/jawedding/jandawedding/proxy.ts` and a secure HTTP-only cookie.
-- RSVP submissions are saved to `/Users/joshuaduarte/Documents/projects/jawedding/jandawedding/data/rsvps.json`.
-- Carpool posts are saved to `/Users/joshuaduarte/Documents/projects/jawedding/jandawedding/data/carpool.json`.
-
-## Temporary Login Info (for testing)
-
-- Guest login page: `/login`
-- Guest test accounts:
-  - Invite code `JAX-2401` + last name `Rivera`
-  - Invite code `JAX-2402` + last name `Chen`
-  - Invite code `JAX-2403` + last name `Parker`
-  - Invite code `JAX-2404` + last name `Lewis`
-- Admin login page: `/admin/login`
-- Default admin password: `admin-temp-2026` (override in `.env.local`)
+- `AUTH_SESSION_SECRET` is mentioned in older docs/comments but is not currently required by the active code.
+- `resend` is installed as a dependency, but email flows are not documented in this README yet.

@@ -91,7 +91,7 @@ const PARENTS = [
   },
   { name: "Julissa Duarte", 
     role: "Joshua's Parent", 
-    roleEs: "Padre de Joshua", 
+    roleEs: "Madre de Joshua", 
     bio: "Julissa is Josh’s mom and the heart of his family, known for her endless love, energy, and selflessness. She always put her children first and never hesitated to give up anything if it meant making them happy. From working tirelessly to support Josh’s dreams to hosting unforgettable moments where everyone felt at home, she created a space full of warmth and life. Whether she is cooking a meal on the spot or talking a little too loudly on the phone, Julissa’s spirit is unforgettable. Ana and Joshua are incredibly grateful for her love and the role she has played in shaping their lives.", 
     bioEs: "Julissa es la madre de Josh y el alma de su familia, conocida por su amor, energía y generosidad infinitos. Siempre antepuso a sus hijos y nunca dudó en sacrificarlo todo con tal de hacerlos felices. Desde trabajar incansablemente para apoyar los sueños de Josh hasta organizar momentos inolvidables donde todos se sentían como en casa, creó un espacio lleno de calidez y vida. Ya sea cocinando en el momento o hablando por teléfono con entusiasmo, el espíritu de Julissa es inolvidable. Ana y Joshua están inmensamente agradecidos por su amor y por el papel que ha desempeñado en la formación de sus vidas." 
   },
@@ -103,7 +103,7 @@ const PARENTS = [
   },
   { name: "Juanita Lima", 
     role: "Ana's Parent", 
-    roleEs: "Padre de Ana", 
+    roleEs: "Madre de Ana", 
     bio: "​​Juanita Lima is Ana’s beloved mother and one of the most selfless and inspiring people she knows. A woman of deep faith, strength, and wisdom, Juanita has always guided her family with love and care while staying actively involved in her Catholic community. Ana is who she is today because of her mother’s example, support, and encouragement. From the moment Joshua entered their lives five years ago, Juanita welcomed him with open arms and has loved and supported their relationship as one of her own. Ana and Joshua are incredibly grateful for her constant love and guidance.", 
     bioEs: "Juanita Lima es la querida madre de Ana y una de las personas más altruistas e inspiradoras que conoce. Mujer de profunda fe, fortaleza y sabiduría, Juanita siempre ha guiado a su familia con amor y cariño, participando activamente en su comunidad católica. Ana es quien es hoy gracias al ejemplo, el apoyo y el aliento de su madre. Desde que Joshua llegó a sus vidas hace cinco años, Juanita lo recibió con los brazos abiertos y ha amado y apoyado su relación como si fuera la suya propia. Ana y Joshua están inmensamente agradecidos por su amor y guía constantes." 
   },
