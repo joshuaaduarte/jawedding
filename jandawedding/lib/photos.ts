@@ -16,26 +16,34 @@ export const PHOTOS = {
   portalBanner: `${SB}/hero.jpg`,
 
   // Engagement photos — featured / editorial slots
-  coast:    `${SB}/engagement/walking-away-coastal.jpg`,
+  coast:    `${SB}/engagement/proposal-hilltop.jpg`,
   venue:    `${SB}/engagement/bench-forest.jpg`,
-  portrait: `${SB}/engagement/face-touch-sky.jpg`,
+  portrait: `${SB}/engagement/formal-blue-dress.jpg`,
 
   // Couple moments — photo wall (landing page) + Our Story chapters
   moment1: `${SB}/engagement/standing-rocks-waves.jpg`,
   moment2: `${SB}/engagement/looking-down-bouquet.jpg`,
-  moment3: `${SB}/engagement/embrace-rocks.jpg`,
-  moment4: `${SB}/engagement/smiling-bouquet-splash.jpg`,
-  moment5: `${SB}/engagement/walking-sandy-path.jpg`,
-  moment6: `${SB}/engagement/closeup-bouquet-ocean.jpg`,
+  moment3: `${SB}/engagement/boat-sunset-kiss.jpg`,
+  moment4: `${SB}/engagement/berkeley-graduation.jpg`,
+  moment5: `${SB}/engagement/tamu-graduation.jpg`,
+  moment6: `${SB}/engagement/avocado-costumes.jpg`,
+
+  // Portal card images
+  closeupBouquetOcean: `${SB}/engagement/closeup-bouquet-ocean.jpg`,
+  walkingAwayCoastal:  `${SB}/engagement/walking-away-coastal.jpg`,
+  cheekKissOcean:      `${SB}/engagement/cheek-kiss-ocean.jpg`,
+  walkingSandyPath:    `${SB}/engagement/walking-sandy-path.jpg`,
+  embraceRocks:        `${SB}/engagement/embrace-rocks.jpg`,
+  smilingBouquetSplash:`${SB}/engagement/smiling-bouquet-splash.jpg`,
 
   // Additional engagement photos — available for future use
-  moment7:  `${SB}/engagement/kiss-bouquet-ocean.jpg`,
-  moment8:  `${SB}/engagement/cheek-kiss-ocean.jpg`,
+  moment7:  `${SB}/engagement/engagement-ring-tamu.jpg`,
+  moment8:  `${SB}/engagement/marathon-golden-sign.jpg`,
   moment9:  `${SB}/engagement/hands-holding-ring.jpg`,
   moment10: `${SB}/engagement/hands-reaching-rocks.jpg`,
-  moment11: `${SB}/engagement/sitting-path-ring.jpg`,
+  moment11: `${SB}/engagement/golden-gate-selfie.jpg`,
   moment12: `${SB}/engagement/walking-rocks-aerial.jpg`,
-  moment13: `${SB}/engagement/kiss-bouquet-ocean.jpg`,
+  moment13: `${SB}/engagement/proposal-hilltop.jpg`,
 
   // Things to do — real photos of each location (Unsplash, free to use)
   placeAquarium:    "https://images.unsplash.com/photo-1536094517470-a9784e41e283?w=1200&h=800&fit=crop&q=80",

@@ -3,7 +3,7 @@ import { getVisibleTravelPosts, getMyTravelPosts } from "@/lib/travel-store";
 import { getAuthenticatedGuest, } from "@/lib/auth";
 import { getGuestsByInviteCode } from "@/lib/guest-data";
 import Image from "next/image";
-import { TEMP_IMAGES } from "@/lib/temp-images";
+import { PHOTOS } from "@/lib/photos";
 import { getLocale } from "@/lib/locale";
 
 export default async function TravelBoardPage() {
@@ -49,7 +49,7 @@ export default async function TravelBoardPage() {
             <p className="mt-3 max-w-3xl text-sm leading-7 text-stone-700">{t.intro}</p>
           </div>
           <div className="relative h-44 overflow-hidden rounded-2xl border border-stone-200">
-            <Image src={TEMP_IMAGES.coast} alt="Monterey coast" fill className="object-cover" />
+            <Image src={PHOTOS.moment12} alt="Monterey coast" fill className="object-cover" />
           </div>
         </div>
       </section>

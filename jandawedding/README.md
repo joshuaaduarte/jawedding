@@ -46,7 +46,7 @@ npm run dev
 - `/portal/itinerary`
 - `/portal/our-story`
 - `/portal/bridal-party`
-- `/portal/registry`
+- `/portal/honeymoon-fund`
 - `/portal/stay`
 - `/portal/things-to-do`
 - `/portal/travel-board`

@@ -206,7 +206,7 @@ export default async function Home() {
             >
               <Image
                 src={PHOTOS.moment11}
-                alt="Sitting on path with ring"
+                alt="Golden Gate Bridge selfie"
                 fill
                 className="object-cover"
               />
@@ -217,7 +217,7 @@ export default async function Home() {
             >
               <Image
                 src={PHOTOS.moment3}
-                alt="Moment 3"
+                alt="Boat kiss at sunset"
                 fill
                 className="object-cover"
               />
@@ -228,7 +228,7 @@ export default async function Home() {
             >
               <Image
                 src={PHOTOS.moment7}
-                alt="Moment 7"
+                alt="Engagement ring at Texas A&M"
                 fill
                 className="object-cover"
               />
@@ -241,7 +241,7 @@ export default async function Home() {
             >
               <Image
                 src={PHOTOS.moment4}
-                alt="Moment 4"
+                alt="Berkeley graduation"
                 fill
                 className="object-cover"
               />
@@ -252,7 +252,7 @@ export default async function Home() {
             >
               <Image
                 src={PHOTOS.moment5}
-                alt="Moment 5"
+                alt="Texas A&M graduation"
                 fill
                 className="object-cover"
               />
@@ -263,7 +263,7 @@ export default async function Home() {
             >
               <Image
                 src={PHOTOS.moment8}
-                alt="Moment 8"
+                alt="Marathon golden sign"
                 fill
                 className="object-cover"
               />
