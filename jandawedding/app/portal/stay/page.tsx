@@ -302,7 +302,7 @@ export default async function StayPage() {
           {
             icon: "📅",
             title: "Reserva Pronto",
-            body: "Septiembre es temporada alta en la Península. Los hoteles en Carmel y Monterey se llenan rápido para fines de semana de boda. Reserva con 4–6 meses de anticipación.",
+            body: "Septiembre es temporada alta en la Península. Los hoteles en Carmel y Monterey se llenan rápido para fines de semana de boda. Reserva lo antes posible.",
           },
           {
             icon: "🚗",
@@ -389,7 +389,7 @@ export default async function StayPage() {
           {
             icon: "📅",
             title: "Book Early — September Fills Fast",
-            body: "The Monterey Peninsula is one of California's most popular destinations in fall. Hotels in Carmel and Monterey fill quickly for wedding weekends. Reserve 4–6 months ahead.",
+            body: "The Monterey Peninsula is one of California's most popular destinations in fall. Hotels in Carmel and Monterey fill quickly for wedding weekends. Reserve as soon as possible.",
           },
           {
             icon: "🚗",
@@ -454,7 +454,7 @@ export default async function StayPage() {
 
         <div className="grid gap-3 sm:grid-cols-3">
           <SearchCard
-            href="https://www.google.com/travel/hotels/Monterey,CA?q=hotels+monterey+carmel+california&dates=2026-09-03,2026-09-05"
+            href="https://www.google.com/travel/hotels/Monterey,+CA?q=hotels+monterey+carmel+california&checkin=2026-09-03&checkout=2026-09-05"
             icon="🏨"
             name={t.searchHotels}
             description={t.searchHotelsDesc}
