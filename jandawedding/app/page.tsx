@@ -92,6 +92,8 @@ export default async function Home() {
             alt="Ana & Joshua"
             fill
             priority
+            quality={90}
+            sizes="(max-width: 1280px) 100vw, 1280px"
             className="object-cover"
           />
           <div
@@ -195,6 +197,8 @@ export default async function Home() {
                 src={PHOTOS.moment1}
                 alt="Featured moment"
                 fill
+                quality={90}
+                sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover"
               />
             </div>
@@ -208,6 +212,8 @@ export default async function Home() {
                 src={PHOTOS.moment11}
                 alt="Golden Gate Bridge selfie"
                 fill
+                quality={90}
+                sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover"
               />
             </div>
@@ -219,6 +225,8 @@ export default async function Home() {
                 src={PHOTOS.moment3}
                 alt="Boat kiss at sunset"
                 fill
+                quality={90}
+                sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover"
               />
             </div>
@@ -230,6 +238,8 @@ export default async function Home() {
                 src={PHOTOS.moment7}
                 alt="Engagement ring at Texas A&M"
                 fill
+                quality={90}
+                sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover"
               />
             </div>
@@ -243,6 +253,8 @@ export default async function Home() {
                 src={PHOTOS.moment4}
                 alt="Berkeley graduation"
                 fill
+                quality={90}
+                sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover"
               />
             </div>
@@ -254,6 +266,8 @@ export default async function Home() {
                 src={PHOTOS.moment5}
                 alt="Texas A&M graduation"
                 fill
+                quality={90}
+                sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover"
               />
             </div>
@@ -265,6 +279,8 @@ export default async function Home() {
                 src={PHOTOS.moment8}
                 alt="Marathon golden sign"
                 fill
+                quality={90}
+                sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover"
               />
             </div>
@@ -283,6 +299,8 @@ export default async function Home() {
                     src={src}
                     alt={`Portrait ${i + 1}`}
                     fill
+                    quality={90}
+                    sizes="33vw"
                     className="object-cover"
                   />
                 </div>
