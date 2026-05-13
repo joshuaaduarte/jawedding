@@ -133,9 +133,7 @@ function RecommendationResults({
     suggestedItinerary: "Itinerario sugerido",
     ifTimeLimited: "Si el tiempo es limitado",
     afterWedding: "Después de la boda",
-    postWeddingMorning: "Muy poco tiempo — solo desayuno antes de salir. Si madrugas, la Playa de Carmel al amanecer es hermosa.",
-    postWeddingAfternoon: "La mañana del sábado es tuya — Point Lobos abre temprano y es impresionante antes de las multitudes. Planifica 2–3 horas.",
-    postWeddingEvening: "Con un día completo después de la boda, Big Sur es lo que hay que hacer. Maneja al sur por la Highway 1 — Bixby Bridge, McWay Falls y la Playa Pfeiffer valen la pena.",
+    postWeddingItinerary: "Tu itinerario post-boda",
   } : {
     weddingDay: "Wedding day",
     yourPlan: "Your plan",
@@ -145,15 +143,199 @@ function RecommendationResults({
     suggestedItinerary: "Suggested itinerary",
     ifTimeLimited: "If time is limited",
     afterWedding: "After the wedding",
-    postWeddingMorning: "Very little time — just breakfast before heading out. If you're up early, Carmel Beach at sunrise is beautiful.",
-    postWeddingAfternoon: "Saturday morning is yours — Point Lobos opens early and is stunning before the crowds. Allow 2–3 hours.",
-    postWeddingEvening: "With a full day after the wedding, Big Sur is the move. Drive south on Highway 1 — Bixby Bridge, McWay Falls, and Pfeiffer Beach are all worth it.",
+    postWeddingItinerary: "Your post-wedding itinerary",
   };
 
-  const postWeddingNote =
-    departureDate === "2026-09-05"
-      ? (departureTime === "morning" ? ui.postWeddingMorning : departureTime === "afternoon" ? ui.postWeddingAfternoon : ui.postWeddingEvening)
-      : ui.postWeddingEvening;
+  // Build post-wedding itinerary, avoiding places already in the main itinerary
+  function getPostWeddingItinerary(): string[] {
+    if (!departureDate || departureDate <= WEDDING_DATE) return [];
+
+    // Detect what the main itinerary already covers
+    const mainText = rec.itinerary.join(" ").toLowerCase();
+    const done = {
+      pointLobos:    mainText.includes("point lobos"),
+      bigSur:        mainText.includes("big sur"),
+      seventeenMile: mainText.includes("17-mile"),
+      aquarium:      mainText.includes("aquarium"),
+      canneryRow:    mainText.includes("cannery row"),
+      carmelValley:  mainText.includes("carmel valley"),
+    };
+
+    // Activity builders — each returns the right language
+    const act = {
+      pointLobos:     es ? "Point Lobos por la mañana (llega antes de las 9 AM — 2–3 horas)" : "Point Lobos in the morning (arrive by 9 AM — allow 2–3 hours)",
+      pointLobosShort:es ? "Point Lobos por la mañana (2–3 horas)" : "Point Lobos in the morning (2–3 hours)",
+      bigSur:         es ? "Big Sur: maneja al sur por la Highway 1" : "Big Sur: drive south on Highway 1",
+      bigSurDetail:   es ? "Bixby Bridge, McWay Falls y la Playa Pfeiffer — planifica medio día" : "Bixby Bridge, McWay Falls, and Pfeiffer Beach — plan for half a day",
+      seventeenMile:  es ? "17-Mile Drive por Pebble Beach" : "17-Mile Drive through Pebble Beach",
+      aquarium:       es ? "Acuario de la Bahía de Monterey (¡reserva antes!)" : "Monterey Bay Aquarium (book ahead!)",
+      carmelValley:   es ? "Catas de vino en Carmel Valley" : "Wine tasting in Carmel Valley",
+      canneryRow:     es ? "Paseo y cena en Cannery Row" : "Stroll and dinner on Cannery Row",
+      // Alternatives for when primary activities are already covered
+      pacificGrove:   es ? "Sendero costero de Pacific Grove — mariposas monarca y vistas al mar" : "Pacific Grove coastal trail — monarch butterflies and ocean views",
+      whaleWatch:     es ? "Avistamiento de ballenas desde la Bahía de Monterey" : "Whale watching from Monterey Bay",
+      kayak:          es ? "Kayak en la Bahía de Monterey — nutrias y leones marinos" : "Kayaking in Monterey Bay — otters and sea lions",
+      fishermansWharf:es ? "Old Fisherman's Wharf — mariscos frescos y tiendas locales" : "Old Fisherman's Wharf — fresh seafood and local shops",
+      carmelBeach:    es ? "Playa de Carmel al amanecer — paseo tranquilo" : "Carmel Beach at sunrise — a peaceful walk",
+      garrapata:      es ? "Garrapata State Park — senderos costeros menos concurridos" : "Garrapata State Park — less crowded coastal trails",
+      montereyWharf:  es ? "Muelle del Pescador y paseo por el puerto" : "Fisherman's Wharf and harbor walk",
+    };
+
+    // Pick the best morning activity not already done
+    function pickMorning(): string {
+      if (!done.pointLobos) return act.pointLobos;
+      if (!done.aquarium) return act.aquarium;
+      return act.garrapata;
+    }
+    function pickMorningShort(): string {
+      if (!done.pointLobos) return act.pointLobosShort;
+      if (!done.aquarium) return act.aquarium;
+      return act.pacificGrove;
+    }
+
+    // Pick the best afternoon activity not already done
+    function pickAfternoon(): string {
+      if (!done.seventeenMile) return act.seventeenMile;
+      if (!done.carmelValley) return act.carmelValley;
+      return act.whaleWatch;
+    }
+
+    // Pick the best evening activity not already done
+    function pickEvening(): string {
+      if (!done.canneryRow) return act.canneryRow;
+      return act.fishermansWharf;
+    }
+
+    // Pick the best full-day activity not already done
+    function pickFullDay(): { header: string; detail: string } {
+      if (!done.bigSur) return { header: act.bigSur, detail: act.bigSurDetail };
+      // If Big Sur was already done, build a full day from two half-day activities
+      return {
+        header: pickMorning(),
+        detail: es ? "Almuerzo en Carmel, luego " + pickAfternoon().toLowerCase() : "Lunch in Carmel, then " + pickAfternoon().toLowerCase(),
+      };
+    }
+
+    const steps: string[] = [];
+
+    if (departureDate === "2026-09-05") {
+      // Leaving Saturday
+      const sat = es ? "Sáb, 5 Sep" : "Sat, Sept 5";
+      if (departureTime === "morning") {
+        steps.push(
+          `${sat} — ${es ? "Desayuno antes de salir" : "Breakfast before heading out"}`,
+          es ? "Si madrugas, la Playa de Carmel al amanecer es hermosa" : "If you're up early, Carmel Beach at sunrise is beautiful",
+          es ? "Sal hacia el aeropuerto / Bay Area" : "Head to the airport / Bay Area",
+        );
+      } else if (departureTime === "afternoon") {
+        steps.push(
+          `${sat} — ${pickMorningShort()}`,
+          es ? "Almuerzo en Carmel, luego sal hacia el aeropuerto / Bay Area" : "Lunch in Carmel, then head to the airport / Bay Area",
+        );
+      } else {
+        steps.push(
+          `${sat} — ${pickMorning()}`,
+          es ? "Almuerzo en Carmel, paseo por Ocean Avenue" : "Lunch in Carmel, stroll Ocean Avenue",
+          `${es ? "Tarde" : "Afternoon"}: ${pickAfternoon()}`,
+          es ? "Sal en la noche" : "Head out in the evening",
+        );
+      }
+    } else if (departureDate === "2026-09-06") {
+      // Leaving Sunday — full Saturday + part of Sunday
+      const sat = es ? "Sáb, 5 Sep" : "Sat, Sept 5";
+      const sun = es ? "Dom, 6 Sep" : "Sun, Sept 6";
+      const fullDay = pickFullDay();
+      steps.push(
+        `${sat} — ${fullDay.header}`,
+        fullDay.detail,
+        `${es ? "Noche" : "Evening"}: ${pickEvening()}`,
+      );
+      if (departureTime === "morning") {
+        steps.push(
+          `${sun} — ${es ? "Desayuno, Playa de Carmel si madrugas, y sal" : "Breakfast, Carmel Beach if you're up early, and head out"}`,
+        );
+      } else if (departureTime === "afternoon") {
+        // Pick a morning activity that wasn't used on Saturday
+        const satUsedPointLobos = !done.pointLobos && fullDay.header.includes("Point Lobos");
+        const sunMorning = satUsedPointLobos || done.pointLobos
+          ? (done.aquarium ? act.pacificGrove : act.aquarium)
+          : act.pointLobosShort;
+        steps.push(
+          `${sun} — ${sunMorning}`,
+          es ? "Almuerzo, luego sal" : "Lunch, then head out",
+        );
+      } else {
+        const satUsedPointLobos = !done.pointLobos && fullDay.header.includes("Point Lobos");
+        const sunMorning = satUsedPointLobos || done.pointLobos
+          ? (done.aquarium ? act.pacificGrove : act.aquarium)
+          : act.pointLobosShort;
+        const satUsedAfternoon = fullDay.detail.toLowerCase().includes("17-mile") || fullDay.detail.toLowerCase().includes("carmel valley");
+        const sunAfternoon = satUsedAfternoon
+          ? (done.seventeenMile && done.carmelValley ? act.whaleWatch : pickAfternoon())
+          : pickAfternoon();
+        steps.push(
+          `${sun} — ${sunMorning}`,
+          `${es ? "Tarde" : "Afternoon"}: ${sunAfternoon}`,
+          es ? "Sal en la noche" : "Head out in the evening",
+        );
+      }
+    } else {
+      // Leaving Monday+ — full Saturday, full Sunday, part of Monday
+      const sat = es ? "Sáb, 5 Sep" : "Sat, Sept 5";
+      const sun = es ? "Dom, 6 Sep" : "Sun, Sept 6";
+      const mon = es ? "Lun, 7 Sep" : "Mon, Sept 7";
+
+      // Saturday: best full-day activity
+      const fullDay = pickFullDay();
+      steps.push(
+        `${sat} — ${fullDay.header}`,
+        fullDay.detail,
+        `${es ? "Noche" : "Evening"}: ${pickEvening()}`,
+      );
+
+      // Sunday: pick activities not used on Saturday or pre-wedding
+      const satUsedPointLobos = fullDay.header.includes("Point Lobos");
+      const sunMorning = satUsedPointLobos || done.pointLobos
+        ? (done.aquarium ? act.garrapata : act.aquarium)
+        : act.pointLobos;
+
+      const satText = (fullDay.header + " " + fullDay.detail).toLowerCase();
+      const satUsed17Mile = satText.includes("17-mile");
+      const satUsedCarmelValley = satText.includes("carmel valley");
+      const sunAfternoon = !done.carmelValley && !satUsedCarmelValley
+        ? act.carmelValley
+        : !done.seventeenMile && !satUsed17Mile
+          ? act.seventeenMile
+          : act.kayak;
+
+      const satUsedCanneryRow = satText.includes("cannery row") || satText.includes("fisherman");
+      const sunEvening = !done.canneryRow && !satUsedCanneryRow
+        ? act.canneryRow
+        : act.fishermansWharf;
+
+      steps.push(
+        `${sun} — ${sunMorning}`,
+        `${es ? "Almuerzo en Carmel" : "Lunch in Carmel"}, ${sunAfternoon.toLowerCase()}`,
+        `${es ? "Noche" : "Evening"}: ${sunEvening}`,
+      );
+
+      // Monday: pick something not yet used
+      const allUsedText = (mainText + " " + steps.join(" ")).toLowerCase();
+      const monActivity = !allUsedText.includes("aquarium")
+        ? act.aquarium
+        : !allUsedText.includes("pacific grove")
+          ? act.pacificGrove
+          : act.carmelBeach;
+      steps.push(
+        `${mon} — ${monActivity}`,
+        es ? "Sal cuando estés listo — un cierre perfecto para el fin de semana" : "Head out when you're ready — a perfect end to the weekend",
+      );
+    }
+
+    return steps;
+  }
+
+  const postWeddingSteps = getPostWeddingItinerary();
 
   return (
     <div className="mt-8 space-y-6">
@@ -239,17 +421,35 @@ function RecommendationResults({
         </div>
       )}
 
-      {/* Post-wedding note */}
-      {hasPostWeddingTime && (
-        <div className="flex items-start gap-3 rounded-2xl p-5"
+      {/* Post-wedding itinerary */}
+      {hasPostWeddingTime && postWeddingSteps.length > 0 && (
+        <div className="rounded-2xl p-5"
           style={{ background: "rgba(201,160,160,0.06)", border: "1px solid rgba(201,160,160,0.25)" }}>
-          <span style={{ color: "#c9a0a0", fontSize: "1rem", marginTop: "1px" }} aria-hidden>✦</span>
-          <div>
-            <p className="text-xs uppercase tracking-[0.18em] mb-1" style={{ color: "#c9a0a0" }}>
-              {ui.afterWedding}
-            </p>
-            <p className="text-sm leading-6" style={{ color: "#5a4535" }}>{postWeddingNote}</p>
-          </div>
+          <p className="text-xs uppercase tracking-[0.2em] mb-4" style={{ color: "#c9a0a0" }}>
+            {ui.postWeddingItinerary}
+          </p>
+          <ol className="space-y-2.5">
+            {postWeddingSteps.map((step, i) => {
+              const isDayHeader = /^(Sat|Sun|Mon|Sáb|Dom|Lun)/.test(step);
+              return (
+                <li key={i} className="flex items-start gap-3">
+                  <span
+                    className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px]"
+                    style={{
+                      background: isDayHeader ? "rgba(201,160,160,0.35)" : "rgba(201,160,160,0.2)",
+                      color: "#c9a0a0",
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+                  <span className="text-sm leading-6"
+                    style={{ color: isDayHeader ? "#2d1f14" : "#5a4535", fontWeight: isDayHeader ? 500 : 400 }}>
+                    {step}
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       )}
     </div>
