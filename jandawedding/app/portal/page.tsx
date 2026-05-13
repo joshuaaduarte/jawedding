@@ -18,6 +18,10 @@ export default async function PortalPage() {
           rsvpTitle: "Confirmación",
           rsvpDesc: "Confirma tu asistencia y déjanos un mensaje.",
           rsvpCta: "Confirmar ahora",
+          dressCodeLabel: "Código de Vestimenta",
+          dressCodeTitle: "Acompáñanos Con Vestimenta Formal",
+          dressCodeDesc:
+            "Les pedimos amablemente que elijan colores distintos al marrón, ya que ese color estará reservado para la familia de la boda.",
           featuredLabel: "Para explorar",
           itineraryTitle: "Tu Agenda",
           itineraryDesc: "Todos tus eventos del fin de semana.",
@@ -37,6 +41,10 @@ export default async function PortalPage() {
           rsvpTitle: "RSVP",
           rsvpDesc: "Confirm your attendance and leave us a message.",
           rsvpCta: "Confirm now",
+          dressCodeLabel: "Dress Code",
+          dressCodeTitle: "Please Join Us in Formal Attire",
+          dressCodeDesc:
+            "We kindly ask that guests choose colors other than brown, as brown will be reserved for the wedding party.",
           featuredLabel: "Explore",
           itineraryTitle: "Your Itinerary",
           itineraryDesc: "All your events across the weekend.",
@@ -128,6 +136,34 @@ export default async function PortalPage() {
           {t.rsvpCta} <span aria-hidden>→</span>
         </p>
       </Link>
+
+      {/* ── Dress code ── */}
+      <section
+        className="rounded-3xl p-8 sm:p-10"
+        style={{
+          border: "1px solid #e8ddd4",
+          background: "rgba(251, 244, 232, 0.92)",
+        }}
+      >
+        <p
+          className="text-xs uppercase tracking-[0.32em]"
+          style={{ color: "#c9a0a0" }}
+        >
+          ✦ &nbsp; {t.dressCodeLabel}
+        </p>
+        <h2
+          className="mt-2 font-serif italic"
+          style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", color: "#2d1f14" }}
+        >
+          {t.dressCodeTitle}
+        </h2>
+        <p
+          className="mt-4 max-w-3xl text-sm leading-7 sm:text-base"
+          style={{ color: "#8a7060" }}
+        >
+          {t.dressCodeDesc}
+        </p>
+      </section>
 
       {/* ── Featured pair ── */}
       <div className="grid gap-3 sm:grid-cols-2">
