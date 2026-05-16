@@ -21,7 +21,7 @@ export default async function PortalPage() {
           dressCodeLabel: "Código de Vestimenta",
           dressCodeTitle: "Acompáñanos Con Vestimenta Formal",
           dressCodeDesc:
-            "Les pedimos amablemente que elijan colores distintos al marrón, ya que ese color estará reservado para la familia de la boda.",
+            "Les pedimos amablemente que elijan colores distintos al cafe, ya que ese color estará reservado para la familia de la boda.",
           featuredLabel: "Para explorar",
           itineraryTitle: "Tu Agenda",
           itineraryDesc: "Todos tus eventos del fin de semana.",
