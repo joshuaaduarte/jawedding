@@ -35,7 +35,7 @@ const BRIDESMAIDS = [
   },
   { name: "Maria Gonzalez", 
     bio: "Maria Gonzalez is one of Ana’s childhood friends, and the two have shared a close friendship since middle school after meeting through church events. Known for her beautiful spirit and generous heart, Maria is always ready to lend a helping hand to those around her. She holds a special place in Ana and Joshua’s story, as she was there the very moment they first met. Over the years, Maria and Ana have shared countless memories, laughter, and heartfelt conversations, always supporting and looking out for one another. Ana and Joshua are deeply grateful for Maria’s friendship and for the love and support she has shown their relationship from the very beginning.", 
-    bioEs: "María González es una de las amigas de la infancia de Ana, y ambas comparten una estrecha amistad desde la secundaria, tras conocerse en eventos de la iglesia. Conocida por su gran corazón y amabilidad, María siempre está dispuesta a ayudar a quienes la rodean. Ocupa un lugar especial en la historia de Ana y Joshua, ya que estuvo presente desde el primer momento en que se conocieron. A lo largo de los años, María y Ana han compartido innumerables recuerdos, risas y conversaciones sinceras, apoyándose y cuidándose siempre mutuamente. Ana y Joshua están profundamente agradecidos por la amistad de María y por el amor y el apoyo que les ha brindado desde el principio." 
+    bioEs: "María González es una de las amigas de la infancia de Ana, y ambas comparten una estrecha amistad desde la secundaria, después de conocerse en eventos de la iglesia. Conocida por su gran corazón y amabilidad, María siempre está dispuesta a ayudar a quienes la rodean. Ocupa un lugar especial en la historia de Ana y Joshua, ya que estuvo presente desde el primer momento en que se conocieron. A lo largo de los años, María y Ana han compartido incontables recuerdos, risas y conversaciones sinceras, apoyándose y cuidándose siempre mutuamente. Ana y Joshua están profundamente agradecidos por la amistad de María y por el amor y el apoyo que les ha brindado desde el principio." 
   },
   { name: "Miranda Alvarez", 
     bio: "Miranda Alvarez is Ana’s cousin and has also been one of her closest friends since childhood. Growing up together in Centerville, the two shared countless memories- from going to school together to making hilarious dancing videos growing up and laughing for hours. Miranda is known for her contagious laugh, positive spirit, and kind heart that brings joy to everyone around her. Anyone who has spent time with Miranda and Ana together knows they are constantly joking, laughing, and making the most of every moment. Ana and Joshua are so grateful to have Miranda celebrating this special day with them.", 
@@ -47,7 +47,7 @@ const BEST_MEN = [
   {
     name: "Roberto Gonzalez",
     bio: "Roberto is one of Josh’s best men and someone he has shared a strong bond with since meeting in eighth grade after moving to Waxahachie. Their friendship grew through years of challenging classes, late night calls, and pushing each other to succeed. Whether it was cramming for exams at the last minute or simply being there when it mattered, Roberto has always been someone Josh can trust and depend on. Kind, genuine, and easygoing, he is the type of person who gets along with anyone he meets. Ana and Joshua are grateful to have him by their side on this special day.",
-    bioEs: "Roberto es uno de los padrinos de Josh y alguien con quien ha forjado una fuerte amistad desde que se conocieron en octavo grado, tras mudarse a Waxahachie. Su amistad creció a través de años de clases exigentes, llamadas nocturnas y apoyo mutuo para alcanzar el éxito. Ya fuera estudiando a última hora para los exámenes o simplemente estando presente cuando más se le necesitaba, Roberto siempre ha sido alguien en quien Josh puede confiar plenamente. Amable, sincero y de trato fácil, es el tipo de persona que se lleva bien con todo el mundo. Ana y Joshua están agradecidos de tenerlo a su lado en este día tan especial.",
+    bioEs: "Roberto es uno de los padrinos de Josh y alguien con quien ha forjado una fuerte amistad desde que se conocieron en octavo grado, después de mudarse a Waxahachie. Su amistad creció a lo largo de años de clases exigentes, llamadas nocturnas y apoyo mutuo para salir adelante. Ya fuera estudiando a último momento para los exámenes o simplemente estando presente cuando más se le necesitaba, Roberto siempre ha sido alguien en quien Josh puede confiar plenamente. Amable, sincero y de trato fácil, es el tipo de persona que se lleva bien con todos. Ana y Joshua están agradecidos de tenerlo a su lado en este día tan especial.",
   },
   {
     name: "Pavan Reddy",
@@ -205,8 +205,8 @@ export default async function BridalPartyPage() {
           bridesmaidRole: "Dama",
           bestMen: "Padrinos de Honor",
           bestManRole: "Padrino de Honor",
-          groomsmen: "Chambelanes",
-          groomsmanRole: "Chambelán",
+          groomsmen: "Caballeros",
+          groomsmanRole: "Caballero",
           familyLabel: "Familia",
           parents: "Padres",
           godparents: "Padrinos",

@@ -276,10 +276,10 @@ export default async function StayPage() {
         hotelsLabel: "Busca Hospedaje",
         hotelsTitle: "Encuentra Dónde Quedarte",
         hotelsIntro:
-          "Busca hoteles, Airbnb y VRBO en el área de Monterey y Carmel. Para grupos de 4+, una casa de alquiler frecuentemente ofrece más espacio y valor.",
+          "Busca hoteles, Airbnb y VRBO en el área de Monterey y Carmel. Para grupos de 4+, una casa de renta frecuentemente ofrece más espacio y valor.",
         searchHotelsDesc: "Compara precios y disponibilidad de hoteles en Monterey y Carmel",
         searchAirbnb: "Buscar en Airbnb",
-        searchAirbnbDesc: "Casas y departamentos perfectos para grupos o estancias largas",
+        searchAirbnbDesc: "Casas y departamentos perfectos para grupos o estadías largas",
         searchVrbo: "Buscar en VRBO",
         searchVrboDesc: "Casas de vacaciones con espacio extra para familias y grupos",
 
