@@ -5,7 +5,7 @@ import { getLocale } from "@/lib/locale";
 
 const MAIDS_OF_HONOR = [
   {
-    name: "Meera Dasai",
+    name: "Meera Desai",
     bio: "Meera Desai is Ana’s childhood best friend, and the two have shared a special and unbreakable bond since they met in the 5th grade. Over the past 15 years, they have grown up together through nearly every stage of life; from school days at Centerville to attending Texas A&M. Even when they went to different schools in high school, their friendship only grew stronger as they made every effort to stay close. Their friendship, full of laughter, love, and countless shared memories, has stood strong through every stage of life. Meera has always been a caring and steadfast presence in Ana’s life, and Ana and Joshua feel so grateful to have her by their side to celebrate this special day.",
     bioEs: "Meera Desai es la mejor amiga de la infancia de Ana, y desde que se conocieron en quinto grado, han compartido un vínculo especial e inquebrantable. Durante los últimos 15 años, han crecido juntas en casi todas las etapas de la vida; desde sus días escolares en Centerville hasta su paso por la Universidad de Texas A&M. Incluso cuando asistieron a diferentes escuelas en la preparatoria, su amistad se fortaleció aún más, esforzándose siempre por mantenerse unidas. Su amistad, llena de risas, amor e innumerables recuerdos compartidos, se ha mantenido firme a lo largo de todas las etapas de la vida. Meera siempre ha sido una presencia cariñosa y constante en la vida de Ana, y Ana y Joshua se sienten muy agradecidos de tenerla a su lado para celebrar este día tan especial.",
   },
