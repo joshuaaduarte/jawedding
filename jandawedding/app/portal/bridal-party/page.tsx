@@ -177,6 +177,8 @@ function Section({
   role?: string;
   locale: string;
 }) {
+  const hasCenteredLastCard = people.length > 1 && people.length % 2 === 1;
+
   return (
     <section className="space-y-4">
       <div>
@@ -185,7 +187,16 @@ function Section({
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         {people.map((person, i) => (
-          <PersonCard key={i} person={person} role={role} locale={locale} />
+          <div
+            key={i}
+            className={
+              hasCenteredLastCard && i === people.length - 1
+                ? "md:col-span-2 md:mx-auto md:w-1/2"
+                : undefined
+            }
+          >
+            <PersonCard person={person} role={role} locale={locale} />
+          </div>
         ))}
       </div>
     </section>
