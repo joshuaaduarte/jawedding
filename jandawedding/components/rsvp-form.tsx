@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { RsvpAttendance, RsvpRecord } from "@/lib/rsvp-store";
 import type { Guest } from "@/lib/guest-data";
 import type { Locale } from "@/lib/locale";
@@ -22,42 +22,72 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
       ? {
           selectAll: "Por favor selecciona asistencia para cada persona.",
           submitError: "No pudimos guardar tu confirmación. Inténtalo otra vez.",
-          submitOk: "Confirmación guardada. ¡Nos vemos pronto!",
+          submitOkAttending: "Confirmación guardada. ¡Nos vemos pronto!",
+          submitOkDeclining: "Confirmación guardada. Lamentamos que no puedas acompañarnos. ¡Gracias por avisarnos!",
+          submitOkMixed: "Confirmación guardada. ¡Gracias por responder!",
           yes: "Asistiré",
           no: "No podré",
           notes: "Necesidades alimenticias",
           hint: "Puedes actualizar tu confirmación después.",
+          unsaved: "Tienes cambios sin guardar — ¡no olvides presionar Guardar!",
           saving: "Guardando...",
-          submit: "Enviar Confirmación",
+          submit: "Guardar Confirmación",
+          savedLabel: "✓ Guardado",
         }
       : {
           selectAll: "Please select attendance for each person.",
           submitError: "Unable to submit RSVP. Please try again.",
-          submitOk: "RSVP saved. We can't wait to see you!",
+          submitOkAttending: "RSVP saved. We can't wait to see you!",
+          submitOkDeclining: "RSVP saved. We're sorry you can't make it — thank you for letting us know!",
+          submitOkMixed: "RSVP saved. Thank you for responding!",
           yes: "Attending",
           no: "Declining",
           notes: "Dietary needs",
           hint: "Your RSVP can be updated later from this portal.",
+          unsaved: "You have unsaved changes — don't forget to press Save!",
           saving: "Saving...",
-          submit: "Submit RSVP",
+          submit: "Save my RSVP",
+          savedLabel: "✓ Saved",
         };
 
-  const [states, setStates] = useState<Record<string, GuestState>>(
-    Object.fromEntries(
-      guests.map((g) => [
-        g.id,
-        {
-          attendance: existingRsvps[g.id]?.attendance ?? "",
-          notes: existingRsvps[g.id]?.notes ?? "",
-        },
-      ]),
-    ),
+  const initialStates: Record<string, GuestState> = Object.fromEntries(
+    guests.map((g) => [
+      g.id,
+      {
+        attendance: existingRsvps[g.id]?.attendance ?? "",
+        notes: existingRsvps[g.id]?.notes ?? "",
+      },
+    ]),
   );
+
+  const [states, setStates] = useState<Record<string, GuestState>>(initialStates);
+  // Baseline of what's persisted on the server, so we can detect unsaved edits.
+  const [savedStates, setSavedStates] =
+    useState<Record<string, GuestState>>(initialStates);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [statusOk, setStatusOk] = useState(false);
   const [saving, setSaving] = useState(false);
 
+  const dirty = guests.some((g) => {
+    const cur = states[g.id];
+    const base = savedStates[g.id];
+    return cur.attendance !== base.attendance || cur.notes !== base.notes;
+  });
+  const hasSaved = guests.some((g) => savedStates[g.id]?.attendance !== "");
+
+  // Native "Leave site?" warning while there are unsaved selections.
+  useEffect(() => {
+    if (!dirty) return;
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [dirty]);
+
   function setAttendance(guestId: string, value: RsvpAttendance) {
+    setStatusMessage(null);
     setStates((prev) => ({
       ...prev,
       [guestId]: { ...prev[guestId], attendance: value },
@@ -65,6 +95,7 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
   }
 
   function setNotes(guestId: string, value: string) {
+    setStatusMessage(null);
     setStates((prev) => ({
       ...prev,
       [guestId]: { ...prev[guestId], notes: value },
@@ -104,7 +135,18 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
       return;
     }
 
-    setStatusMessage(t.submitOk);
+    // Selections are now persisted — reset the baseline so "unsaved" clears.
+    setSavedStates(states);
+
+    const anyAttending = guests.some((g) => states[g.id].attendance === "yes");
+    const anyDeclining = guests.some((g) => states[g.id].attendance === "no");
+    setStatusMessage(
+      anyAttending && anyDeclining
+        ? t.submitOkMixed
+        : anyAttending
+          ? t.submitOkAttending
+          : t.submitOkDeclining,
+    );
     setStatusOk(true);
   }
 
@@ -198,6 +240,13 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
         >
           {statusMessage}
         </p>
+      ) : dirty ? (
+        <p
+          className="text-xs uppercase tracking-[0.2em]"
+          style={{ color: "#e8c07a" }}
+        >
+          {t.unsaved}
+        </p>
       ) : (
         <p
           className="text-xs uppercase tracking-[0.2em]"
@@ -211,13 +260,22 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
         type="submit"
         disabled={saving}
         className="rounded-full px-8 py-3 text-xs uppercase tracking-[0.24em] transition disabled:cursor-not-allowed disabled:opacity-60"
-        style={{
-          border: "1px solid #c9a0a0",
-          color: "#f0e0d0",
-          background: "transparent",
-        }}
+        style={
+          dirty
+            ? {
+                border: "1px solid #c9a0a0",
+                color: "#2d1f14",
+                background: "#e8c8a8",
+                boxShadow: "0 0 0 4px rgba(232,192,122,0.18)",
+              }
+            : {
+                border: "1px solid #c9a0a0",
+                color: "#f0e0d0",
+                background: "transparent",
+              }
+        }
       >
-        {saving ? t.saving : t.submit}
+        {saving ? t.saving : !dirty && hasSaved ? t.savedLabel : t.submit}
       </button>
     </form>
   );
