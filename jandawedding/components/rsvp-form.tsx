@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { RsvpAttendance, RsvpRecord } from "@/lib/rsvp-store";
 import type { Guest } from "@/lib/guest-data";
 import type { Locale } from "@/lib/locale";
+import { useUnsavedChanges } from "@/components/unsaved-changes";
 
 type GuestState = {
   attendance: RsvpAttendance | "";
@@ -75,7 +76,9 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
   });
   const hasSaved = guests.some((g) => savedStates[g.id]?.attendance !== "");
 
-  // Native "Leave site?" warning while there are unsaved selections.
+  const unsavedChanges = useUnsavedChanges();
+
+  // Native "Leave site?" warning for hard navigation (tab close / refresh).
   useEffect(() => {
     if (!dirty) return;
     const handler = (e: BeforeUnloadEvent) => {
@@ -85,6 +88,12 @@ export function RsvpForm({ guests, existingRsvps, locale }: RsvpFormProps) {
     window.addEventListener("beforeunload", handler);
     return () => window.removeEventListener("beforeunload", handler);
   }, [dirty]);
+
+  // Publish dirty state so in-app portal nav can intercept tab switches.
+  useEffect(() => {
+    unsavedChanges?.setDirty(dirty);
+    return () => unsavedChanges?.setDirty(false);
+  }, [dirty, unsavedChanges]);
 
   function setAttendance(guestId: string, value: RsvpAttendance) {
     setStatusMessage(null);

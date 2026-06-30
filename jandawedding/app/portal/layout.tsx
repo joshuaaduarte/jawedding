@@ -5,6 +5,7 @@ import { PHOTOS } from "@/lib/photos";
 import { getLocale } from "@/lib/locale";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { PortalNav } from "@/components/portal-nav";
+import { UnsavedChangesProvider } from "@/components/unsaved-changes";
 
 export default async function PortalLayout({
   children,
@@ -28,6 +29,8 @@ export default async function PortalLayout({
           stay: "Hospedaje",
           things: "Qué Hacer",
           carpool: "Tablero De Viaje",
+          unsavedPrompt:
+            "Tienes cambios sin guardar en tu confirmación. ¿Salir sin guardar?",
         }
       : {
           guestPortal: "Guest Portal",
@@ -42,6 +45,8 @@ export default async function PortalLayout({
           stay: "Stay",
           things: "To Do",
           carpool: "Travel Board",
+          unsavedPrompt:
+            "You have unsaved RSVP changes. Leave without saving?",
         };
 
   const navItems = [
@@ -64,6 +69,7 @@ export default async function PortalLayout({
           "linear-gradient(180deg, #fbf4e8 0%, #f5f0e8 40%, #edf1ee 100%)",
       }}
     >
+      <UnsavedChangesProvider message={t.unsavedPrompt}>
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 sm:px-8">
         {/* ── Portal header ── */}
         <header
@@ -135,6 +141,7 @@ export default async function PortalLayout({
 
         {children}
       </div>
+      </UnsavedChangesProvider>
     </main>
   );
 }

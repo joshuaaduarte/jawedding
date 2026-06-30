@@ -3,12 +3,23 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useUnsavedChanges } from "@/components/unsaved-changes";
 
 type NavItem = { href: string; label: string };
 
 export function PortalNav({ items }: { items: NavItem[] }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const unsavedChanges = useUnsavedChanges();
+
+  // Block client-side tab navigation when the active page has unsaved edits.
+  function handleNavClick(e: React.MouseEvent) {
+    if (unsavedChanges && !unsavedChanges.confirmIfDirty()) {
+      e.preventDefault();
+      return false;
+    }
+    return true;
+  }
 
   return (
     <>
@@ -28,6 +39,7 @@ export function PortalNav({ items }: { items: NavItem[] }) {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={handleNavClick}
                 className="shrink-0 px-4 py-4 text-xs uppercase tracking-[0.18em] transition"
                 style={{
                   color: active ? "#2d1f14" : "#8a7060",
@@ -117,7 +129,10 @@ export function PortalNav({ items }: { items: NavItem[] }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => {
+                    if (!handleNavClick(e)) return;
+                    setOpen(false);
+                  }}
                   className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm transition"
                   style={{
                     color: active ? "#2d1f14" : "#6b5444",
