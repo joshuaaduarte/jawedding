@@ -24,3 +24,13 @@ export function getSupabase(): SupabaseClient {
   _client = createClient<any>(url, key, { auth: { persistSession: false } });
   return _client;
 }
+
+// True when a query failed only because the table hasn't been created yet
+// (i.e. the schema migration in supabase/schema.sql hasn't been run). Lets
+// read paths degrade to an empty result instead of hard-crashing the page.
+export function isMissingTableError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const code = (error as { code?: string }).code;
+  // PGRST205: PostgREST schema cache miss. 42P01: Postgres "undefined_table".
+  return code === "PGRST205" || code === "42P01";
+}

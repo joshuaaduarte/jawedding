@@ -1,9 +1,54 @@
 import Link from "next/link";
 import { getAllRsvps } from "@/lib/rsvp-store";
 import { getAllGuests } from "@/lib/guest-data";
+import { getAllTasks } from "@/lib/task-store";
+import { getAllBudgetItems } from "@/lib/budget-store";
+import { getSeatAssignments } from "@/lib/seating-store";
+
+const usd = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
 
 export default async function AdminDashboard() {
-  const [guests, rsvps] = await Promise.all([getAllGuests(), getAllRsvps()]);
+  const [guests, rsvps, tasks, budgetItems, seats] = await Promise.all([
+    getAllGuests(),
+    getAllRsvps(),
+    getAllTasks(),
+    getAllBudgetItems(),
+    getSeatAssignments(),
+  ]);
+
+  const openTasks = tasks.filter((t) => t.status !== "done").length;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const overdueTasks = tasks.filter(
+    (t) => t.status !== "done" && t.dueDate && new Date(t.dueDate) < today,
+  ).length;
+  const committed = budgetItems.reduce(
+    (s, i) => s + (i.actual > 0 ? i.actual : i.estimated),
+    0,
+  );
+  const paid = budgetItems.reduce((s, i) => s + i.paid, 0);
+  const owed = committed - paid;
+  const seatedCount = seats.filter((s) => s.tableId).length;
+
+  const planningStats = [
+    {
+      label: "Open Tasks",
+      value: openTasks,
+      color: overdueTasks > 0 ? "text-amber-600" : "text-stone-800",
+      sub: overdueTasks > 0 ? `${overdueTasks} overdue` : undefined,
+    },
+    { label: "Budget", value: usd.format(committed), color: "text-stone-800" },
+    { label: "Still Owed", value: usd.format(owed), color: "text-amber-600" },
+    {
+      label: "Seated",
+      value: `${seatedCount}/${seats.length}`,
+      color: "text-stone-800",
+    },
+  ];
 
   const totalGuests = guests.length;
   const attending = rsvps.filter((r) => r.attendance === "yes").length;
@@ -39,32 +84,74 @@ export default async function AdminDashboard() {
         ))}
       </section>
 
+      {/* Planning rollups */}
+      <section className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {planningStats.map((s) => (
+          <div
+            key={s.label}
+            className="rounded-2xl border border-stone-200 bg-white/90 p-5 shadow-sm"
+          >
+            <p className="text-xs uppercase tracking-[0.14em] text-stone-500">
+              {s.label}
+            </p>
+            <p className={`mt-2 font-serif text-2xl sm:text-3xl ${s.color}`}>
+              {s.value}
+            </p>
+            {s.sub ? (
+              <p className="mt-1 text-xs text-amber-600">{s.sub}</p>
+            ) : null}
+          </div>
+        ))}
+      </section>
+
       {/* Quick links */}
-      <section className="grid gap-4 sm:grid-cols-2">
-        <Link
-          href="/admin/guests"
-          className="group rounded-2xl border border-stone-200 bg-white/90 p-6 shadow-sm transition hover:border-stone-300"
-        >
-          <p className="text-xs uppercase tracking-[0.18em] text-stone-500">Manage</p>
-          <h2 className="mt-2 font-serif text-3xl text-stone-900 transition group-hover:text-stone-700">
-            Guests →
-          </h2>
-          <p className="mt-2 text-sm text-stone-600">
-            Add, edit, or remove guests and view their RSVP status.
-          </p>
-        </Link>
-        <Link
-          href="/admin/events"
-          className="group rounded-2xl border border-stone-200 bg-white/90 p-6 shadow-sm transition hover:border-stone-300"
-        >
-          <p className="text-xs uppercase tracking-[0.18em] text-stone-500">Manage</p>
-          <h2 className="mt-2 font-serif text-3xl text-stone-900 transition group-hover:text-stone-700">
-            Events →
-          </h2>
-          <p className="mt-2 text-sm text-stone-600">
-            Add, edit, or remove wedding events and assign them to guest groups.
-          </p>
-        </Link>
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {[
+          {
+            href: "/admin/guests",
+            title: "Guests →",
+            label: "Manage",
+            desc: "Add, edit, or remove guests and view their RSVP status.",
+          },
+          {
+            href: "/admin/events",
+            title: "Events →",
+            label: "Manage",
+            desc: "Add, edit, or remove wedding events and assign them to groups.",
+          },
+          {
+            href: "/admin/tasks",
+            title: "To-Do →",
+            label: "Plan",
+            desc: "Track open planning items by category, owner, and due date.",
+          },
+          {
+            href: "/admin/finance",
+            title: "Finance →",
+            label: "Plan",
+            desc: "Track estimates, actuals, and payments across every category.",
+          },
+          {
+            href: "/admin/seating",
+            title: "Seating →",
+            label: "Plan",
+            desc: "Assign confirmed guests to reception tables and watch capacity.",
+          },
+        ].map((card) => (
+          <Link
+            key={card.href}
+            href={card.href}
+            className="group rounded-2xl border border-stone-200 bg-white/90 p-6 shadow-sm transition hover:border-stone-300"
+          >
+            <p className="text-xs uppercase tracking-[0.18em] text-stone-500">
+              {card.label}
+            </p>
+            <h2 className="mt-2 font-serif text-3xl text-stone-900 transition group-hover:text-stone-700">
+              {card.title}
+            </h2>
+            <p className="mt-2 text-sm text-stone-600">{card.desc}</p>
+          </Link>
+        ))}
       </section>
 
       {/* Recent RSVPs */}

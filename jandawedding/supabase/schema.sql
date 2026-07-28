@@ -125,3 +125,56 @@ CREATE TABLE IF NOT EXISTS messages (
 -- Run in Supabase SQL Editor if upgrading an existing database:
 -- ============================================================
 -- ALTER TABLE events ADD COLUMN address TEXT NOT NULL DEFAULT '';
+
+-- ============================================================
+-- Wedding Planning Hub: To-Do, Finance, and Seating
+-- ============================================================
+
+-- Tasks table (planning to-do list, grouped by category)
+CREATE TABLE IF NOT EXISTS tasks (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title      TEXT NOT NULL,
+  category   TEXT NOT NULL DEFAULT 'General',
+  status     TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open', 'in_progress', 'done')),
+  assignee   TEXT NOT NULL DEFAULT '' CHECK (assignee IN ('', 'joshua', 'ana', 'both')),
+  due_date   DATE,
+  notes      TEXT NOT NULL DEFAULT '',
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Budget items table (finance tracking)
+CREATE TABLE IF NOT EXISTS budget_items (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  category    TEXT NOT NULL DEFAULT 'General',
+  vendor      TEXT NOT NULL DEFAULT '',
+  description TEXT NOT NULL DEFAULT '',
+  estimated   NUMERIC(10, 2) NOT NULL DEFAULT 0,
+  actual      NUMERIC(10, 2) NOT NULL DEFAULT 0,
+  paid        NUMERIC(10, 2) NOT NULL DEFAULT 0,
+  due_date    DATE,
+  notes       TEXT NOT NULL DEFAULT '',
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Seating tables (physical reception tables)
+CREATE TABLE IF NOT EXISTS seating_tables (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name       TEXT NOT NULL,
+  capacity   INTEGER NOT NULL DEFAULT 8 CHECK (capacity >= 0),
+  notes      TEXT NOT NULL DEFAULT '',
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Seat assignments (one row per seatable person; table_id NULL = unassigned)
+CREATE TABLE IF NOT EXISTS seat_assignments (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  guest_id   UUID REFERENCES guests(id) ON DELETE CASCADE,
+  seat_index INTEGER NOT NULL DEFAULT 0,
+  name       TEXT NOT NULL,
+  table_id   UUID REFERENCES seating_tables(id) ON DELETE SET NULL,
+  notes      TEXT NOT NULL DEFAULT '',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (guest_id, seat_index)
+);
