@@ -13,6 +13,7 @@ const NAV = [
   { href: "/admin/seating", label: "Seating" },
   { href: "/admin/messages", label: "Messages" },
   { href: "/admin/travel", label: "Travel" },
+  { href: "/admin/honeymoon", label: "Honeymoon" },
 ];
 
 export default async function AdminLayout({

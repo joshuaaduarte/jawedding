@@ -192,3 +192,22 @@ CREATE TABLE IF NOT EXISTS seat_assignments (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE (guest_id, seat_index)
 );
+
+-- Honeymoon itinerary items (Japan trip planner). Undated rows (item_date NULL)
+-- are the "Ideas / Unscheduled" wishlist; dated rows form the day-by-day plan.
+CREATE TABLE IF NOT EXISTS honeymoon_items (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title      TEXT NOT NULL,
+  city       TEXT NOT NULL DEFAULT '',
+  category   TEXT NOT NULL DEFAULT 'Sightseeing',
+  status     TEXT NOT NULL DEFAULT 'idea' CHECK (status IN ('idea', 'planned', 'booked')),
+  item_date  DATE,
+  end_date   DATE,
+  time_label TEXT NOT NULL DEFAULT '',
+  cost       NUMERIC(10, 2) NOT NULL DEFAULT 0,
+  address    TEXT NOT NULL DEFAULT '',
+  url        TEXT NOT NULL DEFAULT '',
+  notes      TEXT NOT NULL DEFAULT '',
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
