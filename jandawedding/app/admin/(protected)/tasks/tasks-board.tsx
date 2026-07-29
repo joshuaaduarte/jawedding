@@ -6,11 +6,15 @@ import {
   updateTaskAction,
   setTaskStatusAction,
   deleteTaskAction,
+  addMilestoneAction,
+  setMilestoneDoneAction,
+  deleteMilestoneAction,
 } from "./actions";
 import {
   TASK_CATEGORIES,
   type Task,
   type TaskStatus,
+  type Milestone,
 } from "@/lib/task-store";
 
 const ASSIGNEE_LABEL: Record<string, string> = {
@@ -50,6 +54,125 @@ function formatDate(date: string): string {
     day: "numeric",
     year: "numeric",
   });
+}
+
+function isDatePast(date: string | null): boolean {
+  if (!date) return false;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return new Date(`${date}T00:00:00`) < today;
+}
+
+function TaskMilestones({
+  taskId,
+  milestones,
+}: {
+  taskId: string;
+  milestones: Milestone[];
+}) {
+  const [adding, setAdding] = useState(false);
+  const sorted = [...milestones].sort((a, b) => {
+    if (!!a.dueDate !== !!b.dueDate) return a.dueDate ? -1 : 1;
+    if (a.dueDate && b.dueDate) return a.dueDate.localeCompare(b.dueDate);
+    return a.sortOrder - b.sortOrder;
+  });
+
+  return (
+    <div className="mt-2.5 border-l-2 border-stone-100 pl-3">
+      {sorted.length > 0 ? (
+        <ul className="space-y-1.5">
+          {sorted.map((m) => {
+            const overdue = !m.done && isDatePast(m.dueDate);
+            return (
+              <li key={m.id} className="flex items-center gap-2 text-xs">
+                <form action={setMilestoneDoneAction.bind(null, m.id, !m.done)}>
+                  <button
+                    type="submit"
+                    aria-label={m.done ? "Mark milestone open" : "Mark milestone done"}
+                    className={`flex h-4 w-4 items-center justify-center rounded border text-[10px] transition ${
+                      m.done
+                        ? "border-emerald-500 bg-emerald-500 text-white"
+                        : "border-stone-300 hover:border-stone-500"
+                    }`}
+                  >
+                    {m.done ? "✓" : ""}
+                  </button>
+                </form>
+                <span className={m.done ? "text-stone-400 line-through" : "text-stone-700"}>
+                  {m.label}
+                </span>
+                {m.dueDate ? (
+                  <span
+                    className={`rounded-full px-1.5 py-0.5 ${
+                      overdue ? "bg-rose-100 text-rose-700" : "bg-stone-100 text-stone-500"
+                    }`}
+                  >
+                    {overdue ? "Overdue · " : ""}
+                    {formatDate(m.dueDate)}
+                  </span>
+                ) : null}
+                <form
+                  action={deleteMilestoneAction.bind(null, m.id)}
+                  className="ml-auto"
+                  onSubmit={(e) => {
+                    if (!confirm("Delete this milestone?")) e.preventDefault();
+                  }}
+                >
+                  <button type="submit" className="text-stone-400 hover:text-rose-600">
+                    ✕
+                  </button>
+                </form>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
+
+      {adding ? (
+        <form
+          action={async (formData) => {
+            await addMilestoneAction(taskId, formData);
+            setAdding(false);
+          }}
+          className="mt-2 flex flex-wrap items-center gap-2"
+        >
+          <input
+            name="label"
+            type="text"
+            required
+            placeholder="Milestone (e.g. Order proofs)"
+            className="flex-1 rounded-lg border border-stone-300 px-2 py-1 text-xs outline-none"
+          />
+          <input
+            name="dueDate"
+            type="date"
+            className="rounded-lg border border-stone-300 px-2 py-1 text-xs outline-none"
+          />
+          <button
+            type="submit"
+            className="rounded-full bg-stone-800 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-white hover:bg-stone-700"
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            onClick={() => setAdding(false)}
+            className="text-xs text-stone-500 underline"
+          >
+            Cancel
+          </button>
+        </form>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setAdding(true)}
+          className="mt-1.5 text-[11px] text-stone-500 underline hover:text-stone-800"
+        >
+          + Milestone
+        </button>
+      )}
+    </div>
+  );
 }
 
 function TaskFields({ task }: { task?: Task }) {
@@ -134,7 +257,7 @@ function TaskFields({ task }: { task?: Task }) {
   );
 }
 
-function TaskRow({ task }: { task: Task }) {
+function TaskRow({ task, milestones }: { task: Task; milestones: Milestone[] }) {
   const [editing, setEditing] = useState(false);
   const nextStatus: TaskStatus = task.status === "done" ? "open" : "done";
 
@@ -218,6 +341,7 @@ function TaskRow({ task }: { task: Task }) {
         {task.notes ? (
           <p className="mt-1.5 whitespace-pre-wrap text-xs text-stone-500">{task.notes}</p>
         ) : null}
+        <TaskMilestones taskId={task.id} milestones={milestones} />
       </div>
 
       <div className="flex shrink-0 items-center gap-3 text-xs">
@@ -243,7 +367,13 @@ function TaskRow({ task }: { task: Task }) {
   );
 }
 
-export function TasksBoard({ tasks }: { tasks: Task[] }) {
+export function TasksBoard({
+  tasks,
+  milestonesByTask,
+}: {
+  tasks: Task[];
+  milestonesByTask: Record<string, Milestone[]>;
+}) {
   const [showAdd, setShowAdd] = useState(false);
   const [statusFilter, setStatusFilter] = useState<"all" | "active" | TaskStatus>(
     "active",
@@ -377,7 +507,11 @@ export function TasksBoard({ tasks }: { tasks: Task[] }) {
             </h2>
             <ul className="space-y-2">
               {list.map((task) => (
-                <TaskRow key={task.id} task={task} />
+                <TaskRow
+                  key={task.id}
+                  task={task}
+                  milestones={milestonesByTask[task.id] ?? []}
+                />
               ))}
             </ul>
           </section>

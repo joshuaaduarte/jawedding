@@ -143,6 +143,20 @@ CREATE TABLE IF NOT EXISTS tasks (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+-- Task milestones (sub-deadlines on a larger task, e.g. custom coasters:
+-- design approved -> order placed -> proofs -> delivered). Each milestone
+-- has its own due date and lands on the countdown calendar.
+CREATE TABLE IF NOT EXISTS task_milestones (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  task_id    UUID NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+  label      TEXT NOT NULL,
+  due_date   DATE,
+  done       BOOLEAN NOT NULL DEFAULT FALSE,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS task_milestones_task_id_idx ON task_milestones(task_id);
+
 -- Budget items table (finance tracking)
 CREATE TABLE IF NOT EXISTS budget_items (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),

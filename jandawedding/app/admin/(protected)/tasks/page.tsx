@@ -1,8 +1,18 @@
-import { getAllTasks } from "@/lib/task-store";
+import { getAllTasks, getAllMilestones, type Milestone } from "@/lib/task-store";
 import { TasksBoard } from "./tasks-board";
 
 export default async function AdminTasksPage() {
-  const tasks = await getAllTasks();
+  const [tasks, milestones] = await Promise.all([
+    getAllTasks(),
+    getAllMilestones(),
+  ]);
+
+  const milestonesByTask = new Map<string, Milestone[]>();
+  for (const m of milestones) {
+    const list = milestonesByTask.get(m.taskId) ?? [];
+    list.push(m);
+    milestonesByTask.set(m.taskId, list);
+  }
 
   const open = tasks.filter((t) => t.status !== "done").length;
   const done = tasks.filter((t) => t.status === "done").length;
@@ -25,7 +35,7 @@ export default async function AdminTasksPage() {
         </p>
       </div>
 
-      <TasksBoard tasks={tasks} />
+      <TasksBoard tasks={tasks} milestonesByTask={Object.fromEntries(milestonesByTask)} />
     </div>
   );
 }

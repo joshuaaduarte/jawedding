@@ -106,3 +106,85 @@ export async function deleteTask(id: string): Promise<void> {
   const { error } = await getSupabase().from("tasks").delete().eq("id", id);
   if (error) throw error;
 }
+
+// ── Task milestones ─────────────────────────────────────────────────────────
+// Sub-deadlines that hang off a larger task (e.g. custom coasters). Each has
+// its own due date so it can appear on the countdown calendar.
+
+export type Milestone = {
+  id: string;
+  taskId: string;
+  label: string;
+  dueDate: string | null;
+  done: boolean;
+  sortOrder: number;
+  createdAt: string;
+};
+
+function mapMilestone(row: Record<string, unknown>): Milestone {
+  return {
+    id: row.id as string,
+    taskId: row.task_id as string,
+    label: row.label as string,
+    dueDate: (row.due_date as string) ?? null,
+    done: Boolean(row.done),
+    sortOrder: (row.sort_order as number) ?? 0,
+    createdAt: row.created_at as string,
+  };
+}
+
+export async function getAllMilestones(): Promise<Milestone[]> {
+  const { data, error } = await getSupabase()
+    .from("task_milestones")
+    .select("*")
+    .order("due_date", { ascending: true, nullsFirst: false })
+    .order("sort_order", { ascending: true });
+  if (error) {
+    if (isMissingTableError(error)) return [];
+    throw error;
+  }
+  return (data ?? []).map((row) => mapMilestone(row as Record<string, unknown>));
+}
+
+export async function createMilestone(input: {
+  taskId: string;
+  label: string;
+  dueDate?: string | null;
+  done?: boolean;
+}): Promise<Milestone> {
+  const { data, error } = await getSupabase()
+    .from("task_milestones")
+    .insert({
+      task_id: input.taskId,
+      label: input.label,
+      due_date: input.dueDate || null,
+      done: input.done ?? false,
+    })
+    .select()
+    .single();
+  if (error) throw error;
+  return mapMilestone(data as Record<string, unknown>);
+}
+
+export async function updateMilestone(
+  id: string,
+  input: { label?: string; dueDate?: string | null; done?: boolean },
+): Promise<void> {
+  const patch: Record<string, unknown> = {};
+  if (input.label !== undefined) patch.label = input.label;
+  if (input.dueDate !== undefined) patch.due_date = input.dueDate || null;
+  if (input.done !== undefined) patch.done = input.done;
+  const { error } = await getSupabase()
+    .from("task_milestones")
+    .update(patch)
+    .eq("id", id);
+  if (error) throw error;
+}
+
+export async function deleteMilestone(id: string): Promise<void> {
+  const { error } = await getSupabase()
+    .from("task_milestones")
+    .delete()
+    .eq("id", id);
+  if (error) throw error;
+}
