@@ -9,6 +9,8 @@ import {
   addSeatAction,
   updateSeatAction,
   deleteSeatAction,
+  splitSeatAction,
+  rejoinSeatAction,
   syncSeatsAction,
 } from "./actions";
 import type { SeatAssignment, SeatingTable } from "@/lib/seating-store";
@@ -26,12 +28,17 @@ type Party = {
   label: string;
   seats: SeatAssignment[];
   tableId: string | null;
+  // A one-person party created by splitting an individual out of their invite
+  // code. It moves on its own and offers "Rejoin group" instead of "Split off".
+  detached: boolean;
 };
 
 function buildParties(seats: SeatAssignment[]): Party[] {
   const groups = new Map<string, SeatAssignment[]>();
   for (const s of seats) {
-    const key = s.inviteCode || `solo:${s.id}`;
+    // A detached seat is keyed by its own id so it breaks out of its household
+    // and gets its own table selector.
+    const key = s.detached ? `solo:${s.id}` : s.inviteCode || `solo:${s.id}`;
     const list = groups.get(key) ?? [];
     list.push(s);
     groups.set(key, list);
@@ -40,21 +47,38 @@ function buildParties(seats: SeatAssignment[]): Party[] {
   for (const [key, list] of groups) {
     list.sort((a, b) => a.seatIndex - b.seatIndex || a.name.localeCompare(b.name));
     const first = list[0];
+    const detached = first.detached;
     parties.push({
       key,
       inviteCode: first.inviteCode,
-      label: first.partyLabel || first.name,
+      // Detached people keep a "from <household>" trail so you don't lose track
+      // of who they belong to.
+      label: detached
+        ? first.partyLabel
+          ? `${first.name} · from ${first.partyLabel}`
+          : first.name
+        : first.partyLabel || first.name,
       seats: list,
       // Effective location: the whole party follows its first seat. Assignment
       // always moves every seat together, so this stays consistent.
       tableId: first.tableId,
+      detached,
     });
   }
   return parties;
 }
 
-function SeatMember({ seat }: { seat: SeatAssignment }) {
+function SeatMember({
+  seat,
+  canSplit = false,
+}: {
+  seat: SeatAssignment;
+  // Whether "Split off" is offered — only meaningful for a real household with
+  // more than one member. Detached seats always offer "Rejoin group" instead.
+  canSplit?: boolean;
+}) {
   const [editing, setEditing] = useState(false);
+  const [pending, startTransition] = useTransition();
 
   if (editing) {
     return (
@@ -94,13 +118,37 @@ function SeatMember({ seat }: { seat: SeatAssignment }) {
   }
 
   return (
-    <li className="flex items-center gap-2 leading-tight">
+    <li className={`flex items-center gap-2 leading-tight ${pending ? "opacity-50" : ""}`}>
       <span className="min-w-0 flex-1 truncate text-sm text-stone-700">
+        {seat.detached ? (
+          <span aria-hidden className="mr-1 text-amber-500" title="Split from party">
+            ⤴
+          </span>
+        ) : null}
         {seat.name}
         {seat.notes ? (
           <span className="ml-1.5 text-xs text-stone-400">{seat.notes}</span>
         ) : null}
       </span>
+      {seat.detached ? (
+        <button
+          type="button"
+          disabled={pending}
+          onClick={() => startTransition(() => rejoinSeatAction(seat.id))}
+          className="text-[11px] text-amber-600 underline opacity-80 transition hover:text-amber-800 hover:opacity-100 disabled:opacity-40"
+        >
+          Rejoin group
+        </button>
+      ) : canSplit ? (
+        <button
+          type="button"
+          disabled={pending}
+          onClick={() => startTransition(() => splitSeatAction(seat.id))}
+          className="text-[11px] text-stone-400 underline opacity-70 transition hover:text-stone-700 hover:opacity-100 disabled:opacity-40"
+        >
+          Split off
+        </button>
+      ) : null}
       <button
         type="button"
         onClick={() => setEditing(true)}
@@ -157,10 +205,17 @@ function PartyBlock({
     </select>
   );
 
+  // Splitting only makes sense inside a real household with more than one
+  // member — you can't break a lone guest out of a party of one.
+  const canSplit = !party.detached && party.seats.length > 1;
   const members = (
     <ul className="space-y-0.5">
       {party.seats.map((seat) => (
-        <SeatMember key={seat.id} seat={seat} />
+        <SeatMember
+          key={seat.id}
+          seat={seat}
+          canSplit={canSplit && !!seat.inviteCode}
+        />
       ))}
     </ul>
   );
@@ -400,7 +455,10 @@ export function SeatingBoard({
 
       <p className="text-xs text-stone-500">
         Guests sharing an invite code are seated as one party — assigning moves the
-        whole household together so a group is never split across tables.
+        whole household together so a group is never split across tables. Need an
+        exception? Use <span className="font-medium">Split off</span> on a person to
+        seat them on their own, then <span className="font-medium">Rejoin group</span>{" "}
+        to snap them back.
       </p>
 
       {showAddTable ? (

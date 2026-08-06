@@ -189,9 +189,18 @@ CREATE TABLE IF NOT EXISTS seat_assignments (
   name       TEXT NOT NULL,
   table_id   UUID REFERENCES seating_tables(id) ON DELETE SET NULL,
   notes      TEXT NOT NULL DEFAULT '',
+  -- detached = broken out of its invite-code party so this one person can be
+  -- seated at a different table on their own (rare exception to keep-together).
+  detached   BOOLEAN NOT NULL DEFAULT FALSE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE (guest_id, seat_index)
 );
+
+-- ============================================================
+-- Migration: Allow splitting an individual out of their party
+-- Run in Supabase SQL Editor if upgrading an existing database:
+-- ============================================================
+-- ALTER TABLE seat_assignments ADD COLUMN IF NOT EXISTS detached BOOLEAN NOT NULL DEFAULT FALSE;
 
 -- Honeymoon itinerary items (Japan trip planner). Undated rows (item_date NULL)
 -- are the "Ideas / Unscheduled" wishlist; dated rows form the day-by-day plan.

@@ -6,6 +6,8 @@ import {
   updateSeatingTable,
   deleteSeatingTable,
   assignSeats,
+  splitSeat,
+  rejoinSeat,
   createSeat,
   updateSeat,
   deleteSeat,
@@ -46,6 +48,16 @@ export async function assignSeatsAction(
   tableId: string | null,
 ) {
   await assignSeats(seatIds, tableId);
+  revalidatePath("/admin/seating");
+}
+
+export async function splitSeatAction(id: string) {
+  await splitSeat(id);
+  revalidatePath("/admin/seating");
+}
+
+export async function rejoinSeatAction(id: string) {
+  await rejoinSeat(id);
   revalidatePath("/admin/seating");
 }
 

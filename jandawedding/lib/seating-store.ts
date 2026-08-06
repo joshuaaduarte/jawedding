@@ -24,6 +24,10 @@ export type SeatAssignment = {
   // seats have no guest, so inviteCode is "" and each stands on its own.
   inviteCode: string;
   partyLabel: string;
+  // Occasional escape hatch: a detached seat is broken out of its invite-code
+  // party so it can be seated at a different table on its own. The standard is
+  // to keep a household together — this covers the rare exception.
+  detached: boolean;
 };
 
 function mapTable(row: Record<string, unknown>): SeatingTable {
@@ -51,6 +55,7 @@ function mapSeat(
     createdAt: row.created_at as string,
     inviteCode: party?.inviteCode ?? "",
     partyLabel: party?.label ?? "",
+    detached: (row.detached as boolean) ?? false,
   };
 }
 
@@ -158,6 +163,39 @@ export async function assignSeats(
     .from("seat_assignments")
     .update({ table_id: tableId })
     .in("id", seatIds);
+  if (error) throw error;
+}
+
+// Breaks one seat out of its invite-code party so it can be seated on its own.
+// The seat keeps its current table; the rest of the household is unaffected.
+export async function splitSeat(seatId: string): Promise<void> {
+  const { error } = await getSupabase()
+    .from("seat_assignments")
+    .update({ detached: true })
+    .eq("id", seatId);
+  if (error) throw error;
+}
+
+// Re-merges a detached seat into its party and snaps it back to the table the
+// rest of the household is sitting at (falling back to unassigned if the group
+// isn't seated). Manual seats with no invite code simply clear the flag.
+export async function rejoinSeat(seatId: string): Promise<void> {
+  const seats = await getSeatAssignments();
+  const seat = seats.find((s) => s.id === seatId);
+  if (!seat) return;
+
+  let groupTableId: string | null = null;
+  if (seat.inviteCode) {
+    const sibling = seats.find(
+      (s) => s.id !== seatId && !s.detached && s.inviteCode === seat.inviteCode,
+    );
+    groupTableId = sibling?.tableId ?? null;
+  }
+
+  const { error } = await getSupabase()
+    .from("seat_assignments")
+    .update({ detached: false, table_id: groupTableId })
+    .eq("id", seatId);
   if (error) throw error;
 }
 
