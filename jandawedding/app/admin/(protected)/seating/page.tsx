@@ -1,10 +1,12 @@
 import { getSeatingTables, getSeatAssignments } from "@/lib/seating-store";
-import { SeatingBoard } from "./seating-board";
+import { getFloorFixtures } from "@/lib/fixtures-store";
+import { SeatingView } from "./seating-view";
 
 export default async function AdminSeatingPage() {
-  const [tables, seats] = await Promise.all([
+  const [tables, seats, fixtures] = await Promise.all([
     getSeatingTables(),
     getSeatAssignments(),
+    getFloorFixtures(),
   ]);
 
   const assigned = seats.filter((s) => s.tableId).length;
@@ -21,7 +23,7 @@ export default async function AdminSeatingPage() {
         </p>
       </div>
 
-      <SeatingBoard tables={tables} seats={seats} />
+      <SeatingView tables={tables} seats={seats} fixtures={fixtures} />
     </div>
   );
 }

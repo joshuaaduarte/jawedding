@@ -2,12 +2,23 @@ import { getSupabase, isMissingTableError } from "./supabase";
 import { getAllGuests } from "./guest-data";
 import { getAllRsvps } from "./rsvp-store";
 
+export type TableShape = "round" | "rect";
+
 export type SeatingTable = {
   id: string;
   name: string;
   capacity: number;
   notes: string;
   sortOrder: number;
+  // Floor-map placement: fractions 0..1 of the room, or null when the table
+  // hasn't been dropped onto the map yet. width/height are fraction-of-width and
+  // shared per shape; rotation is per-table (degrees). shape drives how it's drawn.
+  posX: number | null;
+  posY: number | null;
+  width: number | null;
+  height: number | null;
+  rotation: number;
+  shape: TableShape;
   createdAt: string;
 };
 
@@ -37,6 +48,12 @@ function mapTable(row: Record<string, unknown>): SeatingTable {
     capacity: (row.capacity as number) ?? 0,
     notes: (row.notes as string) ?? "",
     sortOrder: (row.sort_order as number) ?? 0,
+    posX: (row.pos_x as number | null) ?? null,
+    posY: (row.pos_y as number | null) ?? null,
+    width: (row.width as number | null) ?? null,
+    height: (row.height as number | null) ?? null,
+    rotation: (row.rotation as number) ?? 0,
+    shape: (row.shape as TableShape) === "rect" ? "rect" : "round",
     createdAt: row.created_at as string,
   };
 }
@@ -138,6 +155,73 @@ export async function updateSeatingTable(
   const { error } = await getSupabase()
     .from("seating_tables")
     .update(patch)
+    .eq("id", id);
+  if (error) throw error;
+}
+
+// Persists a table's spot on the floor map. Coordinates are fractions 0..1 of
+// the room; the client clamps them before calling. Passing null for both lifts
+// the table back off the map (returns it to the "unplaced" tray).
+export async function updateTablePosition(
+  id: string,
+  posX: number | null,
+  posY: number | null,
+): Promise<void> {
+  const clamp = (n: number | null) =>
+    n === null ? null : Math.min(1, Math.max(0, n));
+  const { error } = await getSupabase()
+    .from("seating_tables")
+    .update({ pos_x: clamp(posX), pos_y: clamp(posY) })
+    .eq("id", id);
+  if (error) throw error;
+}
+
+// Persists a table's spot and angle on drop (position fractions 0..1, rotation
+// in degrees). Used by the floor map, which drags and rotates per-table.
+export async function updateTableTransform(
+  id: string,
+  posX: number,
+  posY: number,
+  rotation: number,
+): Promise<void> {
+  const { error } = await getSupabase()
+    .from("seating_tables")
+    .update({
+      pos_x: Math.min(1, Math.max(0, posX)),
+      pos_y: Math.min(1, Math.max(0, posY)),
+      rotation,
+    })
+    .eq("id", id);
+  if (error) throw error;
+}
+
+// Resizes every table of a shape together so all round guest tables stay the
+// same size (and the rect sweetheart resizes on its own). Sizes are
+// fraction-of-width; round tables keep width = height.
+export async function updateTableSizeByShape(
+  shape: TableShape,
+  width: number,
+  height: number,
+): Promise<void> {
+  const { error } = await getSupabase()
+    .from("seating_tables")
+    .update({
+      width: Math.max(0.02, width),
+      height: Math.max(0.02, height),
+    })
+    .eq("shape", shape === "rect" ? "rect" : "round");
+  if (error) throw error;
+}
+
+// Switches a table between a round guest table and a rectangular one (the
+// sweetheart table). Purely how it's drawn on the map — capacity is unchanged.
+export async function updateTableShape(
+  id: string,
+  shape: TableShape,
+): Promise<void> {
+  const { error } = await getSupabase()
+    .from("seating_tables")
+    .update({ shape: shape === "rect" ? "rect" : "round" })
     .eq("id", id);
   if (error) throw error;
 }

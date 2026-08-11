@@ -172,11 +172,42 @@ CREATE TABLE IF NOT EXISTS budget_items (
 );
 
 -- Seating tables (physical reception tables)
+-- Floor-map geometry (all fractions of the room's WIDTH, so a value maps to the
+-- same pixel size horizontally and vertically since the room is drawn 10:7):
+--   pos_x / pos_y  the table's center on the map (NULL = not placed yet)
+--   width / height its drawn size; round tables keep width = height
+--   rotation       degrees clockwise (only meaningful for the rect sweetheart)
+--   shape          'round' for the numbered guest tables, 'rect' for sweetheart
+-- Size is shared per shape: resizing one round table resizes them all (see the
+-- store's updateTableSizeByShape). Position and rotation are per-table.
 CREATE TABLE IF NOT EXISTS seating_tables (
   id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name       TEXT NOT NULL,
   capacity   INTEGER NOT NULL DEFAULT 8 CHECK (capacity >= 0),
   notes      TEXT NOT NULL DEFAULT '',
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  pos_x      DOUBLE PRECISION,
+  pos_y      DOUBLE PRECISION,
+  width      DOUBLE PRECISION,
+  height     DOUBLE PRECISION,
+  rotation   DOUBLE PRECISION NOT NULL DEFAULT 0,
+  shape      TEXT NOT NULL DEFAULT 'round',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Floor-map fixtures: the non-seating furniture you can also drag, rotate, and
+-- resize (bar, bev station, DJ/band, dance floor, dessert & cake, apps, doors).
+-- Same fraction-of-width geometry as seating_tables. Size is shared per kind:
+-- resizing one "apps" station resizes them both (see updateFixtureSizeByKind).
+CREATE TABLE IF NOT EXISTS floor_fixtures (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  kind       TEXT NOT NULL,
+  label      TEXT NOT NULL DEFAULT '',
+  pos_x      DOUBLE PRECISION NOT NULL DEFAULT 0.5,
+  pos_y      DOUBLE PRECISION NOT NULL DEFAULT 0.5,
+  width      DOUBLE PRECISION NOT NULL DEFAULT 0.12,
+  height     DOUBLE PRECISION NOT NULL DEFAULT 0.08,
+  rotation   DOUBLE PRECISION NOT NULL DEFAULT 0,
   sort_order INTEGER NOT NULL DEFAULT 0,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -201,6 +232,29 @@ CREATE TABLE IF NOT EXISTS seat_assignments (
 -- Run in Supabase SQL Editor if upgrading an existing database:
 -- ============================================================
 -- ALTER TABLE seat_assignments ADD COLUMN IF NOT EXISTS detached BOOLEAN NOT NULL DEFAULT FALSE;
+
+-- ============================================================
+-- Migration: Floor-map for the visual seating chart
+-- Run in Supabase SQL Editor if upgrading an existing database:
+-- ============================================================
+-- ALTER TABLE seating_tables ADD COLUMN IF NOT EXISTS pos_x DOUBLE PRECISION;
+-- ALTER TABLE seating_tables ADD COLUMN IF NOT EXISTS pos_y DOUBLE PRECISION;
+-- ALTER TABLE seating_tables ADD COLUMN IF NOT EXISTS width DOUBLE PRECISION;
+-- ALTER TABLE seating_tables ADD COLUMN IF NOT EXISTS height DOUBLE PRECISION;
+-- ALTER TABLE seating_tables ADD COLUMN IF NOT EXISTS rotation DOUBLE PRECISION NOT NULL DEFAULT 0;
+-- ALTER TABLE seating_tables ADD COLUMN IF NOT EXISTS shape TEXT NOT NULL DEFAULT 'round';
+-- CREATE TABLE IF NOT EXISTS floor_fixtures (
+--   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--   kind TEXT NOT NULL,
+--   label TEXT NOT NULL DEFAULT '',
+--   pos_x DOUBLE PRECISION NOT NULL DEFAULT 0.5,
+--   pos_y DOUBLE PRECISION NOT NULL DEFAULT 0.5,
+--   width DOUBLE PRECISION NOT NULL DEFAULT 0.12,
+--   height DOUBLE PRECISION NOT NULL DEFAULT 0.08,
+--   rotation DOUBLE PRECISION NOT NULL DEFAULT 0,
+--   sort_order INTEGER NOT NULL DEFAULT 0,
+--   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+-- );
 
 -- Honeymoon itinerary items (Japan trip planner). Undated rows (item_date NULL)
 -- are the "Ideas / Unscheduled" wishlist; dated rows form the day-by-day plan.

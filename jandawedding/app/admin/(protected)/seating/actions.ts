@@ -2,8 +2,19 @@
 
 import { revalidatePath } from "next/cache";
 import {
+  seedDefaultFixtures,
+  updateFixtureTransform,
+  updateFixtureSizeByKind,
+  createFixture,
+  deleteFixture,
+} from "@/lib/fixtures-store";
+import {
   createSeatingTable,
   updateSeatingTable,
+  updateTablePosition,
+  updateTableTransform,
+  updateTableSizeByShape,
+  updateTableShape,
   deleteSeatingTable,
   assignSeats,
   splitSeat,
@@ -35,6 +46,75 @@ export async function updateTableAction(id: string, formData: FormData) {
     capacity: Number.isFinite(capacity) ? Math.max(0, capacity) : 8,
     notes: (formData.get("notes") as string)?.trim() ?? "",
   });
+  revalidatePath("/admin/seating");
+}
+
+export async function updateTablePositionAction(
+  id: string,
+  posX: number | null,
+  posY: number | null,
+) {
+  await updateTablePosition(id, posX, posY);
+  revalidatePath("/admin/seating");
+}
+
+export async function updateTableTransformAction(
+  id: string,
+  posX: number,
+  posY: number,
+  rotation: number,
+) {
+  await updateTableTransform(id, posX, posY, rotation);
+  revalidatePath("/admin/seating");
+}
+
+export async function updateTableSizeAction(
+  shape: "round" | "rect",
+  width: number,
+  height: number,
+) {
+  await updateTableSizeByShape(shape, width, height);
+  revalidatePath("/admin/seating");
+}
+
+export async function updateTableShapeAction(id: string, shape: "round" | "rect") {
+  await updateTableShape(id, shape);
+  revalidatePath("/admin/seating");
+}
+
+// ---- Floor-map fixtures (bar, dj, dance floor, apps, doors, …) ----
+
+export async function seedFixturesAction() {
+  await seedDefaultFixtures();
+  revalidatePath("/admin/seating");
+}
+
+export async function updateFixtureTransformAction(
+  id: string,
+  posX: number,
+  posY: number,
+  rotation: number,
+) {
+  await updateFixtureTransform(id, posX, posY, rotation);
+  revalidatePath("/admin/seating");
+}
+
+export async function updateFixtureSizeAction(
+  kind: string,
+  width: number,
+  height: number,
+) {
+  await updateFixtureSizeByKind(kind, width, height);
+  revalidatePath("/admin/seating");
+}
+
+export async function addFixtureAction(kind: string, label: string) {
+  await createFixture({ kind, label });
+  revalidatePath("/admin/seating");
+}
+
+export async function deleteFixtureAction(id: string) {
+  await deleteFixture(id);
   revalidatePath("/admin/seating");
 }
 
