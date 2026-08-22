@@ -274,3 +274,37 @@ CREATE TABLE IF NOT EXISTS honeymoon_items (
   sort_order INTEGER NOT NULL DEFAULT 0,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+-- Coaster tracker: one row per person who is getting a personalized photo
+-- coaster (one per attending guest, party members included). Rows are generated
+-- from confirmed RSVPs (see syncCoastersFromConfirmed) using the same
+-- guest_id + person_index key as seat_assignments, so a person keeps the same
+-- coaster row across syncs. has_photo = Ana/Joshua have the photo in hand;
+-- is_done = the coaster has been made. guest_id NULL = a manually-added coaster.
+CREATE TABLE IF NOT EXISTS coasters (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  guest_id     UUID REFERENCES guests(id) ON DELETE CASCADE,
+  person_index INTEGER NOT NULL DEFAULT 0,
+  name         TEXT NOT NULL,
+  has_photo    BOOLEAN NOT NULL DEFAULT FALSE,
+  is_done      BOOLEAN NOT NULL DEFAULT FALSE,
+  notes        TEXT NOT NULL DEFAULT '',
+  created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (guest_id, person_index)
+);
+
+-- ============================================================
+-- Migration: Coaster tracker
+-- Run in Supabase SQL Editor if upgrading an existing database:
+-- ============================================================
+-- CREATE TABLE IF NOT EXISTS coasters (
+--   id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--   guest_id     UUID REFERENCES guests(id) ON DELETE CASCADE,
+--   person_index INTEGER NOT NULL DEFAULT 0,
+--   name         TEXT NOT NULL,
+--   has_photo    BOOLEAN NOT NULL DEFAULT FALSE,
+--   is_done      BOOLEAN NOT NULL DEFAULT FALSE,
+--   notes        TEXT NOT NULL DEFAULT '',
+--   created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+--   UNIQUE (guest_id, person_index)
+-- );
