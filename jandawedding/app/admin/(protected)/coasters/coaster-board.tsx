@@ -231,7 +231,18 @@ export function CoasterBoard({ coasters }: { coasters: Coaster[] }) {
                     className="flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
                   >
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-stone-800">{c.name}</p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="truncate text-sm font-medium text-stone-800">{c.name}</p>
+                        {c.tableName ? (
+                          <span className="rounded-full bg-sky-100 px-2 py-0.5 text-[11px] font-medium text-sky-800">
+                            🪑 {c.tableName}
+                          </span>
+                        ) : (
+                          <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[11px] text-stone-400">
+                            No table
+                          </span>
+                        )}
+                      </div>
                       <form
                         action={updateCoasterNotesAction.bind(null, c.id)}
                         className="mt-1"

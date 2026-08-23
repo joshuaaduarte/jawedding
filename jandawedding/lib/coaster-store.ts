@@ -1,6 +1,7 @@
 import { getSupabase, isMissingTableError } from "./supabase";
 import { getAllGuests } from "./guest-data";
 import { getAllRsvps } from "./rsvp-store";
+import { getSeatAssignments, getSeatingTables } from "./seating-store";
 
 export type Coaster = {
   id: string;
@@ -15,11 +16,15 @@ export type Coaster = {
   // household and the export tells Ana which family a photo is for. Manually
   // added coasters have no guest, so partyLabel is "".
   partyLabel: string;
+  // The seating-chart table this person is assigned to, matched from the seating
+  // tool by the shared guest_id + person_index/seat_index key. null when the
+  // person isn't seated yet (or is a manual coaster with no guest).
+  tableName: string | null;
 };
 
 function mapCoaster(
   row: Record<string, unknown>,
-  partyLabel?: string,
+  extra?: { partyLabel?: string; tableName?: string | null },
 ): Coaster {
   return {
     id: row.id as string,
@@ -30,7 +35,8 @@ function mapCoaster(
     isDone: (row.is_done as boolean) ?? false,
     notes: (row.notes as string) ?? "",
     createdAt: row.created_at as string,
-    partyLabel: partyLabel ?? "",
+    partyLabel: extra?.partyLabel ?? "",
+    tableName: extra?.tableName ?? null,
   };
 }
 
@@ -45,8 +51,15 @@ export async function getCoasters(): Promise<Coaster[]> {
   }
 
   // Attach a friendly party label from each coaster's guest so the UI can group
-  // whole households together and the export names the family for context.
-  const guests = await getAllGuests();
+  // whole households together and the export names the family for context, plus
+  // the seating-chart table each person is assigned to (matched by the shared
+  // guest_id + person_index/seat_index key used by both tools).
+  const [guests, seats, tables] = await Promise.all([
+    getAllGuests(),
+    getSeatAssignments(),
+    getSeatingTables(),
+  ]);
+
   const labelByGuestId = new Map(
     guests.map((g) => [
       g.id,
@@ -54,10 +67,24 @@ export async function getCoasters(): Promise<Coaster[]> {
     ]),
   );
 
+  const tableNameById = new Map(tables.map((t) => [t.id, t.name]));
+  const tableNameBySeatKey = new Map<string, string>();
+  for (const seat of seats) {
+    if (!seat.guestId || !seat.tableId) continue;
+    const name = tableNameById.get(seat.tableId);
+    if (name) tableNameBySeatKey.set(`${seat.guestId}:${seat.seatIndex}`, name);
+  }
+
   return (data ?? []).map((row) => {
     const r = row as Record<string, unknown>;
     const guestId = (r.guest_id as string) ?? null;
-    return mapCoaster(r, guestId ? labelByGuestId.get(guestId) : undefined);
+    const personIndex = (r.person_index as number) ?? 0;
+    return mapCoaster(r, {
+      partyLabel: guestId ? labelByGuestId.get(guestId) : undefined,
+      tableName: guestId
+        ? tableNameBySeatKey.get(`${guestId}:${personIndex}`) ?? null
+        : null,
+    });
   });
 }
 
